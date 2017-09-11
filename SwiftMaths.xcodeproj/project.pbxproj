@@ -10,6 +10,11 @@
 		1FA098AC1F674E680068FD7C /* SwiftMaths.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA098A21F674E680068FD7C /* SwiftMaths.framework */; };
 		1FA098B11F674E680068FD7C /* SwiftMathsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA098B01F674E680068FD7C /* SwiftMathsTests.swift */; };
 		1FA098B31F674E680068FD7C /* SwiftMaths.h in Headers */ = {isa = PBXBuildFile; fileRef = 1FA098A51F674E680068FD7C /* SwiftMaths.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1FA098C11F6755AE0068FD7C /* Cartfile.resolved in Resources */ = {isa = PBXBuildFile; fileRef = 1FA098C01F6755AE0068FD7C /* Cartfile.resolved */; };
+		1FA098C61F6756100068FD7C /* SwiftCheck.framework.dSYM in Copy Debug Symbols */ = {isa = PBXBuildFile; fileRef = 1FA098C21F6755E80068FD7C /* SwiftCheck.framework.dSYM */; };
+		1FA098C81F6756200068FD7C /* SwiftCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA098C71F6756200068FD7C /* SwiftCheck.framework */; };
+		1FA098CB1F67563E0068FD7C /* SwiftCheck.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA098C71F6756200068FD7C /* SwiftCheck.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1FA098CD1F6756470068FD7C /* SwiftCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA098C71F6756200068FD7C /* SwiftCheck.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -22,6 +27,31 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		1FA098C51F6756040068FD7C /* Copy Debug Symbols */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 16;
+			files = (
+				1FA098C61F6756100068FD7C /* SwiftCheck.framework.dSYM in Copy Debug Symbols */,
+			);
+			name = "Copy Debug Symbols";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1FA098CA1F6756310068FD7C /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				1FA098CB1F67563E0068FD7C /* SwiftCheck.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		1FA098A21F674E680068FD7C /* SwiftMaths.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftMaths.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FA098A51F674E680068FD7C /* SwiftMaths.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftMaths.h; sourceTree = "<group>"; };
@@ -29,6 +59,10 @@
 		1FA098AB1F674E680068FD7C /* SwiftMathsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftMathsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FA098B01F674E680068FD7C /* SwiftMathsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftMathsTests.swift; sourceTree = "<group>"; };
 		1FA098B21F674E680068FD7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1FA098BE1F6755600068FD7C /* CartFile */ = {isa = PBXFileReference; lastKnownFileType = text; path = CartFile; sourceTree = "<group>"; };
+		1FA098C01F6755AE0068FD7C /* Cartfile.resolved */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.resolved; sourceTree = "<group>"; };
+		1FA098C21F6755E80068FD7C /* SwiftCheck.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = SwiftCheck.framework.dSYM; path = Carthage/Build/Mac/SwiftCheck.framework.dSYM; sourceTree = "<group>"; };
+		1FA098C71F6756200068FD7C /* SwiftCheck.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftCheck.framework; path = Carthage/Build/Mac/SwiftCheck.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FA098C81F6756200068FD7C /* SwiftCheck.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,6 +79,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1FA098AC1F674E680068FD7C /* SwiftMaths.framework in Frameworks */,
+				1FA098CD1F6756470068FD7C /* SwiftCheck.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -55,7 +91,9 @@
 			children = (
 				1FA098A41F674E680068FD7C /* SwiftMaths */,
 				1FA098AF1F674E680068FD7C /* SwiftMathsTests */,
+				1FA098BF1F6755670068FD7C /* Dependencies */,
 				1FA098A31F674E680068FD7C /* Products */,
+				1FA098CC1F6756470068FD7C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -84,6 +122,32 @@
 				1FA098B21F674E680068FD7C /* Info.plist */,
 			);
 			path = SwiftMathsTests;
+			sourceTree = "<group>";
+		};
+		1FA098BF1F6755670068FD7C /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				1FA098BE1F6755600068FD7C /* CartFile */,
+				1FA098C71F6756200068FD7C /* SwiftCheck.framework */,
+				1FA098C41F6755EE0068FD7C /* Debug Symbols */,
+				1FA098C01F6755AE0068FD7C /* Cartfile.resolved */,
+			);
+			name = Dependencies;
+			sourceTree = "<group>";
+		};
+		1FA098C41F6755EE0068FD7C /* Debug Symbols */ = {
+			isa = PBXGroup;
+			children = (
+				1FA098C21F6755E80068FD7C /* SwiftCheck.framework.dSYM */,
+			);
+			name = "Debug Symbols";
+			sourceTree = "<group>";
+		};
+		1FA098CC1F6756470068FD7C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -125,6 +189,8 @@
 				1FA098A71F674E680068FD7C /* Sources */,
 				1FA098A81F674E680068FD7C /* Frameworks */,
 				1FA098A91F674E680068FD7C /* Resources */,
+				1FA098CA1F6756310068FD7C /* Embed Frameworks */,
+				1FA098C51F6756040068FD7C /* Copy Debug Symbols */,
 			);
 			buildRules = (
 			);
@@ -148,6 +214,7 @@
 				TargetAttributes = {
 					1FA098A11F674E680068FD7C = {
 						CreatedOnToolsVersion = 9.0;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 					};
 					1FA098AA1F674E680068FD7C = {
@@ -179,6 +246,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FA098C11F6755AE0068FD7C /* Cartfile.resolved in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -333,6 +401,7 @@
 		1FA098B71F674E680068FD7C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -340,6 +409,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = SwiftMaths/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -347,6 +420,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = net.fortlogic.SwiftMaths;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
@@ -354,6 +428,7 @@
 		1FA098B81F674E680068FD7C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -361,6 +436,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = SwiftMaths/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -377,6 +456,10 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 				INFOPLIST_FILE = SwiftMathsTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.fortlogic.SwiftMathsTests;
@@ -390,6 +473,10 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 				INFOPLIST_FILE = SwiftMathsTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.fortlogic.SwiftMathsTests;
