@@ -7,7 +7,6 @@
 //
 
 import XCTest
-@testable import SwiftMaths
 
 class SwiftMathsTests: XCTestCase {
     
