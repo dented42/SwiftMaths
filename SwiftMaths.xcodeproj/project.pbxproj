@@ -10,6 +10,7 @@
 		1FA098AC1F674E680068FD7C /* SwiftMaths.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA098A21F674E680068FD7C /* SwiftMaths.framework */; };
 		1FA098B11F674E680068FD7C /* SwiftMathsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA098B01F674E680068FD7C /* SwiftMathsTests.swift */; };
 		1FA098B31F674E680068FD7C /* SwiftMaths.h in Headers */ = {isa = PBXBuildFile; fileRef = 1FA098A51F674E680068FD7C /* SwiftMaths.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1FA098C11F6755AE0068FD7C /* Cartfile.resolved in Resources */ = {isa = PBXBuildFile; fileRef = 1FA098C01F6755AE0068FD7C /* Cartfile.resolved */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,6 +31,7 @@
 		1FA098B01F674E680068FD7C /* SwiftMathsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftMathsTests.swift; sourceTree = "<group>"; };
 		1FA098B21F674E680068FD7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1FA098BE1F6755600068FD7C /* CartFile */ = {isa = PBXFileReference; lastKnownFileType = text; path = CartFile; sourceTree = "<group>"; };
+		1FA098C01F6755AE0068FD7C /* Cartfile.resolved */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.resolved; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +94,7 @@
 			isa = PBXGroup;
 			children = (
 				1FA098BE1F6755600068FD7C /* CartFile */,
+				1FA098C01F6755AE0068FD7C /* Cartfile.resolved */,
 			);
 			name = Dependencies;
 			sourceTree = "<group>";
@@ -190,6 +193,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FA098C11F6755AE0068FD7C /* Cartfile.resolved in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
