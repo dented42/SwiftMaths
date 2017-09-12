@@ -29,6 +29,7 @@
 		1FA098AB1F674E680068FD7C /* SwiftMathsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftMathsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FA098B01F674E680068FD7C /* SwiftMathsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftMathsTests.swift; sourceTree = "<group>"; };
 		1FA098B21F674E680068FD7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1FA098BE1F6755600068FD7C /* CartFile */ = {isa = PBXFileReference; lastKnownFileType = text; path = CartFile; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +56,7 @@
 			children = (
 				1FA098A41F674E680068FD7C /* SwiftMaths */,
 				1FA098AF1F674E680068FD7C /* SwiftMathsTests */,
+				1FA098BF1F6755670068FD7C /* Dependencies */,
 				1FA098A31F674E680068FD7C /* Products */,
 			);
 			sourceTree = "<group>";
@@ -84,6 +86,14 @@
 				1FA098B21F674E680068FD7C /* Info.plist */,
 			);
 			path = SwiftMathsTests;
+			sourceTree = "<group>";
+		};
+		1FA098BF1F6755670068FD7C /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				1FA098BE1F6755600068FD7C /* CartFile */,
+			);
+			name = Dependencies;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -148,6 +158,7 @@
 				TargetAttributes = {
 					1FA098A11F674E680068FD7C = {
 						CreatedOnToolsVersion = 9.0;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 					};
 					1FA098AA1F674E680068FD7C = {
@@ -333,6 +344,7 @@
 		1FA098B71F674E680068FD7C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -347,6 +359,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = net.fortlogic.SwiftMaths;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
@@ -354,6 +367,7 @@
 		1FA098B81F674E680068FD7C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
