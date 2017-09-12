@@ -30,7 +30,7 @@
 		1FA098AB1F674E680068FD7C /* SwiftMathsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftMathsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FA098B01F674E680068FD7C /* SwiftMathsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftMathsTests.swift; sourceTree = "<group>"; };
 		1FA098B21F674E680068FD7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1FA098BE1F6755600068FD7C /* CartFile */ = {isa = PBXFileReference; lastKnownFileType = text; path = CartFile; sourceTree = "<group>"; };
+		1FA098BE1F6755600068FD7C /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
 		1FA098C01F6755AE0068FD7C /* Cartfile.resolved */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.resolved; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -93,7 +93,7 @@
 		1FA098BF1F6755670068FD7C /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
-				1FA098BE1F6755600068FD7C /* CartFile */,
+				1FA098BE1F6755600068FD7C /* Cartfile */,
 				1FA098C01F6755AE0068FD7C /* Cartfile.resolved */,
 			);
 			name = Dependencies;
