@@ -8,13 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		1FA098AC1F674E680068FD7C /* SwiftMaths.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA098A21F674E680068FD7C /* SwiftMaths.framework */; };
-		1FA098B11F674E680068FD7C /* SwiftMathsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA098B01F674E680068FD7C /* SwiftMathsTests.swift */; };
 		1FA098B31F674E680068FD7C /* SwiftMaths.h in Headers */ = {isa = PBXBuildFile; fileRef = 1FA098A51F674E680068FD7C /* SwiftMaths.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1FA098C11F6755AE0068FD7C /* Cartfile.resolved in Resources */ = {isa = PBXBuildFile; fileRef = 1FA098C01F6755AE0068FD7C /* Cartfile.resolved */; };
 		1FA098C61F6756100068FD7C /* SwiftCheck.framework.dSYM in Copy Debug Symbols */ = {isa = PBXBuildFile; fileRef = 1FA098C21F6755E80068FD7C /* SwiftCheck.framework.dSYM */; };
 		1FA098C81F6756200068FD7C /* SwiftCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA098C71F6756200068FD7C /* SwiftCheck.framework */; };
 		1FA098CB1F67563E0068FD7C /* SwiftCheck.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA098C71F6756200068FD7C /* SwiftCheck.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1FA098CD1F6756470068FD7C /* SwiftCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA098C71F6756200068FD7C /* SwiftCheck.framework */; };
+		1FBA34BE1F676A2000BD3919 /* InjectiveMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBA34BD1F676A2000BD3919 /* InjectiveMap.swift */; };
+		1FBA34C01F676A3F00BD3919 /* InjectiveMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBA34BF1F676A3F00BD3919 /* InjectiveMapTests.swift */; };
+		1FBA34C21F676A4800BD3919 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBA34C11F676A4800BD3919 /* Utilities.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,12 +59,14 @@
 		1FA098A51F674E680068FD7C /* SwiftMaths.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftMaths.h; sourceTree = "<group>"; };
 		1FA098A61F674E680068FD7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1FA098AB1F674E680068FD7C /* SwiftMathsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftMathsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		1FA098B01F674E680068FD7C /* SwiftMathsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftMathsTests.swift; sourceTree = "<group>"; };
 		1FA098B21F674E680068FD7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1FA098BE1F6755600068FD7C /* CartFile */ = {isa = PBXFileReference; lastKnownFileType = text; path = CartFile; sourceTree = "<group>"; };
 		1FA098C01F6755AE0068FD7C /* Cartfile.resolved */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.resolved; sourceTree = "<group>"; };
 		1FA098C21F6755E80068FD7C /* SwiftCheck.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = SwiftCheck.framework.dSYM; path = Carthage/Build/Mac/SwiftCheck.framework.dSYM; sourceTree = "<group>"; };
 		1FA098C71F6756200068FD7C /* SwiftCheck.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftCheck.framework; path = Carthage/Build/Mac/SwiftCheck.framework; sourceTree = "<group>"; };
+		1FBA34BD1F676A2000BD3919 /* InjectiveMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InjectiveMap.swift; sourceTree = "<group>"; };
+		1FBA34BF1F676A3F00BD3919 /* InjectiveMapTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InjectiveMapTests.swift; sourceTree = "<group>"; };
+		1FBA34C11F676A4800BD3919 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +114,7 @@
 			isa = PBXGroup;
 			children = (
 				1FA098A51F674E680068FD7C /* SwiftMaths.h */,
+				1FBA34BD1F676A2000BD3919 /* InjectiveMap.swift */,
 				1FA098A61F674E680068FD7C /* Info.plist */,
 			);
 			path = SwiftMaths;
@@ -118,8 +123,9 @@
 		1FA098AF1F674E680068FD7C /* SwiftMathsTests */ = {
 			isa = PBXGroup;
 			children = (
-				1FA098B01F674E680068FD7C /* SwiftMathsTests.swift */,
 				1FA098B21F674E680068FD7C /* Info.plist */,
+				1FBA34BF1F676A3F00BD3919 /* InjectiveMapTests.swift */,
+				1FBA34C11F676A4800BD3919 /* Utilities.swift */,
 			);
 			path = SwiftMathsTests;
 			sourceTree = "<group>";
@@ -168,6 +174,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1FA098B61F674E680068FD7C /* Build configuration list for PBXNativeTarget "SwiftMaths" */;
 			buildPhases = (
+				1FBA34C51F677B5100BD3919 /* Generate TODO and FIXME Warnings */,
 				1FA0989D1F674E680068FD7C /* Sources */,
 				1FA0989E1F674E680068FD7C /* Frameworks */,
 				1FA0989F1F674E680068FD7C /* Headers */,
@@ -186,6 +193,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1FA098B91F674E680068FD7C /* Build configuration list for PBXNativeTarget "SwiftMathsTests" */;
 			buildPhases = (
+				1FBA34C61F677B6900BD3919 /* Generate TODO and FIXME Warnings */,
 				1FA098A71F674E680068FD7C /* Sources */,
 				1FA098A81F674E680068FD7C /* Frameworks */,
 				1FA098A91F674E680068FD7C /* Resources */,
@@ -219,6 +227,7 @@
 					};
 					1FA098AA1F674E680068FD7C = {
 						CreatedOnToolsVersion = 9.0;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -259,11 +268,43 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		1FBA34C51F677B5100BD3919 /* Generate TODO and FIXME Warnings */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate TODO and FIXME Warnings";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "TAGS=\"\\/\\/ ?(TODO:|FIXME:)\"\necho \"searching ${SRCROOT}/${TARGET_NAME} for ${TAGS}\"\nfind \"${SRCROOT}/${TARGET_NAME}\" \\( -name \"*.swift\" \\) -print0 \\\n| xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$\" \\\n| perl -p -e \"s/($TAGS)/ warning: \\$1/\"";
+		};
+		1FBA34C61F677B6900BD3919 /* Generate TODO and FIXME Warnings */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate TODO and FIXME Warnings";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "TAGS=\"\\/\\/ ?(TODO:|FIXME:)\"\necho \"searching ${SRCROOT}/${TARGET_NAME} for ${TAGS}\"\nfind \"${SRCROOT}/${TARGET_NAME}\" \\( -name \"*.swift\" \\) -print0 \\\n| xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$\" \\\n| perl -p -e \"s/($TAGS)/ warning: \\$1/\"";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		1FA0989D1F674E680068FD7C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FBA34BE1F676A2000BD3919 /* InjectiveMap.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -271,7 +312,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1FA098B11F674E680068FD7C /* SwiftMathsTests.swift in Sources */,
+				1FBA34C21F676A4800BD3919 /* Utilities.swift in Sources */,
+				1FBA34C01F676A3F00BD3919 /* InjectiveMapTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -454,6 +496,8 @@
 		1FA098BA1F674E680068FD7C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -464,6 +508,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.fortlogic.SwiftMathsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
@@ -471,6 +516,8 @@
 		1FA098BB1F674E680068FD7C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
