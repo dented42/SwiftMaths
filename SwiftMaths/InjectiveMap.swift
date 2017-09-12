@@ -80,7 +80,43 @@ public struct InjectiveMap<Domain: Hashable, Range: Hashable> {
   
   public mutating func compact(whenGarbagePasses garbageLimit: Int = 64) {
     if garbageCount >= garbageLimit {
-      // TODO: write an implementation
+      // get a list of used indices
+      var goodIdxs = Set(domainMap.values)
+      
+      // get a list of garbage indices
+      var garbageIdxs: Set<Int> = Set(contents.indices).subtracting(goodIdxs)
+      
+//      // determine the indices of content that will be moved into the garbage holes
+//      let movingIdxs = Array(domainMap.values).sorted().lazy.reversed()
+      
+      // keep removing garbage until there's none left
+      while !garbageIdxs.isEmpty {
+        let endIdx = contents.indices.last!
+        // if the end isn't garbage then move some garbage into it
+        if !garbageIdxs.contains(endIdx) {
+          // the end kinda has to be in the goodIdxs or something went horribly wrong
+          assert(goodIdxs.contains(endIdx))
+          // find a garbage place to move the end to
+          let garbageIdx = garbageIdxs.first!
+          // get the stuff to move
+          let (endD, endR) = contents[endIdx]
+          // move it over
+          contents[garbageIdx] = (endD, endR)
+          // adjust references
+          domainMap[endD] = garbageIdx
+          rangeMap[endR] = garbageIdx
+          // book keeping
+          goodIdxs.insert(garbageIdx)
+          goodIdxs.remove(endIdx)
+          garbageIdxs.remove(garbageIdx)
+          garbageIdxs.insert(endIdx)
+        }
+        // the thing at the end is garbage
+        assert(garbageIdxs.contains(endIdx))
+        // remove the thing at the end
+        contents.remove(at: endIdx)
+        garbageIdxs.remove(endIdx)
+      }
     }
   }
   
@@ -181,13 +217,16 @@ public extension InjectiveMap {
   }
 }
 
-extension InjectiveMap {
+public extension InjectiveMap {
   public var count: Int {
     assert(domainMap.count == rangeMap.count)
     return domainMap.count
   }
   public var garbageCount: Int {
     return contents.count - count
+  }
+  public var storeCount: Int {
+    return contents.count
   }
 }
 

@@ -112,29 +112,60 @@ class InjectiveMapTests: XCTestCase {
   }
   
   func testCompact() {
+    var empty = InjectiveMap<Int,String>()
+    let oldEmpty = empty
+    empty.compact()
+    XCTAssertEqual(empty, oldEmpty, "compacting an empty map has no effect")
+    
     property("removing items increases garbage count") <- forAll {
-      (m: ArbitraryInjectiveMap<Int,Int>) in
-      return false
+      (m: ArbitraryInjectiveMap<Int,Float>) in
+      var map = m.map
+      return forAll(m.domainGen) { (n: Int) in
+        let oldGarbageCount = map.garbageCount
+        map.remove(domain: n)
+        return map.garbageCount == (oldGarbageCount + 1)
+      }
     }
     
-    property("compacting a map with no garbage has no effect") <- forAll {
-      (m: ArbitraryInjectiveMap<Int,Int>) in
-      return false
+    property("compaction preserves equality") <- forAll {
+      (m: ArbitraryInjectiveMap<Int,String>) in
+      var map = m.map
+      let oldMap = map
+      map.compact(whenGarbagePasses: 1)
+      return map == oldMap
     }
     
     property("compacting removes all the garbage") <- forAll {
       (m: ArbitraryInjectiveMap<Int,Int>) in
-      return false
+      var map = m.map
+      return (map.garbageCount > 0) ==> {
+        let oldGarbageCount = map.garbageCount
+        let oldStoreCount = map.storeCount
+        map.compact(whenGarbagePasses: 1)
+        return
+          (map.garbageCount == 0) <?> "garbage count is zero" ^&&^
+            (map.storeCount == (oldStoreCount - oldGarbageCount)) <?> "store has been reduced"
+      }
     }
     
     property("compaction doesn't change the domain mapping") <- forAll {
       (m: ArbitraryInjectiveMap<Int,Int>) in
-      return false
+      var map = m.map
+      return (map.garbageCount > 0) ==> {
+        let oldDict = map.domainDictionary
+        map.compact(whenGarbagePasses: 1)
+        return map.domainDictionary == oldDict
+      }
     }
     
     property("compaction doesn't change the range mapping") <- forAll {
       (m: ArbitraryInjectiveMap<Int,Int>) in
-      return false
+      var map = m.map
+      return (map.garbageCount > 0) ==> {
+        let oldDict = map.rangeDictionary
+        map.compact(whenGarbagePasses: 1)
+        return map.rangeDictionary == oldDict
+      }
     }
   }
   
