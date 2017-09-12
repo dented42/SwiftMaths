@@ -23,7 +23,10 @@ struct UniqueDictionary<Key: Hashable & Arbitrary, Value: Hashable & Arbitrary>:
     return d
   }
   
-  init(_ d: [Key: Value]) {
+  init?(_ d: [Key: Value]) {
+    guard d.hasUniqueValues else {
+      return nil
+    }
     dictionary = d
   }
   
@@ -57,7 +60,7 @@ struct UniqueDictionary<Key: Hashable & Arbitrary, Value: Hashable & Arbitrary>:
         }
       }
       
-      return UniqueDictionary(d)
+      return UniqueDictionary(d)!
     }
   }
 }
@@ -66,13 +69,26 @@ struct UniqueDictionary<Key: Hashable & Arbitrary, Value: Hashable & Arbitrary>:
 extension Dictionary where Value: Hashable {
   var hasUniqueValues: Bool {
     // make a set containing all the values
-    var values = Set<Value>()
-    for value in self.values {
-      values.insert(value)
-    }
+    let values = Set<Value>(self.values)
     
     // return whether or not the set of values is as big as the set of entries
     return values.count == self.count
   }
+  
+  var backwards: Dictionary<Value,Key>? {
+    var d = [Value:Key]()
+    for (k,v) in self {
+      if d.keys.contains(v) {
+        return nil
+      } else {
+        d[v] = k
+      }
+    }
+    return d
+  }
+}
+
+func wrap<E>(_ arrayGen: Gen<[E]>) -> Gen<ArrayOf<E>> {
+  return arrayGen.map { return ArrayOf($0) }
 }
 

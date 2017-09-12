@@ -107,20 +107,35 @@ class InjectiveMapTests: XCTestCase {
   func testRangeDictionary() {
     property("range dictionary contains the right elements") <- forAll {
       (m: ArbitraryInjectiveMap<String,Int>) in
-      return m.map.rangeDictionary == m.backwards
+      return m.map.rangeDictionary == m.dict.backwards!
     }
   }
   
   func testCompact() {
-    XCTFail() // FIXME: property("removing items increases garbage count")
+    property("removing items increases garbage count") <- forAll {
+      (m: ArbitraryInjectiveMap<Int,Int>) in
+      return false
+    }
     
-    XCTFail() // FIXME: property("compacting a map with no garbage has no effect")
+    property("compacting a map with no garbage has no effect") <- forAll {
+      (m: ArbitraryInjectiveMap<Int,Int>) in
+      return false
+    }
     
-    XCTFail() // FIXME: property("compacting removes all the garbage")
+    property("compacting removes all the garbage") <- forAll {
+      (m: ArbitraryInjectiveMap<Int,Int>) in
+      return false
+    }
     
-    XCTFail() // FIXME: property("compaction doesn't change the domain mapping")
+    property("compaction doesn't change the domain mapping") <- forAll {
+      (m: ArbitraryInjectiveMap<Int,Int>) in
+      return false
+    }
     
-    XCTFail() // FIXME: property("compaction doesn't change the range mapping")
+    property("compaction doesn't change the range mapping") <- forAll {
+      (m: ArbitraryInjectiveMap<Int,Int>) in
+      return false
+    }
   }
   
   func testCount() {
@@ -240,11 +255,45 @@ class InjectiveMapTests: XCTestCase {
   }
   
   func testEquatable() {
-    XCTFail() // FIXME: property("things are equal to themselves")
+    property("things are equal to themselves") <- forAll {
+      (m: ArbitraryInjectiveMap<Float,Character>) in
+      let map = m.map
+      return map == map
+    }
     
-    XCTFail() // FIXME: property("things whose domain differs aren't equal")
+    property("equality is preserved when setting things equal to themselves") <- forAll {
+      (m: ArbitraryInjectiveMap<String,Float>, s: String) in
+      var map = m.map
+      return map.domain.contains(s) ==> {
+        let oldMap = map
+        map[s] = oldMap[s]
+        return map == oldMap
+      }
+    }
     
-    XCTFail() // FIXME: property("things whose range differs aren't equal")
+    property("adding and then removing items preserves equality") <- forAll {
+      (m: ArbitraryInjectiveMap<Int,Float>, n: Int, f: Float) in
+      var map = m.map
+      return !map.domain.contains(n) ==> {
+        return !map.range.contains(f) ==> {
+          let oldMap = map
+          map[n] = f
+          map.remove(domain: n)
+          return map == oldMap
+        }
+      }
+    }
+    
+    property("removing then re-adding things preserves equality") <- forAll {
+      (m: ArbitraryInjectiveMap<Int,String>, n: Int) in
+      var map = m.map
+      return map.domain.contains(n) ==> {
+        let oldMap = map
+        map.remove(domain: n)
+        map[n] = oldMap[n]
+        return map == oldMap
+      }
+    }
   }
   
   func testSubscriptGet() {
@@ -264,7 +313,7 @@ class InjectiveMapTests: XCTestCase {
     property("all range subscripts work") <- forAll {
       (m: ArbitraryInjectiveMap<String,Int>) in
       let map = m.map
-      let dict = m.backwards
+      let dict = m.dict.backwards!
       let range = map.range
       
       return range.reduce(true){
@@ -342,7 +391,7 @@ class InjectiveMapTests: XCTestCase {
       var map = m.map
       return map.domain.contains(n) ==> {
         let oldMap = map
-        map[n] = map[n]
+        map[n] = oldMap[n]
         return map == oldMap
       }
     }
@@ -350,43 +399,160 @@ class InjectiveMapTests: XCTestCase {
   
   func testSubscript_overwrite_both_range() {
     property("equality isn't affected") <- forAll {
-      (m: ArbitraryInjectiveMap<String,Int>, n: Int) in
+      (m: ArbitraryInjectiveMap<Int,String>, s: String) in
       var map = m.map
-      return map.range.contains(n) ==> {
+      return map.range.contains(s) ==> {
         let oldMap = map
-        map[n] = map[n]
+        map[s] = oldMap[s]
         return map == oldMap
       }
     }
   }
   
-  func testSubscript_overwrite_domain() {
-    XCTFail() // FIXME: property("count stays the same")
+  func testSubscript_changeExisting_domain() {
+    property("count stays the same") <- forAll {
+      (m: ArbitraryInjectiveMap<Int,String>, n: Int, s: String) in
+      var map = m.map
+      return map.domain.contains(n) ==> {
+        return !map.range.contains(s) ==> {
+          let oldCount = map.count
+          map[n] = s
+          return map.count == oldCount
+        }
+      }
+    }
     
-    XCTFail() // FIXME: property("change from domain subscript")
+    property("new entry maps correctly from domain") <- forAll {
+      (m: ArbitraryInjectiveMap<Int,String>, n: Int, s: String) in
+      var map = m.map
+      return map.domain.contains(n) ==> {
+        return !map.range.contains(s) ==> {
+          map[n] = s
+          return (map[n] == s)
+        }
+      }
+    }
     
-    XCTFail() // FIXME: property("change from domain subscript")
+    property("new entry maps correctly from range") <- forAll {
+      (m: ArbitraryInjectiveMap<Int,String>, n: Int, s: String) in
+      var map = m.map
+      return map.domain.contains(n) ==> {
+        return !map.range.contains(s) ==> {
+          map[n] = s
+          return (map[s] == n)
+        }
+      }
+    }
+
+    
+    property("everything else stays the same from domain") <- forAll {
+      (m: ArbitraryInjectiveMap<Int,String>, n: Int, s: String) in
+      var map = m.map
+      return map.domain.contains(n) ==> {
+        return !map.range.contains(s) ==> {
+          var d = map.domainDictionary
+          d[n] = nil
+          map[n] = s
+          return d.reduce(true) { (acc: Bool, p: (Int,String)) in
+            let (k,v) = p
+            return acc && (map[k] == v)
+          }
+        }
+      }
+    }
+    
+    property("everything else stays the same from range") <- forAll {
+      (m: ArbitraryInjectiveMap<Int,String>, n: Int, s: String) in
+      var map = m.map
+      return map.domain.contains(n) ==> {
+        return !map.range.contains(s) ==> {
+          var d = map.domainDictionary
+          d[n] = nil
+          map[n] = s
+          return d.reduce(true) { (acc: Bool, p: (Int,String)) in
+            let (k,v) = p
+            return acc && (map[v] == k)
+          }
+        }
+      }
+    }
   }
   
-  func testSubscript_overwrite_range() {
-    XCTFail() // FIXME: property("count stays the same")
+  func testSubscript_changeExisting_range() {
+    property("count stays the same") <- forAll {
+      (m: ArbitraryInjectiveMap<Int,String>, n: Int, s: String) in
+      var map = m.map
+      return map.range.contains(s) ==> {
+        return !map.domain.contains(n) ==> {
+          let oldCount = map.count
+          map[s] = n
+          return map.count == oldCount
+        }
+      }
+    }
     
-    XCTFail() // FIXME: property("change from range subscript")
+    property("new entry maps correctly from domain") <- forAll {
+      (m: ArbitraryInjectiveMap<Int,String>, n: Int, s: String) in
+      var map = m.map
+      return map.range.contains(s) ==> {
+        return !map.domain.contains(n) ==> {
+          map[s] = n
+          return (map[n] == s)
+        }
+      }
+    }
     
-    XCTFail() // FIXME: property("change from range subscript")
+    property("new entry maps correctly from range") <- forAll {
+      (m: ArbitraryInjectiveMap<Int,String>, n: Int, s: String) in
+      var map = m.map
+      return map.range.contains(s) ==> {
+        return !map.domain.contains(n) ==> {
+          map[s] = n
+          return (map[s] == n)
+        }
+      }
+    }
+    
+    property("everything else stays the same from domain") <- forAll {
+      (m: ArbitraryInjectiveMap<Int,String>, n: Int, s: String) in
+      var map = m.map
+      return map.range.contains(s) ==> {
+        return !map.domain.contains(n) ==> {
+          var d = map.rangeDictionary
+          d[s] = nil
+          map[s] = n
+          return d.reduce(true) { (acc: Bool, p: (String,Int)) in
+            let (k,v) = p
+            return acc && (map[v] == k)
+          }
+        }
+      }
+    }
+    
+    property("everything else stays the same from range") <- forAll {
+      (m: ArbitraryInjectiveMap<Int,String>, n: Int, s: String) in
+      var map = m.map
+      return map.range.contains(s) ==> {
+        return !map.domain.contains(n) ==> {
+          var d = map.rangeDictionary
+          d[s] = nil
+          map[s] = n
+          return d.reduce(true) { (acc: Bool, p: (String,Int)) in
+            let (k,v) = p
+            return acc && (map[k] == v)
+          }
+        }
+      }
+    }
   }
   
-  func testSubscriptSet_domainCollision_fromDomain() {
-    XCTFail() // FIXME: property("insertion fails")
-  }
-  
-  func testSubscriptSet_domainCollision_fromRange() {
+  func testSubscriptSet_domainCollision() {
     property("insertion fails") <- forAll {
       (m: ArbitraryInjectiveMap<Int,Character>, n: Int, c: Character) in
       var map = m.map
       return map.domain.contains(n) ==> {
         return map.range.contains(c) ==> {
-          return (map[c] != n) ==> {
+          return (map[n] != c) ==> {
             let oldMap = map
             map[c] = n
             return map == oldMap
@@ -396,12 +562,20 @@ class InjectiveMapTests: XCTestCase {
     }
   }
   
-  func testSubscriptSet_rangeCollision_fromDomain() {
-    XCTFail() // FIXME: property("insertion fails")
-  }
-  
-  func testSubscriptSet_rangeCollision_fromRange() {
-    XCTFail() // FIXME: property("insertion fails")
+  func testSubscriptSet_rangeCollision() {
+    property("insertion fails") <- forAll {
+      (m: ArbitraryInjectiveMap<Int,Character>, n: Int, c: Character) in
+      var map = m.map
+      return map.domain.contains(n) ==> {
+        return map.range.contains(c) ==> {
+          return (map[n] != c) ==> {
+            let oldMap = map
+            map[n] = c
+            return map == oldMap
+          }
+        }
+      }
+    }
   }
   
   func testSubscriptSet_nil_domain() {
@@ -436,22 +610,16 @@ class InjectiveMapTests: XCTestCase {
 struct ArbitraryInjectiveMap<Domain: Hashable & Arbitrary, Range: Hashable & Arbitrary>: Arbitrary {
   let map: InjectiveMap<Domain,Range>
   let dict: Dictionary<Domain,Range>
-  let backwards: Dictionary<Range,Domain>
-  let hasGarbage: Bool
   
   private init(_ dict: UniqueDictionary<Domain,Range>) {
     let map = InjectiveMap<Domain,Range>(dict.dictionary)!
     self.map = map
     self.dict = dict.dictionary
-    self.backwards = dict.backwards
-    self.hasGarbage = false
   }
   
   private init(_ map: InjectiveMap<Domain,Range>) {
     self.map = map
     self.dict = map.domainDictionary
-    self.backwards = map.rangeDictionary
-    self.hasGarbage = map.garbageCount != 0
   }
   
   static var arbitrary: Gen<ArbitraryInjectiveMap<Domain, Range>> {
@@ -487,6 +655,13 @@ struct ArbitraryInjectiveMap<Domain: Hashable & Arbitrary, Range: Hashable & Arb
         // otherwise just return a map
         return ArbitraryInjectiveMap(dict)
       }
+    }
+  }
+  
+  static func shrink(_ s: ArbitraryInjectiveMap) -> [ArbitraryInjectiveMap] {
+    return Dictionary.shrink(s.dict).map {
+      (d: Dictionary<Domain,Range>) in
+      return ArbitraryInjectiveMap(UniqueDictionary(d)!)
     }
   }
 }

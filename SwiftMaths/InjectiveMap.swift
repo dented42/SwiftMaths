@@ -121,14 +121,22 @@ public extension InjectiveMap {
         // remove the pair the domain currently maps to if setting to nil
         return remove(domain: input)
       }
-      // if the input and value aren't in the domain or range.
-      if !domainMap.keys.contains(input) {
-        if !rangeMap.keys.contains(value) {
+      // we only do stuff when there's not a value collision
+      if !rangeMap.keys.contains(value) {
+        // if the input isn't in the domain.
+        if !domainMap.keys.contains(input) {
           // add the pair
           contents.append((input,value))
           // get the last index
           let idx = contents.indices.last
           domainMap[input] = idx
+          rangeMap[value] = idx
+        } else {
+          // if the input is in the domain then we can just overwrite the contents pair
+          let idx = domainMap[input]!
+          let (_, oldValue) = contents[idx]
+          contents[idx] = (input, value)
+          rangeMap[oldValue] = nil
           rangeMap[value] = idx
         }
       }
@@ -150,8 +158,9 @@ public extension InjectiveMap {
         // remove the pair the domain currently maps to if setting to nil
         return remove(range: input)
       }
-      // if the input and value aren't in the domain or range.
+      // as long as there isn't a value collision
       if !domainMap.keys.contains(value) {
+        // if the input isn't in the range.
         if !rangeMap.keys.contains(input) {
           // add the pair
           contents.append((value,input))
@@ -159,6 +168,13 @@ public extension InjectiveMap {
           let idx = contents.indices.last
           domainMap[value] = idx
           rangeMap[input] = idx
+        } else {
+          // if the input is in the range then just overwrite the contents pair
+          let idx = rangeMap[input]!
+          let (oldValue, _) = contents[idx]
+          contents[idx] = (value, input)
+          domainMap[oldValue] = nil
+          domainMap[value] = idx
         }
       }
     }
