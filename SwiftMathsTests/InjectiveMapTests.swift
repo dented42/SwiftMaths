@@ -411,9 +411,9 @@ class InjectiveMapTests: XCTestCase {
   
   func testSubscript_changeExisting_domain() {
     property("count stays the same") <- forAll {
-      (m: ArbitraryInjectiveMap<Int,String>, n: Int, s: String) in
+      (m: ArbitraryInjectiveMap<Int,String>, s: String) in
       var map = m.map
-      return map.domain.contains(n) ==> {
+      return forAll(m.domainGen) { (n: Int) in
         return !map.range.contains(s) ==> {
           let oldCount = map.count
           map[n] = s
@@ -423,20 +423,20 @@ class InjectiveMapTests: XCTestCase {
     }
     
     property("new entry maps correctly from domain") <- forAll {
-      (m: ArbitraryInjectiveMap<Int,String>, n: Int, s: String) in
+      (m: ArbitraryInjectiveMap<Int,String>, s: String) in
       var map = m.map
-      return map.domain.contains(n) ==> {
+      return forAll(m.domainGen) { (n: Int) in
         return !map.range.contains(s) ==> {
           map[n] = s
           return (map[n] == s)
         }
       }
     }
-    
+
     property("new entry maps correctly from range") <- forAll {
-      (m: ArbitraryInjectiveMap<Int,String>, n: Int, s: String) in
+      (m: ArbitraryInjectiveMap<Int,String>, s: String) in
       var map = m.map
-      return map.domain.contains(n) ==> {
+      return forAll(m.domainGen) { (n: Int) in
         return !map.range.contains(s) ==> {
           map[n] = s
           return (map[s] == n)
@@ -444,11 +444,11 @@ class InjectiveMapTests: XCTestCase {
       }
     }
 
-    
+
     property("everything else stays the same from domain") <- forAll {
-      (m: ArbitraryInjectiveMap<Int,String>, n: Int, s: String) in
+      (m: ArbitraryInjectiveMap<Int,String>, s: String) in
       var map = m.map
-      return map.domain.contains(n) ==> {
+      return forAll(m.domainGen) { (n: Int) in
         return !map.range.contains(s) ==> {
           var d = map.domainDictionary
           d[n] = nil
@@ -460,11 +460,11 @@ class InjectiveMapTests: XCTestCase {
         }
       }
     }
-    
+
     property("everything else stays the same from range") <- forAll {
-      (m: ArbitraryInjectiveMap<Int,String>, n: Int, s: String) in
+      (m: ArbitraryInjectiveMap<Int,String>, s: String) in
       var map = m.map
-      return map.domain.contains(n) ==> {
+      return forAll(m.domainGen) { (n: Int) in
         return !map.range.contains(s) ==> {
           var d = map.domainDictionary
           d[n] = nil
@@ -610,6 +610,14 @@ class InjectiveMapTests: XCTestCase {
 struct ArbitraryInjectiveMap<Domain: Hashable & Arbitrary, Range: Hashable & Arbitrary>: Arbitrary {
   let map: InjectiveMap<Domain,Range>
   let dict: Dictionary<Domain,Range>
+  
+  var domainGen: Gen<Domain> {
+    return Gen<Domain>.fromElements(of: Array(map.domain))
+  }
+  
+  var rangeGen: Gen<Range> {
+    return Gen<Domain>.fromElements(of: Array(map.range))
+  }
   
   private init(_ dict: UniqueDictionary<Domain,Range>) {
     let map = InjectiveMap<Domain,Range>(dict.dictionary)!
