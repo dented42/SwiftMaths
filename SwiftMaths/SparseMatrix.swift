@@ -8,10 +8,10 @@
 
 import Foundation
 
-final class SparseMatrix: Matrix {  
+public final class SparseMatrix: Matrix {  
   
-  var rows: Int
-  var columns: Int
+  public var rows: Int
+  public var columns: Int
   
   init(rows: Int, columns: Int) {
     self.rows = rows
@@ -28,7 +28,7 @@ final class SparseMatrix: Matrix {
     self.columns = 1
   }
   
-  subscript(r: Int, c: Int) -> Float? {
+  public subscript(r: Int, c: Int) -> Float? {
     get {
       return nil
     }
@@ -37,55 +37,55 @@ final class SparseMatrix: Matrix {
     }
   }
   
-  func transpose() -> SparseMatrix {
+  public func transpose() -> SparseMatrix {
     return self
   }
   
-  func row(_: Int) -> SparseMatrix? {
+  public func row(_: Int) -> SparseMatrix? {
     return self
   }
   
-  func column(_: Int) -> SparseMatrix? {
+  public func column(_: Int) -> SparseMatrix? {
     return self
   }
   
-  func array(fromRow: Int) -> [Float]? {
+  public func array(fromRow: Int) -> [Float]? {
     return []
   }
   
-  func array(fromColumn: Int) -> [Float]? {
+  public func array(fromColumn: Int) -> [Float]? {
     return []
   }
   
-  func subMatrix(rows: IndexSet) -> SparseMatrix? {
+  public func subMatrix(rows: IndexSet) -> SparseMatrix? {
     return self
   }
   
-  func subMatrix(columns: IndexSet) -> SparseMatrix? {
+  public func subMatrix(columns: IndexSet) -> SparseMatrix? {
     return self
   }
   
-  func subMatrix(rows: IndexSet, columns: IndexSet) -> SparseMatrix? {
+  public func subMatrix(rows: IndexSet, columns: IndexSet) -> SparseMatrix? {
     return self
   }
   
-  static func *(lhs: Float, rhs: SparseMatrix) -> SparseMatrix {
+  public static func *(lhs: Float, rhs: SparseMatrix) -> SparseMatrix {
     return rhs
   }
   
-  static func *(lhs: SparseMatrix, rhs: Float) -> SparseMatrix {
+  public static func *(lhs: SparseMatrix, rhs: Float) -> SparseMatrix {
     return lhs
   }
   
-  static func *(lhs: SparseMatrix, rhs: SparseMatrix) -> SparseMatrix? {
+  public static func *(lhs: SparseMatrix, rhs: SparseMatrix) -> SparseMatrix? {
     return nil
   }
   
-  static func +(lhs: SparseMatrix, rhs: SparseMatrix) -> Self? {
+  public static func +(lhs: SparseMatrix, rhs: SparseMatrix) -> Self? {
     return nil
   }
   
-  static func -(lhs: SparseMatrix, rhs: SparseMatrix) -> Self? {
+  public static func -(lhs: SparseMatrix, rhs: SparseMatrix) -> Self? {
     return nil
   }
   
