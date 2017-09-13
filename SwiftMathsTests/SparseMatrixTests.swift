@@ -24,40 +24,71 @@ class SparseMatrixTests: XCTestCase {
   }
   
   func testInitWithRowsColumns() {
-    XCTFail() // FIXME: write tests
+    XCTFail()
   }
   
   func testSubscript() {
-    XCTFail() // FIXME: write tests
+    XCTFail()
   }
   
   func testTranspose() {
-    XCTFail() // FIXME: write tests
+    XCTFail()
   }
   
-  //  func row(_: Int) -> Self?
-  //  func column(_: Int) -> Self?
+  func testRow() {
+    XCTFail()
+  }
   
-  //  func array(fromRow: Int) -> [Float]?
-  //  func array(fromColumn: Int) -> [Float]?
+  func testColumn() {
+    XCTFail()
+  }
   
-  //  func subMatrix(rows: IndexSet) -> Self?
-  //  func subMatrix(columns: IndexSet) -> Self?
-  //  func subMatrix(rows: IndexSet, columns: IndexSet) -> Self?
+  func testArrayFromRow() {
+    XCTFail()
+  }
   
-  //  static func *(lhs: Float, rhs: Self) -> Self
-  //  static func *(lhs: Self, rhs: Float) -> Self
+  func testArrayFromColumn() {
+    XCTFail()
+  }
   
-  //  static func +(lhs: Self, rhs: Self) -> Self?
-  //  static func -(lhs: Self, rhs: Self) -> Self?
-  //  static func *(lhs: Self, rhs: Self) -> Self?
+  func testSubMatrixRows() {
+    XCTFail()
+  }
   
+  func testSubMatrixColumns() {
+    XCTFail()
+  }
+  
+  func testSubMatrixRowsColumns() {
+    XCTFail()
+  }
+  
+  func testScalarMultiply() {
+    XCTFail()
+  }
+  
+  func testMultiplyScalar() {
+    XCTFail()
+  }
+  
+  func testAdd() {
+    XCTFail()
+  }
+  
+  func testSubtract() {
+    XCTFail()
+  }
+  
+  func testMultiply() {
+    XCTFail()
+  }
 }
 
-extension SparseMatrix: Arbitrary {
-  public static var arbitrary: Gen<SparseMatrix> {
-    <#code#>
-  }
-  
-  
-}
+//extension SparseMatrix: Arbitrary {
+//  public static var arbitrary: Gen<SparseMatrix> {
+//
+//  }
+//
+//
+//}
+

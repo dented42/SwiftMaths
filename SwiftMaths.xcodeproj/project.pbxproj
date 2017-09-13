@@ -10,11 +10,11 @@
 		1F5135991F68C5430055FAB1 /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5135981F68C5430055FAB1 /* Matrix.swift */; };
 		1F51359B1F68C5A90055FAB1 /* SparseMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F51359A1F68C5A90055FAB1 /* SparseMatrix.swift */; };
 		1F51359D1F68C5C00055FAB1 /* SparseMatrixTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F51359C1F68C5C00055FAB1 /* SparseMatrixTests.swift */; };
+		1F981FAD1F69ADF300F22B11 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F981FAC1F69ADF300F22B11 /* Accelerate.framework */; };
 		1FA098AC1F674E680068FD7C /* SwiftMaths.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA098A21F674E680068FD7C /* SwiftMaths.framework */; };
 		1FA098B31F674E680068FD7C /* SwiftMaths.h in Headers */ = {isa = PBXBuildFile; fileRef = 1FA098A51F674E680068FD7C /* SwiftMaths.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1FA098C11F6755AE0068FD7C /* Cartfile.resolved in Resources */ = {isa = PBXBuildFile; fileRef = 1FA098C01F6755AE0068FD7C /* Cartfile.resolved */; };
 		1FA098C61F6756100068FD7C /* SwiftCheck.framework.dSYM in Copy Debug Symbols */ = {isa = PBXBuildFile; fileRef = 1FA098C21F6755E80068FD7C /* SwiftCheck.framework.dSYM */; };
-		1FA098C81F6756200068FD7C /* SwiftCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA098C71F6756200068FD7C /* SwiftCheck.framework */; };
 		1FA098CB1F67563E0068FD7C /* SwiftCheck.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA098C71F6756200068FD7C /* SwiftCheck.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1FA098CD1F6756470068FD7C /* SwiftCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA098C71F6756200068FD7C /* SwiftCheck.framework */; };
 /* End PBXBuildFile section */
@@ -58,6 +58,7 @@
 		1F5135981F68C5430055FAB1 /* Matrix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matrix.swift; sourceTree = "<group>"; };
 		1F51359A1F68C5A90055FAB1 /* SparseMatrix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparseMatrix.swift; sourceTree = "<group>"; };
 		1F51359C1F68C5C00055FAB1 /* SparseMatrixTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparseMatrixTests.swift; sourceTree = "<group>"; };
+		1F981FAC1F69ADF300F22B11 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		1FA098A21F674E680068FD7C /* SwiftMaths.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftMaths.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FA098A51F674E680068FD7C /* SwiftMaths.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftMaths.h; sourceTree = "<group>"; };
 		1FA098A61F674E680068FD7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -74,7 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1FA098C81F6756200068FD7C /* SwiftCheck.framework in Frameworks */,
+				1F981FAD1F69ADF300F22B11 /* Accelerate.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -152,6 +153,7 @@
 		1FA098CC1F6756470068FD7C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1F981FAC1F69ADF300F22B11 /* Accelerate.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

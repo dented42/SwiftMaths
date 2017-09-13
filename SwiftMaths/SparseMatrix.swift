@@ -6,6 +6,7 @@
 //  Copyright © 2017 Matias Eyzaguirre. All rights reserved.
 //
 
+import Accelerate
 import Foundation
 
 public final class SparseMatrix: Matrix {  
