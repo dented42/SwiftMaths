@@ -8,8 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		1F5135991F68C5430055FAB1 /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5135981F68C5430055FAB1 /* Matrix.swift */; };
+		1F51359B1F68C5A90055FAB1 /* SparseMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F51359A1F68C5A90055FAB1 /* SparseMatrix.swift */; };
+		1F51359D1F68C5C00055FAB1 /* SparseMatrixTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F51359C1F68C5C00055FAB1 /* SparseMatrixTests.swift */; };
 		1FA098AC1F674E680068FD7C /* SwiftMaths.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA098A21F674E680068FD7C /* SwiftMaths.framework */; };
-		1FA098B11F674E680068FD7C /* SwiftMathsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA098B01F674E680068FD7C /* SwiftMathsTests.swift */; };
 		1FA098B31F674E680068FD7C /* SwiftMaths.h in Headers */ = {isa = PBXBuildFile; fileRef = 1FA098A51F674E680068FD7C /* SwiftMaths.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1FA098C11F6755AE0068FD7C /* Cartfile.resolved in Resources */ = {isa = PBXBuildFile; fileRef = 1FA098C01F6755AE0068FD7C /* Cartfile.resolved */; };
 		1FA098C61F6756100068FD7C /* SwiftCheck.framework.dSYM in Copy Debug Symbols */ = {isa = PBXBuildFile; fileRef = 1FA098C21F6755E80068FD7C /* SwiftCheck.framework.dSYM */; };
@@ -55,11 +56,12 @@
 
 /* Begin PBXFileReference section */
 		1F5135981F68C5430055FAB1 /* Matrix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matrix.swift; sourceTree = "<group>"; };
+		1F51359A1F68C5A90055FAB1 /* SparseMatrix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparseMatrix.swift; sourceTree = "<group>"; };
+		1F51359C1F68C5C00055FAB1 /* SparseMatrixTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparseMatrixTests.swift; sourceTree = "<group>"; };
 		1FA098A21F674E680068FD7C /* SwiftMaths.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftMaths.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FA098A51F674E680068FD7C /* SwiftMaths.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftMaths.h; sourceTree = "<group>"; };
 		1FA098A61F674E680068FD7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1FA098AB1F674E680068FD7C /* SwiftMathsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftMathsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		1FA098B01F674E680068FD7C /* SwiftMathsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftMathsTests.swift; sourceTree = "<group>"; };
 		1FA098B21F674E680068FD7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1FA098BE1F6755600068FD7C /* CartFile */ = {isa = PBXFileReference; lastKnownFileType = text; path = CartFile; sourceTree = "<group>"; };
 		1FA098C01F6755AE0068FD7C /* Cartfile.resolved */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.resolved; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 			children = (
 				1FA098A51F674E680068FD7C /* SwiftMaths.h */,
 				1F5135981F68C5430055FAB1 /* Matrix.swift */,
+				1F51359A1F68C5A90055FAB1 /* SparseMatrix.swift */,
 				1FA098A61F674E680068FD7C /* Info.plist */,
 			);
 			path = SwiftMaths;
@@ -121,7 +124,7 @@
 		1FA098AF1F674E680068FD7C /* SwiftMathsTests */ = {
 			isa = PBXGroup;
 			children = (
-				1FA098B01F674E680068FD7C /* SwiftMathsTests.swift */,
+				1F51359C1F68C5C00055FAB1 /* SparseMatrixTests.swift */,
 				1FA098B21F674E680068FD7C /* Info.plist */,
 			);
 			path = SwiftMathsTests;
@@ -267,6 +270,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F51359B1F68C5A90055FAB1 /* SparseMatrix.swift in Sources */,
 				1F5135991F68C5430055FAB1 /* Matrix.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -275,7 +279,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1FA098B11F674E680068FD7C /* SwiftMathsTests.swift in Sources */,
+				1F51359D1F68C5C00055FAB1 /* SparseMatrixTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
