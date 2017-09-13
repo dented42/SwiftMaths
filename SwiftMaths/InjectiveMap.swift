@@ -78,7 +78,8 @@ public struct InjectiveMap<Domain: Hashable, Range: Hashable> {
     return self.contains(d,r)
   }
   
-  public mutating func compact(whenGarbagePasses garbageLimit: Int = 64) {
+  public mutating func compact(whenGarbagePasses garbageLimit: Int = 64,
+                               shrinkStorage: Bool = false) {
     if garbageCount >= garbageLimit {
       // get a list of used indices
       var goodIdxs = Set(domainMap.values)
@@ -118,6 +119,10 @@ public struct InjectiveMap<Domain: Hashable, Range: Hashable> {
         garbageIdxs.remove(endIdx)
       }
     }
+    if shrinkStorage {
+      let oldContents = contents
+      contents = Array(oldContents)
+    }
   }
   
   public mutating func remove(domain: Domain) {
@@ -132,6 +137,19 @@ public struct InjectiveMap<Domain: Hashable, Range: Hashable> {
       domainMap.removeValue(forKey: domain)
       rangeMap.removeValue(forKey: range)
     }
+  }
+}
+
+public extension InjectiveMap {
+  public var count: Int {
+    assert(domainMap.count == rangeMap.count)
+    return domainMap.count
+  }
+  public var garbageCount: Int {
+    return contents.count - count
+  }
+  public var storeCount: Int {
+    return contents.count
   }
 }
 
@@ -214,19 +232,6 @@ public extension InjectiveMap {
         }
       }
     }
-  }
-}
-
-public extension InjectiveMap {
-  public var count: Int {
-    assert(domainMap.count == rangeMap.count)
-    return domainMap.count
-  }
-  public var garbageCount: Int {
-    return contents.count - count
-  }
-  public var storeCount: Int {
-    return contents.count
   }
 }
 
