@@ -22,3 +22,7 @@ extension Int {
     return Gen<Int>.fromElements(in: from...to)
   }
 }
+
+func wrap<E>(_ arrayGen: Gen<[E]>) -> Gen<ArrayOf<E>> {
+  return arrayGen.map { return ArrayOf($0) }
+}

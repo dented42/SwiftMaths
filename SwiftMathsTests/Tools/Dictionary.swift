@@ -87,8 +87,3 @@ struct UniqueDictionary<Key: Hashable & Arbitrary, Value: Hashable & Arbitrary>:
     }
   }
 }
-
-func wrap<E>(_ arrayGen: Gen<[E]>) -> Gen<ArrayOf<E>> {
-  return arrayGen.map { return ArrayOf($0) }
-}
-
