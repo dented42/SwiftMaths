@@ -14,7 +14,7 @@ public final class SparseMatrix: Matrix {
   public var rows: Int
   public var columns: Int
   
-  init(rows: Int, columns: Int) {
+  public init(rows: Int, columns: Int) {
     self.rows = rows
     self.columns = columns
   }

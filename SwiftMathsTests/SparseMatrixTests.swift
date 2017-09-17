@@ -23,7 +23,15 @@ class SparseMatrixTests: XCTestCase {
     super.tearDown()
   }
   
-  func testInitWithRowsColumns() {
+  func testInit_RowsColumns() {
+    XCTFail()
+  }
+  
+  func testInit_rowVector() {
+    XCTFail()
+  }
+  
+  func testInit_columnVector() {
     XCTFail()
   }
   
@@ -84,11 +92,17 @@ class SparseMatrixTests: XCTestCase {
   }
 }
 
-//extension SparseMatrix: Arbitrary {
+extension SparseMatrix/*: Arbitrary*/ {
+  public static var zerosGen: Gen<SparseMatrix> {
+    return Gen<(Int,Int)>.zip(Int.naturalsGen, Int.naturalsGen).map { (pair: (Int,Int)) in
+      let (r,c) = pair
+      return SparseMatrix(rows: r, columns: c)
+    }
+  }
+  
 //  public static var arbitrary: Gen<SparseMatrix> {
 //
 //  }
-//
-//
-//}
+
+}
 

@@ -10,6 +10,7 @@
 		1F5135991F68C5430055FAB1 /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5135981F68C5430055FAB1 /* Matrix.swift */; };
 		1F51359B1F68C5A90055FAB1 /* SparseMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F51359A1F68C5A90055FAB1 /* SparseMatrix.swift */; };
 		1F51359D1F68C5C00055FAB1 /* SparseMatrixTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F51359C1F68C5C00055FAB1 /* SparseMatrixTests.swift */; };
+		1F77D5101F6DF262004C3F9B /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F77D50F1F6DF262004C3F9B /* Utilities.swift */; };
 		1F981FAD1F69ADF300F22B11 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F981FAC1F69ADF300F22B11 /* Accelerate.framework */; };
 		1FA098AC1F674E680068FD7C /* SwiftMaths.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA098A21F674E680068FD7C /* SwiftMaths.framework */; };
 		1FA098B31F674E680068FD7C /* SwiftMaths.h in Headers */ = {isa = PBXBuildFile; fileRef = 1FA098A51F674E680068FD7C /* SwiftMaths.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -58,6 +59,7 @@
 		1F5135981F68C5430055FAB1 /* Matrix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matrix.swift; sourceTree = "<group>"; };
 		1F51359A1F68C5A90055FAB1 /* SparseMatrix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparseMatrix.swift; sourceTree = "<group>"; };
 		1F51359C1F68C5C00055FAB1 /* SparseMatrixTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparseMatrixTests.swift; sourceTree = "<group>"; };
+		1F77D50F1F6DF262004C3F9B /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		1F981FAC1F69ADF300F22B11 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		1FA098A21F674E680068FD7C /* SwiftMaths.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftMaths.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FA098A51F674E680068FD7C /* SwiftMaths.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftMaths.h; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 			isa = PBXGroup;
 			children = (
 				1F51359C1F68C5C00055FAB1 /* SparseMatrixTests.swift */,
+				1F77D50F1F6DF262004C3F9B /* Utilities.swift */,
 				1FA098B21F674E680068FD7C /* Info.plist */,
 			);
 			path = SwiftMathsTests;
@@ -281,6 +284,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F77D5101F6DF262004C3F9B /* Utilities.swift in Sources */,
 				1F51359D1F68C5C00055FAB1 /* SparseMatrixTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
