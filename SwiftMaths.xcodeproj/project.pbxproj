@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F8D95341F6F1B4B007C5C09 /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8D95331F6F1B4B007C5C09 /* Sequence.swift */; };
+		1F8D95361F6F1B57007C5C09 /* SequenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8D95351F6F1B57007C5C09 /* SequenceTests.swift */; };
+		1F8D95381F6F1C4F007C5C09 /* Functional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8D95371F6F1C4F007C5C09 /* Functional.swift */; };
+		1F8D953A1F6F1C59007C5C09 /* FunctionalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8D95391F6F1C59007C5C09 /* FunctionalTests.swift */; };
 		1FA098AC1F674E680068FD7C /* SwiftMaths.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA098A21F674E680068FD7C /* SwiftMaths.framework */; };
 		1FA098B31F674E680068FD7C /* SwiftMaths.h in Headers */ = {isa = PBXBuildFile; fileRef = 1FA098A51F674E680068FD7C /* SwiftMaths.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1FA098C11F6755AE0068FD7C /* Cartfile.resolved in Resources */ = {isa = PBXBuildFile; fileRef = 1FA098C01F6755AE0068FD7C /* Cartfile.resolved */; };
@@ -55,6 +59,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1F8D95331F6F1B4B007C5C09 /* Sequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
+		1F8D95351F6F1B57007C5C09 /* SequenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequenceTests.swift; sourceTree = "<group>"; };
+		1F8D95371F6F1C4F007C5C09 /* Functional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functional.swift; sourceTree = "<group>"; };
+		1F8D95391F6F1C59007C5C09 /* FunctionalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionalTests.swift; sourceTree = "<group>"; };
 		1FA098A21F674E680068FD7C /* SwiftMaths.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftMaths.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FA098A51F674E680068FD7C /* SwiftMaths.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftMaths.h; sourceTree = "<group>"; };
 		1FA098A61F674E680068FD7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -114,7 +122,9 @@
 			isa = PBXGroup;
 			children = (
 				1FA098A51F674E680068FD7C /* SwiftMaths.h */,
+				1F8D95371F6F1C4F007C5C09 /* Functional.swift */,
 				1FBA34BD1F676A2000BD3919 /* InjectiveMap.swift */,
+				1F8D95331F6F1B4B007C5C09 /* Sequence.swift */,
 				1FA098A61F674E680068FD7C /* Info.plist */,
 			);
 			path = SwiftMaths;
@@ -124,7 +134,9 @@
 			isa = PBXGroup;
 			children = (
 				1FA098B21F674E680068FD7C /* Info.plist */,
+				1F8D95391F6F1C59007C5C09 /* FunctionalTests.swift */,
 				1FBA34BF1F676A3F00BD3919 /* InjectiveMapTests.swift */,
+				1F8D95351F6F1B57007C5C09 /* SequenceTests.swift */,
 				1FBA34C11F676A4800BD3919 /* Utilities.swift */,
 			);
 			path = SwiftMathsTests;
@@ -304,6 +316,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F8D95381F6F1C4F007C5C09 /* Functional.swift in Sources */,
+				1F8D95341F6F1B4B007C5C09 /* Sequence.swift in Sources */,
 				1FBA34BE1F676A2000BD3919 /* InjectiveMap.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -314,6 +328,8 @@
 			files = (
 				1FBA34C21F676A4800BD3919 /* Utilities.swift in Sources */,
 				1FBA34C01F676A3F00BD3919 /* InjectiveMapTests.swift in Sources */,
+				1F8D953A1F6F1C59007C5C09 /* FunctionalTests.swift in Sources */,
+				1F8D95361F6F1B57007C5C09 /* SequenceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
