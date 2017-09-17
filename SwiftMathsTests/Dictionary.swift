@@ -9,6 +9,29 @@
 import Foundation
 import SwiftCheck
 
+// An extension on Dictionary that tells when it's values are unique.
+extension Dictionary where Value: Hashable {
+  var hasUniqueValues: Bool {
+    // make a set containing all the values
+    let values = Set<Value>(self.values)
+    
+    // return whether or not the set of values is as big as the set of entries
+    return values.count == self.count
+  }
+  
+  var backwards: Dictionary<Value,Key>? {
+    var d = [Value:Key]()
+    for (k,v) in self {
+      if d.keys.contains(v) {
+        return nil
+      } else {
+        d[v] = k
+      }
+    }
+    return d
+  }
+}
+
 // This should be an extension on Dictionary that makes it Arbitrary when it's keys and values are
 // also arbitrary. Swift however does not yet allow extensions to provide conditional protocol
 // conformance.
@@ -62,29 +85,6 @@ struct UniqueDictionary<Key: Hashable & Arbitrary, Value: Hashable & Arbitrary>:
       
       return UniqueDictionary(d)!
     }
-  }
-}
-
-// An extension on Dictionary that tells when it's values are unique.
-extension Dictionary where Value: Hashable {
-  var hasUniqueValues: Bool {
-    // make a set containing all the values
-    let values = Set<Value>(self.values)
-    
-    // return whether or not the set of values is as big as the set of entries
-    return values.count == self.count
-  }
-  
-  var backwards: Dictionary<Value,Key>? {
-    var d = [Value:Key]()
-    for (k,v) in self {
-      if d.keys.contains(v) {
-        return nil
-      } else {
-        d[v] = k
-      }
-    }
-    return d
   }
 }
 
