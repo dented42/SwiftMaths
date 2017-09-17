@@ -8,15 +8,53 @@
 
 import Foundation
 
-public struct SimpleMatrix: Matrix {
+public struct SimpleMatrix {
   
   public var rows: Int
   
   public var columns: Int
   
+  private var entries: [Float]
+  
+  public init?(rows: Int, columns: Int) {
+    // dimensions must be valid
+    guard (rows > 0) && (columns > 0) else {
+      return nil
+    }
+    
+    self.rows = rows
+    self.columns = columns
+    self.entries = Array(repeating: 0, count: rows*columns)
+  }
+  
+  public init?(row: [Float]) {
+    // dimensions must be valid
+    guard row.count > 0 else {
+      return nil
+    }
+    
+    self.rows = 1
+    self.columns = row.count
+    self.entries = row
+  }
+  
+  public init?(column: [Float]) {
+    self.rows = column.count
+    self.columns = 1
+    self.entries = []
+  }
+  
+}
+
+extension SimpleMatrix: Matrix {
+  public var count: Int {
+    return entries.count
+  }
+  
   public subscript(r: Int, c: Int) -> Float? {
     get {
-      return nil
+      let rowOffset = columns * r
+      return entries[rowOffset + c]
     }
     set {
       
@@ -74,6 +112,4 @@ public struct SimpleMatrix: Matrix {
   public static func *(lhs: SimpleMatrix, rhs: SimpleMatrix) -> SimpleMatrix? {
     return nil
   }
-  
-  
 }

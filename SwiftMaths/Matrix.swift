@@ -13,6 +13,8 @@ public protocol Matrix {
   var rows: Int { get }
   var columns: Int { get }
   
+  var count: Int { get }
+  
   subscript(r: Int, c: Int) -> Float? { get set }
   
   func transpose() -> Self //{ get }
