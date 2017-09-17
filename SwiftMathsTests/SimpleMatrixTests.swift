@@ -8,6 +8,8 @@
 
 import XCTest
 
+import SwiftMaths
+
 class SimpleMatrixTests: XCTestCase {
   
   override func setUp() {
@@ -87,5 +89,8 @@ class SimpleMatrixTests: XCTestCase {
   func testMultiply() {
     XCTFail()
   }
+}
+
+extension SimpleMatrix {
   
 }

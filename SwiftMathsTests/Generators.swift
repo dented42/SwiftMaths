@@ -17,4 +17,8 @@ extension Int {
   static var countingGen: Gen<Int> {
     return Gen<Int>.chooseAny().map { return 1 + abs($0) }
   }
+  
+  static func gen(from: Int = 0, to: Int) -> Gen<Int> {
+    return Gen<Int>.fromElements(in: from...to)
+  }
 }
