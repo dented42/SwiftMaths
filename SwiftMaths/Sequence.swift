@@ -9,11 +9,17 @@
 import Foundation
 
 public extension Sequence {
-  public func map(and: (Element) -> Bool) -> Bool {
-    return false
+  public func mapAnd(_ f: (Element) -> Bool) -> Bool {
+    return self.reduce(true) {
+      (acc: Bool, element: Element) in
+      return acc && f(element)
+    }
   }
   
-  public func map(or: (Element) -> Bool) -> Bool {
-    return false
+  public func mapOr(_ f: (Element) -> Bool) -> Bool {
+    return self.reduce(false) {
+      (acc: Bool, element: Element) in
+      return acc || f(element)
+    }
   }
 }
