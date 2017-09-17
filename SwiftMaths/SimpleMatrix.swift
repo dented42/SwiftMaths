@@ -39,9 +39,14 @@ public struct SimpleMatrix {
   }
   
   public init?(column: [Float]) {
+    // dimensions must be valid
+    guard column.count > 0 else {
+      return nil
+    }
+    
     self.rows = column.count
     self.columns = 1
-    self.entries = []
+    self.entries = column
   }
   
 }
@@ -53,8 +58,13 @@ extension SimpleMatrix: Matrix {
   
   public subscript(r: Int, c: Int) -> Float? {
     get {
-      let rowOffset = columns * r
-      return entries[rowOffset + c]
+      let idx = (columns * r) + c
+      
+      if entries.indices.contains(idx) {
+        return entries[idx]
+      } else {
+        return nil
+      }
     }
     set {
       

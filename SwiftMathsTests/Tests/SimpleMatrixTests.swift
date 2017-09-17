@@ -83,7 +83,10 @@ class SimpleMatrixTests: XCTestCase {
       (rowHolder: ArrayOf<Float>) in
       let row = rowHolder.getArray
       return (row.count > 0) ==> {
-        let m = SimpleMatrix(row: row)!
+        guard let m = SimpleMatrix(row: row) else {
+          return false
+        }
+        
         return row.indices.mapAnd {
           (idx: Int) in
           return m[0, idx] == row[idx]
@@ -92,10 +95,41 @@ class SimpleMatrixTests: XCTestCase {
     }
   }
 
-//  func testInit_columnVector() {
-//    XCTFail()
-//  }
-//
+  func testInit_columnVector() {
+    property("empty vector is rejected") <- {
+      return SimpleMatrix(column: []) == nil
+    }
+    
+    property("dimensions are correct") <- forAll {
+      (columnHolder: ArrayOf<Float>) in
+      let column = columnHolder.getArray
+      return (column.count > 0) ==> {
+        let m = SimpleMatrix(column: column)
+        
+        let exists = (m != nil) <?> "matrix exists"
+        let rowsMatch = (m?.rows == column.count) <?> "correct number of rows"
+        let columnsMatch = (m?.columns == 1) <?> "correct number of columns"
+        
+        return exists ^&&^ rowsMatch ^&&^ columnsMatch
+      }
+    }
+    
+    property("entries are correct") <- forAll {
+      (columnHolder: ArrayOf<Float>) in
+      let column = columnHolder.getArray
+      return (column.count > 0) ==> {
+        guard let m = SimpleMatrix(column: column) else {
+          return false
+        }
+        
+        return column.indices.mapAnd {
+          (idx: Int) in
+          return m[idx, 0] == column[idx]
+        }
+      }
+    }
+  }
+
 //  func testCount() {
 //    XCTFail()
 //  }
