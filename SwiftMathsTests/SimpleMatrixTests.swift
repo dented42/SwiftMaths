@@ -1,17 +1,14 @@
 //
-//  SparseMatrixTests.swift
+//  SimpleMatrixTests.swift
 //  SwiftMathsTests
 //
-//  Created by Matias Eyzaguirre on 9/12/17.
+//  Created by Matias Eyzaguirre on 9/16/17.
 //  Copyright © 2017 Matias Eyzaguirre. All rights reserved.
 //
 
-import SwiftCheck
 import XCTest
 
-import SwiftMaths
-
-class SparseMatrixTests: XCTestCase {
+class SimpleMatrixTests: XCTestCase {
   
   override func setUp() {
     super.setUp()
@@ -90,19 +87,5 @@ class SparseMatrixTests: XCTestCase {
   func testMultiply() {
     XCTFail()
   }
-}
-
-extension SparseMatrix/*: Arbitrary*/ {
-  public static var zerosGen: Gen<SparseMatrix> {
-    return Gen<(Int,Int)>.zip(Int.naturalsGen, Int.naturalsGen).map { (pair: (Int,Int)) in
-      let (r,c) = pair
-      return SparseMatrix(rows: r, columns: c)
-    }
-  }
   
-//  public static var arbitrary: Gen<SparseMatrix> {
-//
-//  }
-
 }
-
