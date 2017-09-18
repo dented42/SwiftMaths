@@ -361,17 +361,68 @@ class MatrixTests: XCTestCase {
   }
   
   func testSubMatrixRowsColumns() {
-    property("empty row sets are rejected") <- false
+    property("empty row sets are rejected") <- forAll {
+      (matrix: SimpleMatrix, columnSet: IndexSet) in
+      
+      return matrix.subMatrix(rows: IndexSet(), columns: columnSet) == nil
+    }
     
-    property("empty column sets are rejected") <- false
+    property("empty column sets are rejected") <- forAll {
+      (matrix: SimpleMatrix, rowSet: IndexSet) in
+      
+      return matrix.subMatrix(rows: rowSet, columns: IndexSet()) == nil
+    }
     
-    property("invalid row indices are rejected") <- false
+    property("invalid row indices are rejected") <- forAll {
+      (matrix: SimpleMatrix, rowSet: IndexSet, columnSet: IndexSet) in
+      return (rowSet.contains { return !matrix.rows.contains($0) }) ==> {
+        return matrix.subMatrix(rows: rowSet, columns: columnSet) == nil
+      }
+    }
     
-    property("invalid column sets are rejected") <- false
+    property("invalid column sets are rejected") <- forAll {
+      (matrix: SimpleMatrix, rowSet: IndexSet, columnSet: IndexSet) in
+      return (columnSet.contains { return !matrix.columns.contains($0) }) ==> {
+        return matrix.subMatrix(rows: rowSet, columns: columnSet) == nil
+      }
+    }
     
-    property("dimensions match") <- false
+    property("dimensions match") <- forAll {
+      (matrix: SimpleMatrix, rowSet: IndexSet, columnSet: IndexSet) in
+      return (rowSet.mapAnd { return matrix.rows.contains($0) }) ==> {
+        return (columnSet.mapAnd { return matrix.columns.contains($0) }) ==> {
+          guard let subMatrix = matrix.subMatrix(rows: rowSet, columns: columnSet) else {
+            return false
+          }
+          
+          let rowsMatch = (subMatrix.rowCount == rowSet.count) <?> "rows"
+          let columnsMatch = (subMatrix.columnCount == columnSet.count) <?> "columns"
+          return rowsMatch ^&&^ columnsMatch
+        }
+      }
+    }
     
-    property("entries match") <- false
+    property("entries match") <- forAll {
+      (matrix: SimpleMatrix, rowSet: IndexSet, columnSet: IndexSet) in
+      return (rowSet.mapAnd { return matrix.rows.contains($0) }) ==> {
+        return (columnSet.mapAnd { return matrix.columns.contains($0) }) ==> {
+          guard let subMatrix = matrix.subMatrix(rows: rowSet, columns: columnSet) else {
+            return false
+          }
+          
+          let rowIdxs = Array(rowSet).sorted()
+          let columnIdxs = Array(columnSet).sorted()
+          
+          return rowIdxs.indices.mapAnd {
+            (row) in
+            return columnIdxs.indices.mapAnd {
+              (column) in
+              return subMatrix[row,column] == matrix[rowIdxs[row],columnIdxs[column]]
+            }
+          }
+        }
+      }
+    }
   }
   
   func testTranspose() {

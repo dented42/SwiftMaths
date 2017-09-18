@@ -184,7 +184,7 @@ public extension Matrix {
   }
   
   public func subMatrix(columns columnSet: IndexSet) -> Self? {
-    // the rows need to be in the right range
+    // the columns need to be in the right range
     guard (columnSet.count > 0) && (columnSet.mapAnd{ return columns.contains($0) }) else {
       return nil
     }
@@ -202,8 +202,29 @@ public extension Matrix {
     return sub
   }
   
-  public func subMatrix(rows: IndexSet, columns: IndexSet) -> Self? {
-    return nil
+  public func subMatrix(rows rowSet: IndexSet, columns columnSet: IndexSet) -> Self? {
+    // the rows need to be in the right range
+    guard (rowSet.count > 0) && (rowSet.mapAnd{ return rows.contains($0) }) else {
+      return nil
+    }
+    
+    // the columns need to be in the right range
+    guard (columnSet.count > 0) && (columnSet.mapAnd{ return columns.contains($0) }) else {
+      return nil
+    }
+    
+    let rowIdxs = Array(rowSet).sorted()
+    let columnIdxs = Array(columnSet).sorted()
+    
+    var sub = Self(rows: rowSet.count, columns: columnSet.count)!
+    
+    for row in rowIdxs.indices {
+      for column in columnIdxs.indices {
+        sub[row,column] = self[rowIdxs[row], columnIdxs[column]]
+      }
+    }
+    
+    return sub
   }
   
   public func transpose() -> Self {
