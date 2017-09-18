@@ -13,6 +13,10 @@ import SwiftMaths
 
 class MatrixTests: XCTestCase {
   
+  func testAbstractTestClass() {
+    AssertAbstractTestClass(name: "SwiftMathsTests.MatrixTests")
+  }
+  
   // Mark: Default methods
   
   func testInit_row() {

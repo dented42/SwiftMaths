@@ -24,6 +24,7 @@
 		1FA098C61F6756100068FD7C /* SwiftCheck.framework.dSYM in Copy Debug Symbols */ = {isa = PBXBuildFile; fileRef = 1FA098C21F6755E80068FD7C /* SwiftCheck.framework.dSYM */; };
 		1FA098CB1F67563E0068FD7C /* SwiftCheck.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA098C71F6756200068FD7C /* SwiftCheck.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1FA098CD1F6756470068FD7C /* SwiftCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA098C71F6756200068FD7C /* SwiftCheck.framework */; };
+		1FB57CE81F70577200999308 /* TestAssertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB57CE71F70577200999308 /* TestAssertions.swift */; };
 		1FBA34BE1F676A2000BD3919 /* InjectiveMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBA34BD1F676A2000BD3919 /* InjectiveMap.swift */; };
 		1FBA34C01F676A3F00BD3919 /* InjectiveMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBA34BF1F676A3F00BD3919 /* InjectiveMapTests.swift */; };
 		1FBA34C21F676A4800BD3919 /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBA34C11F676A4800BD3919 /* Dictionary.swift */; };
@@ -85,6 +86,7 @@
 		1FA098C01F6755AE0068FD7C /* Cartfile.resolved */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.resolved; sourceTree = "<group>"; };
 		1FA098C21F6755E80068FD7C /* SwiftCheck.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = SwiftCheck.framework.dSYM; path = Carthage/Build/Mac/SwiftCheck.framework.dSYM; sourceTree = "<group>"; };
 		1FA098C71F6756200068FD7C /* SwiftCheck.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftCheck.framework; path = Carthage/Build/Mac/SwiftCheck.framework; sourceTree = "<group>"; };
+		1FB57CE71F70577200999308 /* TestAssertions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestAssertions.swift; sourceTree = "<group>"; };
 		1FBA34BD1F676A2000BD3919 /* InjectiveMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InjectiveMap.swift; sourceTree = "<group>"; };
 		1FBA34BF1F676A3F00BD3919 /* InjectiveMapTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InjectiveMapTests.swift; sourceTree = "<group>"; };
 		1FBA34C11F676A4800BD3919 /* Dictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dictionary.swift; sourceTree = "<group>"; };
@@ -117,6 +119,7 @@
 				1FBA34C11F676A4800BD3919 /* Dictionary.swift */,
 				1F2CC7191F6F79B3000D67FF /* IndexSet.swift */,
 				1F77D50F1F6DF262004C3F9B /* Generators.swift */,
+				1FB57CE71F70577200999308 /* TestAssertions.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -369,6 +372,7 @@
 				1F8D953A1F6F1C59007C5C09 /* FunctionalTests.swift in Sources */,
 				1F8D95361F6F1B57007C5C09 /* SequenceTests.swift in Sources */,
 				1F2CC71A1F6F79B3000D67FF /* IndexSet.swift in Sources */,
+				1FB57CE81F70577200999308 /* TestAssertions.swift in Sources */,
 				1F77D5101F6DF262004C3F9B /* Generators.swift in Sources */,
 				1F2C6D801F6DF8FF002A6CC9 /* SimpleMatrixTests.swift in Sources */,
 			);
