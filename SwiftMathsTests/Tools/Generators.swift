@@ -23,6 +23,15 @@ extension Int {
   }
 }
 
+extension Float {
+  static var percentGen: Gen<Float> {
+    return Gen<Float>.chooseAny().suchThat {
+      (f) in
+      return (f >= 0) && (f <= 1)
+    }
+  }
+}
+
 func wrap<E>(_ arrayGen: Gen<[E]>) -> Gen<ArrayOf<E>> {
   return arrayGen.map { return ArrayOf($0) }
 }

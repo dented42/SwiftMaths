@@ -10,10 +10,13 @@ import Foundation
 
 public protocol Matrix {
   
-  var rows: Int { get }
-  var columns: Int { get }
+  var rowCount: Int { get }
+  var columnCount: Int { get }
   
   var count: Int { get }
+  
+  var rows: CountableRange<Int> { get }
+  var columns: CountableRange<Int> { get }
   
   subscript(r: Int, c: Int) -> Float? { get set }
   

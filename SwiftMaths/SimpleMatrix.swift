@@ -10,9 +10,9 @@ import Foundation
 
 public struct SimpleMatrix {
   
-  public var rows: Int
+  public var rowCount: Int
   
-  public var columns: Int
+  public var columnCount: Int
   
   private var entries: [Float]
   
@@ -22,8 +22,8 @@ public struct SimpleMatrix {
       return nil
     }
     
-    self.rows = rows
-    self.columns = columns
+    self.rowCount = rows
+    self.columnCount = columns
     self.entries = Array(repeating: 0, count: rows*columns)
   }
   
@@ -33,8 +33,8 @@ public struct SimpleMatrix {
       return nil
     }
     
-    self.rows = 1
-    self.columns = row.count
+    self.rowCount = 1
+    self.columnCount = row.count
     self.entries = row
   }
   
@@ -44,8 +44,8 @@ public struct SimpleMatrix {
       return nil
     }
     
-    self.rows = column.count
-    self.columns = 1
+    self.rowCount = column.count
+    self.columnCount = 1
     self.entries = column
   }
   
@@ -56,9 +56,17 @@ extension SimpleMatrix: Matrix {
     return entries.count
   }
   
+  public var rows: CountableRange<Int> {
+    return 0..<rowCount
+  }
+  
+  public var columns: CountableRange<Int> {
+    return 0..<columnCount
+  }
+  
   public subscript(r: Int, c: Int) -> Float? {
     get {
-      let idx = (columns * r) + c
+      let idx = (columnCount * r) + c
       
       if entries.indices.contains(idx) {
         return entries[idx]
@@ -72,15 +80,43 @@ extension SimpleMatrix: Matrix {
   }
   
   public func transpose() -> SimpleMatrix {
-    return self
+    var trans = SimpleMatrix(rows: columnCount, columns: rowCount)!
+    
+    for row in rows {
+      for column in columns {
+        trans[row, column] = self[column, row]
+      }
+    }
+    
+    return trans
   }
   
-  public func row(_: Int) -> SimpleMatrix? {
-    return nil
+  public func row(_ row: Int) -> SimpleMatrix? {
+    guard rows.contains(row) else {
+      return nil
+    }
+    
+    var mat = SimpleMatrix(rows: 1, columns: columnCount)!
+    
+    for column in columns {
+      mat[0, column] = self[row, column]!
+    }
+    
+    return mat
   }
   
-  public func column(_: Int) -> SimpleMatrix? {
-    return nil
+  public func column(_ column: Int) -> SimpleMatrix? {
+    guard columns.contains(column) else {
+      return nil
+    }
+    
+    var mat = SimpleMatrix(rows: rowCount, columns: 1)!
+    
+    for row in rows {
+      mat[row,0] = self[row, column]!
+    }
+    
+    return mat
   }
   
   public func array(fromRow: Int) -> [Float]? {
