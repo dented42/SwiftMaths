@@ -15,7 +15,7 @@ class MatrixTests: XCTestCase {
   
   // Mark: Default methods
   
-  func testInit_rowVector() {
+  func testInit_row() {
     property("empty vector is rejected") <- {
       return SimpleMatrix(row: []) == nil
     }
@@ -50,7 +50,7 @@ class MatrixTests: XCTestCase {
     }
   }
   
-  func testInit_columnVector() {
+  func testInit_column() {
     property("empty vector is rejected") <- {
       return SimpleMatrix(column: []) == nil
     }
@@ -305,18 +305,61 @@ class MatrixTests: XCTestCase {
         }
       }
     }
+    
+    property("transpose^2 = id") <- forAll {
+      (matrix: SimpleMatrix) in
+      return matrix.transpose().transpose() == matrix
+    }
   }
   
   func testScalarMultiply() {
-    property("dimensions") <- false
+    property("dimensions") <- forAll {
+      (matrix: SimpleMatrix, scalar: Float) in
+      let scaled = scalar * matrix
+      
+      let rowsMatch = (scaled.rowCount == matrix.rowCount) <?> "rows"
+      let columnsMatch = (scaled.columnCount == matrix.columnCount) <?> "columns"
+      
+      return rowsMatch ^&&^ columnsMatch
+    }
     
-    property("entries") <- false
+    property("entries") <- forAll {
+      (matrix: SimpleMatrix, scalar: Float) in
+      let scaled = scalar * matrix
+      
+      return scaled.rows.mapAnd {
+        (row) in
+        return scaled.columns.mapAnd {
+          (column) in
+          return scaled[row,column] == (matrix[row,column]! * scalar)
+        }
+      }
+    }
   }
   
   func testMultiplyScalar() {
-    property("dimensions") <- false
+    property("dimensions") <- forAll {
+      (matrix: SimpleMatrix, scalar: Float) in
+      let scaled =  matrix * scalar
+      
+      let rowsMatch = (scaled.rowCount == matrix.rowCount) <?> "rows"
+      let columnsMatch = (scaled.columnCount == matrix.columnCount) <?> "columns"
+      
+      return rowsMatch ^&&^ columnsMatch
+    }
     
-    property("entries") <- false
+    property("entries") <- forAll {
+      (matrix: SimpleMatrix, scalar: Float) in
+      let scaled =  matrix * scalar
+      
+      return scaled.rows.mapAnd {
+        (row) in
+        return scaled.columns.mapAnd {
+          (column) in
+          return scaled[row,column] == (matrix[row,column]! * scalar)
+        }
+      }
+    }
   }
   
   func testAdd() {
@@ -330,7 +373,7 @@ class MatrixTests: XCTestCase {
     property("dimensions") <- forAll {
       (mat1: SimpleMatrix, mat2: SimpleMatrix) in
       return ((mat1.rowCount == mat2.rowCount) && (mat1.columnCount == mat2.columnCount)) ==> {
-        guard let mat3 = (mat1 + mat2) else {
+        guard let mat3 = mat1 + mat2 else {
           return false
         }
         
@@ -344,7 +387,7 @@ class MatrixTests: XCTestCase {
     property("entries") <- forAll {
       (mat1: SimpleMatrix, mat2: SimpleMatrix) in
       return ((mat1.rowCount == mat2.rowCount) && (mat1.columnCount == mat2.columnCount)) ==> {
-        guard let mat3 = (mat1 + mat2) else {
+        guard let mat3 = mat1 + mat2 else {
           return false
         }
         
@@ -360,19 +403,86 @@ class MatrixTests: XCTestCase {
   }
   
   func testSubtract() {
-    property("invalid dimensions fail") <- false
+    property("invalid dimensions fail") <- forAll {
+      (mat1: SimpleMatrix, mat2: SimpleMatrix) in
+      return ((mat1.rowCount != mat2.rowCount) && (mat1.columnCount != mat2.columnCount)) ==> {
+        return (mat1 - mat2) == nil
+      }
+    }
     
-    property("dimensions") <- false
+    property("dimensions") <- forAll {
+      (mat1: SimpleMatrix, mat2: SimpleMatrix) in
+      return ((mat1.rowCount == mat2.rowCount) && (mat1.columnCount == mat2.columnCount)) ==> {
+        guard let mat3 = mat1 - mat2 else {
+          return false
+        }
+        
+        let rowsMatch = (mat3.rowCount == mat1.rowCount) <?> "rows"
+        let columnsMatch = (mat3.columnCount == mat1.columnCount) <?> "columns"
+        
+        return rowsMatch ^&&^ columnsMatch
+      }
+    }
     
-    property("entries") <- false
+    property("entries") <- forAll {
+      (mat1: SimpleMatrix, mat2: SimpleMatrix) in
+      return ((mat1.rowCount == mat2.rowCount) && (mat1.columnCount == mat2.columnCount)) ==> {
+        guard let mat3 = mat1 - mat2 else {
+          return false
+        }
+        
+        return mat3.rows.mapAnd {
+          (row) in
+          return mat3.columns.mapAnd {
+            (column) in
+            return mat3[row,column] == (mat1[row,column]! - mat2[row,column]!)
+          }
+        }
+      }
+    }
   }
   
   func testMultiply() {
-    property("invalid dimensions fail") <- false
+    property("invalid dimensions fail") <- forAll {
+      (matrix1: SimpleMatrix, matrix2: SimpleMatrix) in
+      return (matrix1.columnCount != matrix2.rowCount) ==> {
+        return (matrix1 * matrix2) == nil
+      }
+    }
     
-    property("dimensions") <- false
+    property("dimensions") <- forAll {
+      (matrix1: SimpleMatrix, matrix2: SimpleMatrix) in
+      return (matrix1.columnCount == matrix2.rowCount) ==> {
+        guard let product = matrix1 * matrix2 else {
+          return false
+        }
+        
+        let rowsMatch = (product.rowCount == matrix1.rowCount) <?> "rows"
+        let columnsMatch = (product.columnCount == matrix2.columnCount) <?> "columns"
+        
+        return rowsMatch ^&&^ columnsMatch
+      }
+    }
     
-    property("entries") <- false
+    property("entries") <- forAll {
+      (matrix1: SimpleMatrix, matrix2: SimpleMatrix) in
+      return (matrix1.columnCount == matrix2.rowCount) ==> {
+        guard let product = matrix1 * matrix2 else {
+          return false
+        }
+        
+        return product.rows.mapAnd {
+          (row) in
+          return product.columns.mapAnd {
+            (column) in
+            return product[row,column] == matrix1.columns.reduce(0) {
+              (acc: Float, idx: Int) in
+              return acc + (matrix1[row, idx]! * matrix2[idx, column]!)
+            }
+          }
+        }
+      }
+    }
   }
   
   // Mark: Additional methods

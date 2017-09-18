@@ -27,6 +27,12 @@ public struct SimpleMatrix: Matrix {
     self.entries = Array(repeating: 0, count: rows*columns)
   }
   
+  public static func ==(lhs: SimpleMatrix, rhs: SimpleMatrix) -> Bool {
+    return (lhs.rowCount == rhs.rowCount) &&
+      (lhs.columnCount == rhs.columnCount) &&
+      (lhs.entries == rhs.entries)
+  }
+  
   public subscript(r: Int, c: Int) -> Float? {
     get {
       let idx = (columnCount * r) + c
@@ -37,9 +43,12 @@ public struct SimpleMatrix: Matrix {
         return nil
       }
     }
-    set {
-      
+    set(v) {
+      let value: Float = (v == nil) ? 0 : v!
+      let idx = (columnCount * r) + c
+      if entries.indices.contains(idx) {
+        entries[idx] = value
+      }
     }
   }
- 
 }

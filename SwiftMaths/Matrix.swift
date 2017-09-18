@@ -8,9 +8,11 @@
 
 import Foundation
 
-public protocol Matrix {
+public protocol Matrix: Equatable {
   
   init?(rows: Int, columns: Int)
+  init?(row: [Float])
+  init?(column: [Float])
   
   var rowCount: Int { get }
   var columnCount: Int { get }
@@ -168,7 +170,7 @@ public extension Matrix {
     
     for row in rows {
       for column in columns {
-        trans[row, column] = self[column, row]
+        trans[column, row] = self[row, column]
       }
     }
     
@@ -176,11 +178,27 @@ public extension Matrix {
   }
   
   public static func *(lhs: Float, rhs: Self) -> Self {
-    return rhs
+    var scaled = Self(rows: rhs.rowCount, columns: rhs.columnCount)!
+    
+    for row in scaled.rows {
+      for column in scaled.columns {
+        scaled[row,column] = lhs * rhs[row,column]!
+      }
+    }
+    
+    return scaled
   }
   
   public static func *(lhs: Self, rhs: Float) -> Self {
-    return lhs
+    var scaled = Self(rows: lhs.rowCount, columns: lhs.columnCount)!
+    
+    for row in scaled.rows {
+      for column in scaled.columns {
+        scaled[row,column] = rhs * lhs[row,column]!
+      }
+    }
+    
+    return scaled
   }
   
   public static func +(lhs: Self, rhs: Self) -> Self? {
@@ -188,16 +206,50 @@ public extension Matrix {
       return nil
     }
     
-    return nil
+    var sum = Self(rows: lhs.rowCount, columns: lhs.columnCount)!
     
+    for row in lhs.rows {
+      for column in lhs.columns {
+        sum[row, column] = lhs[row, column]! + rhs[row, column]!
+      }
+    }
+    
+    return sum
   }
   
   public static func -(lhs: Self, rhs: Self) -> Self? {
-    return nil
+    guard (lhs.rowCount == rhs.rowCount) && (lhs.columnCount == rhs.columnCount) else {
+      return nil
+    }
+    
+    var difference = Self(rows: lhs.rowCount, columns: lhs.columnCount)!
+    
+    for row in lhs.rows {
+      for column in lhs.columns {
+        difference[row, column] = lhs[row, column]! - rhs[row, column]!
+      }
+    }
+    
+    return difference
   }
   
   public static func *(lhs: Self, rhs: Self) -> Self? {
-    return nil
+    guard lhs.columnCount == rhs.rowCount else {
+      return nil
+    }
+    
+    var product = Self(rows: lhs.rowCount, columns: rhs.columnCount)!
+    
+    for row in product.rows {
+      for column in product.columns {
+        product[row, column] = lhs.columns.reduce(0) {
+          (acc: Float, idx: Int) in
+          return acc + (lhs[row,idx]! * rhs[idx,column]!)
+        }
+      }
+    }
+    
+    return product
   }
   
 }
