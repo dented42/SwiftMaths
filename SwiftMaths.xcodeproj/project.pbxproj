@@ -10,6 +10,7 @@
 		1F1B2D611F6F55B00025DFB7 /* MatrixTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1B2D601F6F55B00025DFB7 /* MatrixTests.swift */; };
 		1F2C6D801F6DF8FF002A6CC9 /* SimpleMatrixTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2C6D7F1F6DF8FF002A6CC9 /* SimpleMatrixTests.swift */; };
 		1F2C6D821F6DF92C002A6CC9 /* SimpleMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2C6D811F6DF92C002A6CC9 /* SimpleMatrix.swift */; };
+		1F2CC71A1F6F79B3000D67FF /* IndexSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2CC7191F6F79B3000D67FF /* IndexSet.swift */; };
 		1F5135991F68C5430055FAB1 /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5135981F68C5430055FAB1 /* Matrix.swift */; };
 		1F77D5101F6DF262004C3F9B /* Generators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F77D50F1F6DF262004C3F9B /* Generators.swift */; };
 		1F8D95341F6F1B4B007C5C09 /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8D95331F6F1B4B007C5C09 /* Sequence.swift */; };
@@ -67,6 +68,7 @@
 		1F1B2D601F6F55B00025DFB7 /* MatrixTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatrixTests.swift; sourceTree = "<group>"; };
 		1F2C6D7F1F6DF8FF002A6CC9 /* SimpleMatrixTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleMatrixTests.swift; sourceTree = "<group>"; };
 		1F2C6D811F6DF92C002A6CC9 /* SimpleMatrix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleMatrix.swift; sourceTree = "<group>"; };
+		1F2CC7191F6F79B3000D67FF /* IndexSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexSet.swift; sourceTree = "<group>"; };
 		1F5135981F68C5430055FAB1 /* Matrix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matrix.swift; sourceTree = "<group>"; };
 		1F77D50F1F6DF262004C3F9B /* Generators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Generators.swift; sourceTree = "<group>"; };
 		1F8D95331F6F1B4B007C5C09 /* Sequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				1FBA34C11F676A4800BD3919 /* Dictionary.swift */,
+				1F2CC7191F6F79B3000D67FF /* IndexSet.swift */,
 				1F77D50F1F6DF262004C3F9B /* Generators.swift */,
 			);
 			path = Tools;
@@ -365,6 +368,7 @@
 				1FBA34C01F676A3F00BD3919 /* InjectiveMapTests.swift in Sources */,
 				1F8D953A1F6F1C59007C5C09 /* FunctionalTests.swift in Sources */,
 				1F8D95361F6F1B57007C5C09 /* SequenceTests.swift in Sources */,
+				1F2CC71A1F6F79B3000D67FF /* IndexSet.swift in Sources */,
 				1F77D5101F6DF262004C3F9B /* Generators.swift in Sources */,
 				1F2C6D801F6DF8FF002A6CC9 /* SimpleMatrixTests.swift in Sources */,
 			);

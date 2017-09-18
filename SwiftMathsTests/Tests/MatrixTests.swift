@@ -269,15 +269,109 @@ class MatrixTests: XCTestCase {
   }
   
   func testSubMatrixRows() {
-    property("write tests") <- false
+    property("empty row sets are rejected") <- forAll {
+      (matrix: SimpleMatrix) in
+      return matrix.subMatrix(rows: IndexSet()) == nil
+    }
+    
+    property("invalid indices are rejected") <- forAll {
+      (matrix: SimpleMatrix, rowSet: IndexSet) in
+      return (rowSet.contains { return !matrix.rows.contains($0) }) ==> {
+        return matrix.subMatrix(rows: rowSet) == nil
+      }
+    }
+    
+    property("dimensions match") <- forAll {
+      (matrix: SimpleMatrix, rowSet: IndexSet) in
+      return (rowSet.mapAnd { return matrix.rows.contains($0) }) ==> {
+        guard let subMatrix = matrix.subMatrix(rows: rowSet) else {
+          return false
+        }
+        
+        let rowsMatch = (subMatrix.rowCount == rowSet.count) <?> "rows"
+        let columnsMatch = (subMatrix.columnCount == matrix.columnCount) <?> "columns"
+        return rowsMatch ^&&^ columnsMatch
+      }
+    }
+    
+    property("entries match") <- forAll {
+      (matrix: SimpleMatrix, rowSet: IndexSet) in
+      return (rowSet.mapAnd { return matrix.rows.contains($0) }) ==> {
+        guard let subMatrix = matrix.subMatrix(rows: rowSet) else {
+          return false
+        }
+        
+        let rowIdxs = Array(rowSet).sorted()
+        
+        return rowIdxs.indices.mapAnd {
+          (row) in
+          return subMatrix.columns.mapAnd {
+            (column) in
+            return subMatrix[row,column] == matrix[rowIdxs[row],column]
+          }
+        }
+      }
+    }
   }
   
   func testSubMatrixColumns() {
-    property("write tests") <- false
+    property("empty column sets are rejected") <- forAll {
+      (matrix: SimpleMatrix) in
+      return matrix.subMatrix(columns: IndexSet()) == nil
+    }
+    
+    property("invalid indices are rejected") <- forAll {
+      (matrix: SimpleMatrix, columnSet: IndexSet) in
+      return (columnSet.contains { return !matrix.columns.contains($0) }) ==> {
+        return matrix.subMatrix(columns: columnSet) == nil
+      }
+    }
+    
+    property("dimensions match") <- forAll {
+      (matrix: SimpleMatrix, columnSet: IndexSet) in
+      return (columnSet.mapAnd { return matrix.columns.contains($0) }) ==> {
+        guard let subMatrix = matrix.subMatrix(columns: columnSet) else {
+          return false
+        }
+        
+        let rowsMatch = (subMatrix.rowCount == matrix.rowCount) <?> "rows"
+        let columnsMatch = (subMatrix.columnCount == columnSet.count) <?> "columns"
+        return rowsMatch ^&&^ columnsMatch
+      }
+    }
+    
+    property("entries match") <- forAll {
+      (matrix: SimpleMatrix, columnSet: IndexSet) in
+      return (columnSet.mapAnd { return matrix.columns.contains($0) }) ==> {
+        guard let subMatrix = matrix.subMatrix(columns: columnSet) else {
+          return false
+        }
+        
+        let columnIdxs = Array(columnSet).sorted()
+        
+        return subMatrix.rows.mapAnd {
+          (row) in
+          return columnIdxs.indices.mapAnd {
+            (column) in
+            return subMatrix[row,column] == matrix[row,columnIdxs[column]]
+          }
+        }
+      }
+    }
   }
   
   func testSubMatrixRowsColumns() {
-    property("write tests") <- false
+    property("empty row sets are rejected") <- false
+    
+    property("empty column sets are rejected") <- false
+    
+    property("invalid row indices are rejected") <- false
+    
+    property("invalid column sets are rejected") <- false
+    
+    property("dimensions match") <- false
+    
+    property("entries match") <- false
   }
   
   func testTranspose() {
@@ -488,19 +582,89 @@ class MatrixTests: XCTestCase {
   // Mark: Additional methods
   
   func testInit_trace() {
-    property("invalid dimensions fail") <- false
+    property("invalid dimensions fail") <- {
+      return SimpleMatrix(trace: []) == nil
+    }
     
-    property("dimensions") <- false
+    property("dimensions") <- forAll {
+      (t: ArrayOf<Float>) in
+      let trace = t.getArray
+      return (trace.count > 0) ==> {
+        guard let matrix = SimpleMatrix(trace: trace) else {
+          return false
+        }
+        
+        let rowsMatch = (matrix.rowCount == trace.count) <?> "rows"
+        let columnsMatch = (matrix.columnCount == trace.count) <?> "columns"
+        
+        return rowsMatch ^&&^ columnsMatch
+      }
+    }
     
-    property("entries") <- false
+    property("entries") <- forAll {
+      (t: ArrayOf<Float>) in
+      let trace = t.getArray
+      return (trace.count > 0) ==> {
+        guard let matrix = SimpleMatrix(trace: trace) else {
+          return false
+        }
+        
+        return matrix.rows.mapAnd {
+          (row) in
+          return matrix.columns.mapAnd {
+            (column) in
+            if row == column {
+              return matrix[row,column] == trace[row]
+            } else {
+              return matrix[row,column] == 0
+            }
+          }
+        }
+      }
+    }
   }
   
   func testIdentity() {
-    property("invalid dimensions fail") <- false
+    property("invalid dimensions fail") <- forAll {
+      (size: Int) in
+      return (size <= 0) ==> {
+        return SimpleMatrix.identity(size: size) == nil
+      }
+    }
     
-    property("dimensions") <- false
+    property("dimensions") <- forAll {
+      (size: Int) in
+      return (size > 0) ==> {
+        guard let matrix = SimpleMatrix.identity(size: size) else {
+          return false
+        }
+        
+        let rowsMatch = (matrix.rowCount == size) <?> "rows"
+        let columnsMatch = (matrix.columnCount == size) <?> "columns"
+        
+        return rowsMatch ^&&^ columnsMatch
+      }
+    }
     
-    property("entries") <- false
+    property("entries") <- forAll {
+      (size: Int) in
+      return (size > 0) ==> {
+        guard let matrix = SimpleMatrix.identity(size: size) else {
+          return false
+        }
+        
+        return matrix.rows.mapAnd {
+          (row) in
+          return matrix.columns.mapAnd {
+            (column) in
+            if row == column {
+              return matrix[row,column] == 1
+            } else {
+              return matrix[row,column] == 0
+            }
+          }
+        }
+      }
+    }
   }
-
 }

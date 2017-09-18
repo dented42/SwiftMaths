@@ -35,15 +35,21 @@ public struct SimpleMatrix: Matrix {
   
   public subscript(r: Int, c: Int) -> Float? {
     get {
-      let idx = (columnCount * r) + c
-      
-      if entries.indices.contains(idx) {
-        return entries[idx]
-      } else {
+      // negative indices make no sense
+      guard rows.contains(r) && columns.contains(c) else {
         return nil
       }
+      
+      let idx = (columnCount * r) + c
+      
+      return entries[idx]
     }
     set(v) {
+      // negative indices make no sense
+      guard rows.contains(r) && columns.contains(c) else {
+        return
+      }
+      
       let value: Float = (v == nil) ? 0 : v!
       let idx = (columnCount * r) + c
       if entries.indices.contains(idx) {

@@ -50,11 +50,22 @@ public protocol Matrix: Equatable {
 public extension Matrix {
   
   public init?(trace: [Float]) {
-    return nil
+    guard trace.count > 0 else {
+      return nil
+    }
+    
+    self.init(rows: trace.count, columns: trace.count)!
+    
+    for idx in trace.indices {
+      self[idx,idx] = trace[idx]
+    }
   }
   
   public static func identity(size: Int) -> Self? {
-    return nil
+    guard size > 0 else {
+      return nil
+    }
+    return Self(trace: Array(repeating: 1, count: size))
   }
   
 }
@@ -153,15 +164,45 @@ public extension Matrix {
     }
   }
   
-  public func subMatrix(rows: IndexSet) -> SimpleMatrix? {
-    return nil
+  public func subMatrix(rows rowSet: IndexSet) -> Self? {
+    // the rows need to be in the right range
+    guard (rowSet.count > 0) && (rowSet.mapAnd{ return rows.contains($0) }) else {
+      return nil
+    }
+    
+    let rowIdxs = Array(rowSet).sorted()
+    
+    var sub = Self(rows: rowIdxs.count, columns: columnCount)!
+    
+    for row in sub.rows {
+      for column in sub.columns {
+        sub[row,column] = self[rowIdxs[row], column]
+      }
+    }
+    
+    return sub
   }
   
-  public func subMatrix(columns: IndexSet) -> SimpleMatrix? {
-    return nil
+  public func subMatrix(columns columnSet: IndexSet) -> Self? {
+    // the rows need to be in the right range
+    guard (columnSet.count > 0) && (columnSet.mapAnd{ return columns.contains($0) }) else {
+      return nil
+    }
+    
+    let columnIdxs = Array(columnSet).sorted()
+    
+    var sub = Self(rows: rowCount, columns: columnIdxs.count)!
+    
+    for row in sub.rows {
+      for column in sub.columns {
+        sub[row,column] = self[row, columnIdxs[column]]
+      }
+    }
+    
+    return sub
   }
   
-  public func subMatrix(rows: IndexSet, columns: IndexSet) -> SimpleMatrix? {
+  public func subMatrix(rows: IndexSet, columns: IndexSet) -> Self? {
     return nil
   }
   

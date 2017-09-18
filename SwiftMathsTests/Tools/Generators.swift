@@ -24,10 +24,10 @@ extension Int {
 }
 
 extension Float {
-  static var percentGen: Gen<Float> {
+  static var unitGen: Gen<Float> {
     return Gen<Float>.chooseAny().suchThat {
       (f) in
-      return (f >= 0) && (f <= 1)
+      return (f > 0) && (f < 1)
     }
   }
 }

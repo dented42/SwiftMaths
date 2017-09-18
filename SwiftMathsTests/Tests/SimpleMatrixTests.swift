@@ -50,11 +50,63 @@ class SimpleMatrixTests: XCTestCase {
   }
   
   func testSubscript_get() {
-    property("write tests") <- false
+    property("invalid indices are rejected") <- forAll {
+      (matrix: SimpleMatrix, row: Int, column: Int) in
+      return !(matrix.rows.contains(row) && matrix.columns.contains(column)) ==> {
+        return matrix[row,column] == nil
+      }
+    }
+    
+    property("entries map correctly") <- forAll {
+      (holder: SimpleMatrix.Metadata) in
+      let matrix = holder.matrix
+      return matrix.rows.mapAnd {
+        (row) in
+        return matrix.columns.mapAnd {
+          (column) in
+          return matrix[row,column] == holder.reference[row][column]
+        }
+      }
+    }
   }
 
   func testSubscript_set() {
-    property("write tests") <- false
+    property("invalid indices have no effect") <- forAll {
+      (matrix: SimpleMatrix, row: Int, column: Int, value: Float) in
+      return !(matrix.rows.contains(row) && matrix.columns.contains(column)) ==> {
+        var mutableMatrix = matrix
+        mutableMatrix[row,column] = value
+        return mutableMatrix == matrix
+      }
+    }
+    
+    property("setting an entry changes that entry") <- forAll {
+      (matrix: SimpleMatrix, row: Int, column: Int, value: Float) in
+      return (matrix.rows.contains(row) && matrix.columns.contains(column)) ==> {
+        var mutableMatrix = matrix
+        mutableMatrix[row,column] = value
+        return mutableMatrix[row,column] == value
+      }
+    }
+    
+    property("setting an entry doesn't change other entries") <- forAll {
+      (matrix: SimpleMatrix, row: Int, column: Int, value: Float) in
+      return (matrix.rows.contains(row) && matrix.columns.contains(column)) ==> {
+        var mutableMatrix = matrix
+        mutableMatrix[row,column] = value
+        return mutableMatrix.rows.mapAnd {
+          (r) in
+          return mutableMatrix.columns.mapAnd {
+            (c) in
+            if (r != row) && (c != column) {
+              return mutableMatrix[r,c] == matrix[r,c]
+            } else {
+              return true
+            }
+          }
+        }
+      }
+    }
   }
 }
 
@@ -71,7 +123,7 @@ extension SimpleMatrix: Arbitrary {
         case 1:
           return .Empty
         case 2:
-          return .Sparse(c.generate(using: Float.percentGen))
+          return .Sparse(c.generate(using: Float.unitGen))
         case 3:
           return .Full
         default:
@@ -81,18 +133,20 @@ extension SimpleMatrix: Arbitrary {
     }
   }
   
-  struct KindPair: Arbitrary {
+  struct Metadata: Arbitrary {
     let matrix: SimpleMatrix
     let kind: MatrixKind
+    let reference: [[Float]]
     
-    static var arbitrary: Gen<SimpleMatrix.KindPair> {
-      return Gen<SimpleMatrix.KindPair>.compose { (c) in
+    static var arbitrary: Gen<SimpleMatrix.Metadata> {
+      return Gen<SimpleMatrix.Metadata>.compose { (c) in
         let kind: MatrixKind = c.generate()
         
         let rows: Int = abs(c.generate()) + 1
         let columns: Int = abs(c.generate()) + 1
         
         var mat = SimpleMatrix(rows: rows, columns: columns)!
+        var ref = [[Float]](repeating: [Float](repeating: 0, count: columns), count: rows)
         
         let fillRate: Float
 
@@ -104,14 +158,16 @@ extension SimpleMatrix: Arbitrary {
         
         for row in 0..<rows {
           for col in 0..<columns {
-            let dice = c.generate(using: Float.percentGen)
+            let dice = c.generate(using: Float.unitGen)
             if dice < fillRate {
-              mat[row, col] = c.generate()
+              let value: Float = c.generate()
+              mat[row, col] = value
+              ref[row][col] = value
             }
           }
         }
         
-        return KindPair(matrix: mat, kind: kind)
+        return Metadata(matrix: mat, kind: kind, reference: ref)
       }
     }
   }
@@ -126,7 +182,7 @@ extension SimpleMatrix: Arbitrary {
   
   public static var arbitrary: Gen<SimpleMatrix> {
     return Gen<SimpleMatrix>.compose { (c) in
-      let p: KindPair = c.generate()
+      let p: Metadata = c.generate()
       return p.matrix
     }
   }
