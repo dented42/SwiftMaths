@@ -1,5 +1,5 @@
 //
-//  MatrixTests.swift
+//  AbstractMatrixTests.swift
 //  SwiftMathsTests
 //
 //  Created by Matias Eyzaguirre on 9/17/17.
@@ -11,10 +11,10 @@ import XCTest
 
 import SwiftMaths
 
-class MatrixTests: XCTestCase {
+class AbstractMatrixTests: XCTestCase {
   
   func testAbstractTestClass() {
-    AssertAbstractTestClass(name: "SwiftMathsTests.MatrixTests")
+    AssertAbstractTestClass(name: "SwiftMathsTests.AbstractMatrixTests")
   }
   
   // Mark: Default methods

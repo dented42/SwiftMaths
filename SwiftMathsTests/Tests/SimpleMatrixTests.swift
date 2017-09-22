@@ -11,7 +11,7 @@ import XCTest
 
 import SwiftMaths
 
-class SimpleMatrixTests: MatrixTests {
+class SimpleMatrixTests: AbstractMatrixTests {
   
   func testInit_RowsColumns() {
     property("invalid dimensions are rejected") <- forAll {
