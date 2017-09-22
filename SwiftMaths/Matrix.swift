@@ -107,11 +107,12 @@ final public class AnyMatrix: Matrix {
   private let _transpose: () -> AnyMatrix
   private let _multiply_scalar_left: (Float) -> AnyMatrix
   private let _multiply_scalar_right: (Float) -> AnyMatrix
+  private let _equals: (AnyMatrix) -> Bool
   private let _plus: (AnyMatrix) -> AnyMatrix?
   private let _minus: (AnyMatrix) -> AnyMatrix?
   private let _multiply: (AnyMatrix) -> AnyMatrix?
   
-  init<M: Matrix>(_ m: M) {
+  public init<M: Matrix>(_ m: M) {
     var matrix = m
     _matrix = matrix
     _rowCount = { return matrix.rowCount }
@@ -131,6 +132,13 @@ final public class AnyMatrix: Matrix {
     _transpose = { return AnyMatrix(matrix.transpose()) }
     _multiply_scalar_left = { (scalar) in return AnyMatrix(scalar * matrix) }
     _multiply_scalar_right = { (scalar) in return AnyMatrix(matrix * scalar) }
+    _equals = { (other) in
+      if let otherMatrix = other._matrix as? M {
+        return matrix == otherMatrix
+      } else {
+        return false
+      }
+    }
     _plus = { (other) in
       if let otherMatrix = other._matrix as? M {
         return AnyMatrix(maybe: matrix.plus(otherMatrix))
@@ -154,7 +162,7 @@ final public class AnyMatrix: Matrix {
     }
   }
   
-  convenience init?<M: Matrix>(maybe m: M?) {
+  public convenience init?<M: Matrix>(maybe m: M?) {
     if let matrix = m {
       self.init(matrix)
     } else {
@@ -189,7 +197,7 @@ final public class AnyMatrix: Matrix {
   public static func *(lhs: Float, rhs: AnyMatrix) -> AnyMatrix { return rhs._multiply_scalar_left(lhs) }
   public static func *(lhs: AnyMatrix, rhs: Float) -> AnyMatrix { return lhs._multiply_scalar_right(rhs) }
   
-  public static func ==(lhs: AnyMatrix, rhs: AnyMatrix) -> Bool { return ObjectIdentifier(lhs) == ObjectIdentifier(rhs) }
+  public static func ==(lhs: AnyMatrix, rhs: AnyMatrix) -> Bool { return lhs._equals(rhs) }
   
   public static func +(lhs: AnyMatrix, rhs: AnyMatrix) -> AnyMatrix? { return lhs._plus(rhs) }
   public static func -(lhs: AnyMatrix, rhs: AnyMatrix) -> AnyMatrix? { return lhs._minus(rhs) }
