@@ -68,6 +68,132 @@ public extension Matrix {
     return Self(trace: Array(repeating: 1, count: size))
   }
   
+  public func plus(_ other: Self) -> Self? {
+    return self + other
+  }
+  
+  public func minus(_ other: Self) -> Self? {
+    return self - other
+  }
+  
+  public func multiply(_ other: Self) -> Self? {
+    return self * other
+  }
+  
+}
+
+// MARK: AnyMatrix
+
+final public class AnyMatrix: Matrix {
+  required init?(rows: Int, columns: Int) { return nil }
+  required init?(row: [Float]) { return nil }
+  required init?(column: [Float]) { return nil }
+  
+  private let _matrix: Any
+  private let _rowCount: () -> Int
+  private let _columnCount: () -> Int
+  private let _count: () -> Int
+  private let _rows: () -> CountableRange<Int>
+  private let _columns: () -> CountableRange<Int>
+  private let _subscript_get: (Int,Int) -> Float?
+  private let _subscript_set: (Int,Int,Float?) -> ()
+  private let _row_idx: (Int) -> AnyMatrix?
+  private let _column_idx: (Int) -> AnyMatrix?
+  private let _array_fromRow: (Int) -> [Float]?
+  private let _array_fromColumn: (Int) -> [Float]?
+  private let _submatrix_rows: (IndexSet) -> AnyMatrix?
+  private let _submatrix_columns: (IndexSet) -> AnyMatrix?
+  private let _submatrix_rows_columns: (IndexSet,IndexSet) -> AnyMatrix?
+  private let _transpose: () -> AnyMatrix
+  private let _multiply_scalar_left: (Float) -> AnyMatrix
+  private let _multiply_scalar_right: (Float) -> AnyMatrix
+  private let _plus: (AnyMatrix) -> AnyMatrix?
+  private let _minus: (AnyMatrix) -> AnyMatrix?
+  private let _multiply: (AnyMatrix) -> AnyMatrix?
+  
+  init<M: Matrix>(_ m: M) {
+    var matrix = m
+    _matrix = matrix
+    _rowCount = { return matrix.rowCount }
+    _columnCount = { return matrix.columnCount }
+    _count = { return matrix.count }
+    _rows = { return matrix.rows }
+    _columns = { return matrix.columns }
+    _subscript_get = { (r,c) in return matrix[r,c] }
+    _subscript_set = { (r,c,v) in matrix[r,c] = v }
+    _row_idx = { (idx) in return AnyMatrix(maybe: matrix.row(idx)) }
+    _column_idx = { (idx) in return AnyMatrix(maybe: matrix.column(idx)) }
+    _array_fromRow = { (idx) in return matrix.array(fromRow: idx) }
+    _array_fromColumn = { (idx) in return matrix.array(fromColumn: idx) }
+    _submatrix_rows = { (rows) in return AnyMatrix(maybe: matrix.subMatrix(rows: rows)) }
+    _submatrix_columns = { (cols) in return AnyMatrix(maybe: matrix.subMatrix(columns: cols)) }
+    _submatrix_rows_columns = { return AnyMatrix(maybe: matrix.subMatrix(rows: $0, columns: $1)) }
+    _transpose = { return AnyMatrix(matrix.transpose()) }
+    _multiply_scalar_left = { (scalar) in return AnyMatrix(scalar * matrix) }
+    _multiply_scalar_right = { (scalar) in return AnyMatrix(matrix * scalar) }
+    _plus = { (other) in
+      if let otherMatrix = other._matrix as? M {
+        return AnyMatrix(maybe: matrix.plus(otherMatrix))
+      } else {
+        return nil
+      }
+    }
+    _minus = { (other) in
+      if let otherMatrix = other._matrix as? M {
+        return AnyMatrix(maybe: matrix.minus(otherMatrix))
+      } else {
+        return nil
+      }
+    }
+    _multiply = { (other) in
+      if let otherMatrix = other._matrix as? M {
+        return AnyMatrix(maybe: matrix.multiply(otherMatrix))
+      } else {
+        return nil
+      }
+    }
+  }
+  
+  convenience init?<M: Matrix>(maybe m: M?) {
+    if let matrix = m {
+      self.init(matrix)
+    } else {
+      return nil
+    }
+  }
+  
+  var rowCount: Int { return _rowCount() }
+  var columnCount: Int { return _columnCount() }
+  
+  var count: Int { return _count() }
+  
+  var rows: CountableRange<Int> { return _rows() }
+  var columns: CountableRange<Int> { return _columns() }
+  
+  subscript(r: Int, c: Int) -> Float? {
+    get { return _subscript_get(r,c) }
+    set(v) { return _subscript_set(r,c,v) } }
+  
+  func row(_ idx: Int) -> AnyMatrix? { return _row_idx(idx) }
+  func column(_ idx: Int) -> AnyMatrix? { return _column_idx(idx) }
+  
+  func array(fromRow idx : Int) -> [Float]? { return _array_fromRow(idx) }
+  func array(fromColumn idx: Int) -> [Float]? { return _array_fromColumn(idx) }
+  
+  func subMatrix(rows: IndexSet) -> AnyMatrix? { return _submatrix_rows(rows) }
+  func subMatrix(columns: IndexSet) -> AnyMatrix? { return _submatrix_columns(columns) }
+  func subMatrix(rows: IndexSet, columns: IndexSet) -> AnyMatrix? { return _submatrix_rows_columns(rows,columns) }
+  
+  func transpose() -> AnyMatrix { return _transpose() }
+  
+  static func *(lhs: Float, rhs: AnyMatrix) -> AnyMatrix { return rhs._multiply_scalar_left(lhs) }
+  static func *(lhs: AnyMatrix, rhs: Float) -> AnyMatrix { return lhs._multiply_scalar_right(rhs) }
+  
+  static func ==(lhs: AnyMatrix, rhs: AnyMatrix) -> Bool { return ObjectIdentifier(lhs) == ObjectIdentifier(rhs) }
+  
+  static func +(lhs: AnyMatrix, rhs: AnyMatrix) -> AnyMatrix? { return lhs._plus(rhs) }
+  static func -(lhs: AnyMatrix, rhs: AnyMatrix) -> AnyMatrix? { return lhs._minus(rhs) }
+  static func *(lhs: AnyMatrix, rhs: AnyMatrix) -> AnyMatrix? { return lhs._multiply(rhs) }
 }
 
 // MARK: Default Implementations
