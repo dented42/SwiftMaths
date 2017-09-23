@@ -15,14 +15,15 @@ class SimpleMatrixTests: AbstractMatrixTests {
   
   // MARK: Required
   
+
   override var matrixGenerator: Gen<AnyMatrix> {
     return SimpleMatrix.arbitrary.map { return $0.wrapped }
   }
-  
+
   override func matrix_init(row: [Float]) -> AnyMatrix? {
     return SimpleMatrix(row: row)?.wrapped
   }
-  
+
   override func matrix_init(column: [Float]) -> AnyMatrix? {
     return SimpleMatrix(column: column)?.wrapped
   }
@@ -68,10 +69,10 @@ class SimpleMatrixTests: AbstractMatrixTests {
   func testSubscript_get() {
     property("invalid indices are rejected") <- forAll {
       (matrix: SimpleMatrix, row: Int, column: Int) in
-      return !(matrix.rows.contains(row) && matrix.columns.contains(column)) ==> {
-        return matrix[row,column] == nil
+        return !(matrix.rows.contains(row) && matrix.columns.contains(column)) ==> {
+          return matrix[row,column] == nil
+        }
       }
-    }
     
     property("entries map correctly") <- forAll {
       (holder: SimpleMatrix.Metadata) in

@@ -114,41 +114,43 @@ class AbstractMatrixTests: XCTestCase {
   }
   
   func testRows() {
-    property("correct lower bound") <- forAll {
-      (mat: SimpleMatrix) in
+    property("correct lower bound") <- forAll(self.matrixGenerator) {
+      (mat: AnyMatrix) in
       return mat.rows.first == 0
     }
     
-    property("correct upper bound") <- forAll {
-      (mat: SimpleMatrix) in
+    property("correct upper bound") <- forAll(self.matrixGenerator) {
+      (mat: AnyMatrix) in
       return mat.rows.last == (mat.rowCount - 1)
     }
   }
   
   func testColumns() {
-    property("correct lower bound") <- forAll {
-      (mat: SimpleMatrix) in
+    property("correct lower bound") <- forAll(self.matrixGenerator) {
+      (mat: AnyMatrix) in
       return mat.columns.first == 0
     }
     
-    property("correct upper bound") <- forAll {
-      (mat: SimpleMatrix) in
+    property("correct upper bound") <- forAll(self.matrixGenerator) {
+      (mat: AnyMatrix) in
       return mat.columns.last == (mat.columnCount - 1)
     }
   }
 
   
   func testRow() {
-    property("invalid rows are rejected") <- forAll {
-      (mat: SimpleMatrix, rowIdx: Int) in
-      return !mat.rows.contains(rowIdx) ==> {
-        return mat.row(rowIdx) == nil
+    property("invalid rows are rejected") <- forAll(self.matrixGenerator) {
+      (mat: AnyMatrix) in
+      return forAll { (rowIdx: Int) in
+        return !mat.rows.contains(rowIdx) ==> {
+          return mat.row(rowIdx) == nil
+        }
       }
     }
     
-    property("dimensions") <- forAll {
-      (mat: SimpleMatrix) in
-      return forAll(mat.rowIdxGen) {
+    property("dimensions") <- forAll(self.matrixGenerator) {
+      (mat: AnyMatrix) in
+      return forAll(mat.rowIndexGen) {
         (rowIdx: Int) in
         guard let row = mat.row(rowIdx) else {
           return false
@@ -161,9 +163,9 @@ class AbstractMatrixTests: XCTestCase {
       }
     }
     
-    property("contents") <- forAll {
-      (mat: SimpleMatrix) in
-      return forAll(mat.rowIdxGen) {
+    property("contents") <- forAll(self.matrixGenerator) {
+      (mat: AnyMatrix) in
+      return forAll(mat.rowIndexGen) {
         (rowIdx: Int) in
         guard let row = mat.row(rowIdx) else {
           return false
@@ -178,16 +180,18 @@ class AbstractMatrixTests: XCTestCase {
   }
   
   func testColumn() {
-    property("invalid columns are rejected") <- forAll {
-      (mat: SimpleMatrix, columnIdx: Int) in
-      return !mat.columns.contains(columnIdx) ==> {
-        return mat.column(columnIdx) == nil
+    property("invalid columns are rejected") <- forAll(self.matrixGenerator) {
+      (mat: AnyMatrix) in
+      return forAll { (columnIdx: Int) in
+        return !mat.columns.contains(columnIdx) ==> {
+          return mat.column(columnIdx) == nil
+        }
       }
     }
     
-    property("dimensions") <- forAll {
-      (mat: SimpleMatrix) in
-      return forAll(mat.columnIdxGen) {
+    property("dimensions") <- forAll(self.matrixGenerator) {
+      (mat: AnyMatrix) in
+      return forAll(mat.columnIndexGen) {
         (columnIdx: Int) in
         guard let column = mat.column(columnIdx) else {
           return false
@@ -200,9 +204,9 @@ class AbstractMatrixTests: XCTestCase {
       }
     }
     
-    property("contents") <- forAll {
-      (mat: SimpleMatrix) in
-      return forAll(mat.columnIdxGen) {
+    property("contents") <- forAll(self.matrixGenerator) {
+      (mat: AnyMatrix) in
+      return forAll(mat.columnIndexGen) {
         (columnIdx: Int) in
         guard let column = mat.column(columnIdx) else {
           return false
@@ -217,16 +221,18 @@ class AbstractMatrixTests: XCTestCase {
   }
   
   func testArrayFromRow() {
-    property("invalid rows are rejected") <- forAll {
-      (mat: SimpleMatrix, rowIdx: Int) in
-      return !mat.rows.contains(rowIdx) ==> {
-        return mat.array(fromRow: rowIdx) == nil
+    property("invalid rows are rejected") <- forAll(self.matrixGenerator) {
+      (mat: AnyMatrix) in
+      return forAll { (rowIdx: Int) in
+        return !mat.rows.contains(rowIdx) ==> {
+          return mat.array(fromRow: rowIdx) == nil
+        }
       }
     }
     
-    property("dimensions") <- forAll {
-      (mat: SimpleMatrix) in
-      return forAll(mat.rowIdxGen) {
+    property("dimensions") <- forAll(self.matrixGenerator) {
+      (mat: AnyMatrix) in
+      return forAll(mat.rowIndexGen) {
         (rowIdx: Int) in
         guard let row = mat.array(fromRow: rowIdx) else {
           return false
@@ -236,9 +242,9 @@ class AbstractMatrixTests: XCTestCase {
       }
     }
     
-    property("contents") <- forAll {
-      (mat: SimpleMatrix) in
-      return forAll(mat.rowIdxGen) {
+    property("contents") <- forAll(self.matrixGenerator) {
+      (mat: AnyMatrix) in
+      return forAll(mat.rowIndexGen) {
         (rowIdx: Int) in
         guard let row = mat.array(fromRow: rowIdx) else {
           return false
@@ -253,16 +259,18 @@ class AbstractMatrixTests: XCTestCase {
   }
   
   func testArrayFromColumn() {
-    property("invalid columns are rejected") <- forAll {
-      (mat: SimpleMatrix, columnIdx: Int) in
-      return !mat.columns.contains(columnIdx) ==> {
-        return mat.array(fromColumn: columnIdx) == nil
+    property("invalid columns are rejected") <- forAll(self.matrixGenerator) {
+      (mat: AnyMatrix) in
+      return forAll { (columnIdx: Int) in
+        return !mat.columns.contains(columnIdx) ==> {
+          return mat.array(fromColumn: columnIdx) == nil
+        }
       }
     }
     
-    property("dimensions") <- forAll {
-      (mat: SimpleMatrix) in
-      return forAll(mat.columnIdxGen) {
+    property("dimensions") <- forAll(self.matrixGenerator) {
+      (mat: AnyMatrix) in
+      return forAll(mat.columnIndexGen) {
         (columnIdx: Int) in
         guard let column = mat.array(fromColumn: columnIdx) else {
           return false
@@ -272,9 +280,9 @@ class AbstractMatrixTests: XCTestCase {
       }
     }
     
-    property("contents") <- forAll {
-      (mat: SimpleMatrix) in
-      return forAll(mat.columnIdxGen) {
+    property("contents") <- forAll(self.matrixGenerator) {
+      (mat: AnyMatrix) in
+      return forAll(mat.columnIndexGen) {
         (columnIdx: Int) in
         guard let column = mat.array(fromColumn: columnIdx) else {
           return false
@@ -289,45 +297,51 @@ class AbstractMatrixTests: XCTestCase {
   }
   
   func testSubMatrixRows() {
-    property("empty row sets are rejected") <- forAll {
-      (matrix: SimpleMatrix) in
+    property("empty row sets are rejected") <- forAll(self.matrixGenerator) {
+      (matrix: AnyMatrix) in
       return matrix.subMatrix(rows: IndexSet()) == nil
     }
     
-    property("invalid indices are rejected") <- forAll {
-      (matrix: SimpleMatrix, rowSet: IndexSet) in
-      return (rowSet.contains { return !matrix.rows.contains($0) }) ==> {
-        return matrix.subMatrix(rows: rowSet) == nil
+    property("invalid indices are rejected") <- forAll(self.matrixGenerator) {
+      (matrix: AnyMatrix) in
+      return forAll { (rowSet: IndexSet) in
+        return (rowSet.contains { return !matrix.rows.contains($0) }) ==> {
+          return matrix.subMatrix(rows: rowSet) == nil
+        }
       }
     }
     
-    property("dimensions match") <- forAll {
-      (matrix: SimpleMatrix, rowSet: IndexSet) in
-      return (rowSet.mapAnd { return matrix.rows.contains($0) }) ==> {
-        guard let subMatrix = matrix.subMatrix(rows: rowSet) else {
-          return false
+    property("dimensions match") <- forAll(self.matrixGenerator) {
+      (matrix: AnyMatrix) in
+      return forAll { (rowSet: IndexSet) in
+        return (rowSet.mapAnd { return matrix.rows.contains($0) }) ==> {
+          guard let subMatrix = matrix.subMatrix(rows: rowSet) else {
+            return false
+          }
+          
+          let rowsMatch = (subMatrix.rowCount == rowSet.count) <?> "rows"
+          let columnsMatch = (subMatrix.columnCount == matrix.columnCount) <?> "columns"
+          return rowsMatch ^&&^ columnsMatch
         }
-        
-        let rowsMatch = (subMatrix.rowCount == rowSet.count) <?> "rows"
-        let columnsMatch = (subMatrix.columnCount == matrix.columnCount) <?> "columns"
-        return rowsMatch ^&&^ columnsMatch
       }
     }
     
-    property("entries match") <- forAll {
-      (matrix: SimpleMatrix, rowSet: IndexSet) in
-      return (rowSet.mapAnd { return matrix.rows.contains($0) }) ==> {
-        guard let subMatrix = matrix.subMatrix(rows: rowSet) else {
-          return false
-        }
-        
-        let rowIdxs = Array(rowSet).sorted()
-        
-        return rowIdxs.indices.mapAnd {
-          (row) in
-          return subMatrix.columns.mapAnd {
-            (column) in
-            return subMatrix[row,column] == matrix[rowIdxs[row],column]
+    property("entries match") <- forAll(self.matrixGenerator) {
+      (matrix: AnyMatrix) in
+      return forAll { (rowSet: IndexSet) in
+        return (rowSet.mapAnd { return matrix.rows.contains($0) }) ==> {
+          guard let subMatrix = matrix.subMatrix(rows: rowSet) else {
+            return false
+          }
+          
+          let rowIdxs = Array(rowSet).sorted()
+          
+          return rowIdxs.indices.mapAnd {
+            (row) in
+            return subMatrix.columns.mapAnd {
+              (column) in
+              return subMatrix[row,column] == matrix[rowIdxs[row],column]
+            }
           }
         }
       }
@@ -335,45 +349,51 @@ class AbstractMatrixTests: XCTestCase {
   }
   
   func testSubMatrixColumns() {
-    property("empty column sets are rejected") <- forAll {
-      (matrix: SimpleMatrix) in
+    property("empty column sets are rejected") <- forAll(self.matrixGenerator) {
+      (matrix: AnyMatrix) in
       return matrix.subMatrix(columns: IndexSet()) == nil
     }
     
-    property("invalid indices are rejected") <- forAll {
-      (matrix: SimpleMatrix, columnSet: IndexSet) in
-      return (columnSet.contains { return !matrix.columns.contains($0) }) ==> {
-        return matrix.subMatrix(columns: columnSet) == nil
+    property("invalid indices are rejected") <- forAll(self.matrixGenerator) {
+      (matrix: AnyMatrix) in
+      return forAll { (columnSet: IndexSet) in
+        return (columnSet.contains { return !matrix.columns.contains($0) }) ==> {
+          return matrix.subMatrix(columns: columnSet) == nil
+        }
       }
     }
     
-    property("dimensions match") <- forAll {
-      (matrix: SimpleMatrix, columnSet: IndexSet) in
-      return (columnSet.mapAnd { return matrix.columns.contains($0) }) ==> {
-        guard let subMatrix = matrix.subMatrix(columns: columnSet) else {
-          return false
+    property("dimensions match") <- forAll(self.matrixGenerator) {
+      (matrix: AnyMatrix) in
+      return forAll { (columnSet: IndexSet) in
+        return (columnSet.mapAnd { return matrix.columns.contains($0) }) ==> {
+          guard let subMatrix = matrix.subMatrix(columns: columnSet) else {
+            return false
+          }
+          
+          let rowsMatch = (subMatrix.rowCount == matrix.rowCount) <?> "rows"
+          let columnsMatch = (subMatrix.columnCount == columnSet.count) <?> "columns"
+          return rowsMatch ^&&^ columnsMatch
         }
-        
-        let rowsMatch = (subMatrix.rowCount == matrix.rowCount) <?> "rows"
-        let columnsMatch = (subMatrix.columnCount == columnSet.count) <?> "columns"
-        return rowsMatch ^&&^ columnsMatch
       }
     }
     
-    property("entries match") <- forAll {
-      (matrix: SimpleMatrix, columnSet: IndexSet) in
-      return (columnSet.mapAnd { return matrix.columns.contains($0) }) ==> {
-        guard let subMatrix = matrix.subMatrix(columns: columnSet) else {
-          return false
-        }
-        
-        let columnIdxs = Array(columnSet).sorted()
-        
-        return subMatrix.rows.mapAnd {
-          (row) in
-          return columnIdxs.indices.mapAnd {
-            (column) in
-            return subMatrix[row,column] == matrix[row,columnIdxs[column]]
+    property("entries match") <- forAll(self.matrixGenerator) {
+      (matrix: AnyMatrix) in
+      return forAll { (columnSet: IndexSet) in
+        return (columnSet.mapAnd { return matrix.columns.contains($0) }) ==> {
+          guard let subMatrix = matrix.subMatrix(columns: columnSet) else {
+            return false
+          }
+          
+          let columnIdxs = Array(columnSet).sorted()
+          
+          return subMatrix.rows.mapAnd {
+            (row) in
+            return columnIdxs.indices.mapAnd {
+              (column) in
+              return subMatrix[row,column] == matrix[row,columnIdxs[column]]
+            }
           }
         }
       }
@@ -381,63 +401,73 @@ class AbstractMatrixTests: XCTestCase {
   }
   
   func testSubMatrixRowsColumns() {
-    property("empty row sets are rejected") <- forAll {
-      (matrix: SimpleMatrix, columnSet: IndexSet) in
-      
-      return matrix.subMatrix(rows: IndexSet(), columns: columnSet) == nil
-    }
-    
-    property("empty column sets are rejected") <- forAll {
-      (matrix: SimpleMatrix, rowSet: IndexSet) in
-      
-      return matrix.subMatrix(rows: rowSet, columns: IndexSet()) == nil
-    }
-    
-    property("invalid row indices are rejected") <- forAll {
-      (matrix: SimpleMatrix, rowSet: IndexSet, columnSet: IndexSet) in
-      return (rowSet.contains { return !matrix.rows.contains($0) }) ==> {
-        return matrix.subMatrix(rows: rowSet, columns: columnSet) == nil
+    property("empty row sets are rejected") <- forAll(self.matrixGenerator) {
+      (matrix: AnyMatrix) in
+      return forAll { (columnSet: IndexSet) in
+        return matrix.subMatrix(rows: IndexSet(), columns: columnSet) == nil
       }
     }
     
-    property("invalid column sets are rejected") <- forAll {
-      (matrix: SimpleMatrix, rowSet: IndexSet, columnSet: IndexSet) in
-      return (columnSet.contains { return !matrix.columns.contains($0) }) ==> {
-        return matrix.subMatrix(rows: rowSet, columns: columnSet) == nil
+    property("empty column sets are rejected") <- forAll(self.matrixGenerator) {
+      (matrix: AnyMatrix) in
+      return forAll { (rowSet: IndexSet) in
+        return matrix.subMatrix(rows: rowSet, columns: IndexSet()) == nil
       }
     }
     
-    property("dimensions match") <- forAll {
-      (matrix: SimpleMatrix, rowSet: IndexSet, columnSet: IndexSet) in
-      return (rowSet.mapAnd { return matrix.rows.contains($0) }) ==> {
-        return (columnSet.mapAnd { return matrix.columns.contains($0) }) ==> {
-          guard let subMatrix = matrix.subMatrix(rows: rowSet, columns: columnSet) else {
-            return false
-          }
-          
-          let rowsMatch = (subMatrix.rowCount == rowSet.count) <?> "rows"
-          let columnsMatch = (subMatrix.columnCount == columnSet.count) <?> "columns"
-          return rowsMatch ^&&^ columnsMatch
+    property("invalid row indices are rejected") <- forAll(self.matrixGenerator) {
+      (matrix: AnyMatrix) in
+      return forAll { (rowSet: IndexSet, columnSet: IndexSet) in
+        return (rowSet.contains { return !matrix.rows.contains($0) }) ==> {
+          return matrix.subMatrix(rows: rowSet, columns: columnSet) == nil
         }
       }
     }
     
-    property("entries match") <- forAll {
-      (matrix: SimpleMatrix, rowSet: IndexSet, columnSet: IndexSet) in
-      return (rowSet.mapAnd { return matrix.rows.contains($0) }) ==> {
-        return (columnSet.mapAnd { return matrix.columns.contains($0) }) ==> {
-          guard let subMatrix = matrix.subMatrix(rows: rowSet, columns: columnSet) else {
-            return false
+    property("invalid column sets are rejected") <- forAll(self.matrixGenerator) {
+      (matrix: AnyMatrix) in
+      return forAll { (rowSet: IndexSet, columnSet: IndexSet) in
+        return (columnSet.contains { return !matrix.columns.contains($0) }) ==> {
+          return matrix.subMatrix(rows: rowSet, columns: columnSet) == nil
+        }
+      }
+    }
+    
+    property("dimensions match") <- forAll(self.matrixGenerator) {
+      (matrix: AnyMatrix) in
+      return forAll { (rowSet: IndexSet, columnSet: IndexSet) in
+        return (rowSet.mapAnd { return matrix.rows.contains($0) }) ==> {
+          return (columnSet.mapAnd { return matrix.columns.contains($0) }) ==> {
+            guard let subMatrix = matrix.subMatrix(rows: rowSet, columns: columnSet) else {
+              return false
+            }
+            
+            let rowsMatch = (subMatrix.rowCount == rowSet.count) <?> "rows"
+            let columnsMatch = (subMatrix.columnCount == columnSet.count) <?> "columns"
+            return rowsMatch ^&&^ columnsMatch
           }
-          
-          let rowIdxs = Array(rowSet).sorted()
-          let columnIdxs = Array(columnSet).sorted()
-          
-          return rowIdxs.indices.mapAnd {
-            (row) in
-            return columnIdxs.indices.mapAnd {
-              (column) in
-              return subMatrix[row,column] == matrix[rowIdxs[row],columnIdxs[column]]
+        }
+      }
+    }
+    
+    property("entries match") <- forAll(self.matrixGenerator) {
+      (matrix: AnyMatrix) in
+      return forAll { (rowSet: IndexSet, columnSet: IndexSet) in
+        return (rowSet.mapAnd { return matrix.rows.contains($0) }) ==> {
+          return (columnSet.mapAnd { return matrix.columns.contains($0) }) ==> {
+            guard let subMatrix = matrix.subMatrix(rows: rowSet, columns: columnSet) else {
+              return false
+            }
+            
+            let rowIdxs = Array(rowSet).sorted()
+            let columnIdxs = Array(columnSet).sorted()
+            
+            return rowIdxs.indices.mapAnd {
+              (row) in
+              return columnIdxs.indices.mapAnd {
+                (column) in
+                return subMatrix[row,column] == matrix[rowIdxs[row],columnIdxs[column]]
+              }
             }
           }
         }
@@ -446,8 +476,8 @@ class AbstractMatrixTests: XCTestCase {
   }
   
   func testTranspose() {
-    property("dimensions") <- forAll {
-      (mat: SimpleMatrix) in
+    property("dimensions") <- forAll(self.matrixGenerator) {
+      (mat: AnyMatrix) in
       
       let trans = mat.transpose()
       
@@ -457,8 +487,8 @@ class AbstractMatrixTests: XCTestCase {
       return rowsMatch ^&&^ columnsMatch
     }
     
-    property("entries") <- forAll {
-      (mat: SimpleMatrix) in
+    property("entries") <- forAll(self.matrixGenerator) {
+      (mat: AnyMatrix) in
       
       let trans = mat.transpose()
       
@@ -471,72 +501,80 @@ class AbstractMatrixTests: XCTestCase {
       }
     }
     
-    property("transpose^2 = id") <- forAll {
-      (matrix: SimpleMatrix) in
+    property("transpose^2 = id") <- forAll(self.matrixGenerator) {
+      (matrix: AnyMatrix) in
       return matrix.transpose().transpose() == matrix
     }
   }
   
   func testScalarMultiply() {
-    property("dimensions") <- forAll {
-      (matrix: SimpleMatrix, scalar: Float) in
-      let scaled = scalar * matrix
-      
-      let rowsMatch = (scaled.rowCount == matrix.rowCount) <?> "rows"
-      let columnsMatch = (scaled.columnCount == matrix.columnCount) <?> "columns"
-      
-      return rowsMatch ^&&^ columnsMatch
+    property("dimensions") <- forAll(self.matrixGenerator) {
+      (matrix: AnyMatrix) in
+      return forAll { (scalar: Float) in
+        let scaled = scalar * matrix
+        
+        let rowsMatch = (scaled.rowCount == matrix.rowCount) <?> "rows"
+        let columnsMatch = (scaled.columnCount == matrix.columnCount) <?> "columns"
+        
+        return rowsMatch ^&&^ columnsMatch
+      }
     }
     
-    property("entries") <- forAll {
-      (matrix: SimpleMatrix, scalar: Float) in
-      let scaled = scalar * matrix
-      
-      return scaled.rows.mapAnd {
-        (row) in
-        return scaled.columns.mapAnd {
-          (column) in
-          return scaled[row,column] == (matrix[row,column]! * scalar)
+    property("entries") <- forAll(self.matrixGenerator) {
+      (matrix: AnyMatrix) in
+      return forAll { (scalar: Float) in
+        let scaled = scalar * matrix
+        
+        return scaled.rows.mapAnd {
+          (row) in
+          return scaled.columns.mapAnd {
+            (column) in
+            return scaled[row,column] == (matrix[row,column]! * scalar)
+          }
         }
       }
     }
   }
   
   func testMultiplyScalar() {
-    property("dimensions") <- forAll {
-      (matrix: SimpleMatrix, scalar: Float) in
-      let scaled =  matrix * scalar
-      
-      let rowsMatch = (scaled.rowCount == matrix.rowCount) <?> "rows"
-      let columnsMatch = (scaled.columnCount == matrix.columnCount) <?> "columns"
-      
-      return rowsMatch ^&&^ columnsMatch
+    property("dimensions") <- forAll(self.matrixGenerator) {
+      (matrix: AnyMatrix) in
+      return forAll { (scalar: Float) in
+        let scaled =  matrix * scalar
+        
+        let rowsMatch = (scaled.rowCount == matrix.rowCount) <?> "rows"
+        let columnsMatch = (scaled.columnCount == matrix.columnCount) <?> "columns"
+        
+        return rowsMatch ^&&^ columnsMatch
+      }
     }
     
-    property("entries") <- forAll {
-      (matrix: SimpleMatrix, scalar: Float) in
-      let scaled =  matrix * scalar
-      
-      return scaled.rows.mapAnd {
-        (row) in
-        return scaled.columns.mapAnd {
-          (column) in
-          return scaled[row,column] == (matrix[row,column]! * scalar)
+    property("entries") <- forAll(self.matrixGenerator) {
+      (matrix: AnyMatrix) in
+      return forAll { (scalar: Float) in
+        let scaled =  matrix * scalar
+        
+        return scaled.rows.mapAnd {
+          (row) in
+          return scaled.columns.mapAnd {
+            (column) in
+            return scaled[row,column] == (matrix[row,column]! * scalar)
+          }
         }
       }
     }
   }
   
   func testAdd() {
-    property("invalid dimensions fail") <- forAll {
-      (mat1: SimpleMatrix, mat2: SimpleMatrix) in
+    property("invalid dimensions fail") <- forAll(self.matrixGenerator, self.matrixGenerator) {
+      (mat1: AnyMatrix, mat2: AnyMatrix) in
       return ((mat1.rowCount != mat2.rowCount) && (mat1.columnCount != mat2.columnCount)) ==> {
         return (mat1 + mat2) == nil
       }
     }
     
-    property("dimensions") <- forAll {
-      (mat1: SimpleMatrix, mat2: SimpleMatrix) in
+    property("dimensions") <- forAll(self.matrixGenerator, self.matrixGenerator) {
+      (mat1: AnyMatrix, mat2: AnyMatrix) in
       return ((mat1.rowCount == mat2.rowCount) && (mat1.columnCount == mat2.columnCount)) ==> {
         guard let mat3 = mat1 + mat2 else {
           return false
@@ -549,8 +587,8 @@ class AbstractMatrixTests: XCTestCase {
       }
     }
     
-    property("entries") <- forAll {
-      (mat1: SimpleMatrix, mat2: SimpleMatrix) in
+    property("entries") <- forAll(self.matrixGenerator, self.matrixGenerator) {
+      (mat1: AnyMatrix, mat2: AnyMatrix) in
       return ((mat1.rowCount == mat2.rowCount) && (mat1.columnCount == mat2.columnCount)) ==> {
         guard let mat3 = mat1 + mat2 else {
           return false
@@ -568,15 +606,15 @@ class AbstractMatrixTests: XCTestCase {
   }
   
   func testSubtract() {
-    property("invalid dimensions fail") <- forAll {
-      (mat1: SimpleMatrix, mat2: SimpleMatrix) in
+    property("invalid dimensions fail") <- forAll(self.matrixGenerator, self.matrixGenerator) {
+      (mat1: AnyMatrix, mat2: AnyMatrix) in
       return ((mat1.rowCount != mat2.rowCount) && (mat1.columnCount != mat2.columnCount)) ==> {
         return (mat1 - mat2) == nil
       }
     }
     
-    property("dimensions") <- forAll {
-      (mat1: SimpleMatrix, mat2: SimpleMatrix) in
+    property("dimensions") <- forAll(self.matrixGenerator, self.matrixGenerator) {
+      (mat1: AnyMatrix, mat2: AnyMatrix) in
       return ((mat1.rowCount == mat2.rowCount) && (mat1.columnCount == mat2.columnCount)) ==> {
         guard let mat3 = mat1 - mat2 else {
           return false
@@ -589,8 +627,8 @@ class AbstractMatrixTests: XCTestCase {
       }
     }
     
-    property("entries") <- forAll {
-      (mat1: SimpleMatrix, mat2: SimpleMatrix) in
+    property("entries") <- forAll(self.matrixGenerator, self.matrixGenerator) {
+      (mat1: AnyMatrix, mat2: AnyMatrix) in
       return ((mat1.rowCount == mat2.rowCount) && (mat1.columnCount == mat2.columnCount)) ==> {
         guard let mat3 = mat1 - mat2 else {
           return false
@@ -608,15 +646,15 @@ class AbstractMatrixTests: XCTestCase {
   }
   
   func testMultiply() {
-    property("invalid dimensions fail") <- forAll {
-      (matrix1: SimpleMatrix, matrix2: SimpleMatrix) in
+    property("invalid dimensions fail") <- forAll(self.matrixGenerator, self.matrixGenerator) {
+      (matrix1: AnyMatrix, matrix2: AnyMatrix) in
       return (matrix1.columnCount != matrix2.rowCount) ==> {
         return (matrix1 * matrix2) == nil
       }
     }
     
-    property("dimensions") <- forAll {
-      (matrix1: SimpleMatrix, matrix2: SimpleMatrix) in
+    property("dimensions") <- forAll(self.matrixGenerator, self.matrixGenerator) {
+      (matrix1: AnyMatrix, matrix2: AnyMatrix) in
       return (matrix1.columnCount == matrix2.rowCount) ==> {
         guard let product = matrix1 * matrix2 else {
           return false
@@ -629,8 +667,8 @@ class AbstractMatrixTests: XCTestCase {
       }
     }
     
-    property("entries") <- forAll {
-      (matrix1: SimpleMatrix, matrix2: SimpleMatrix) in
+    property("entries") <- forAll(self.matrixGenerator, self.matrixGenerator) {
+      (matrix1: AnyMatrix, matrix2: AnyMatrix) in
       return (matrix1.columnCount == matrix2.rowCount) ==> {
         guard let product = matrix1 * matrix2 else {
           return false
@@ -745,5 +783,13 @@ class AbstractMatrixTests: XCTestCase {
 extension AnyMatrix: Arbitrary {
   public static var arbitrary: Gen<AnyMatrix> {
     preconditionFailure("AnyMatrix doesn't conform to Arbitrary. Supply an explicit generator instead.")
+  }
+  
+  var rowIndexGen: Gen<Int> {
+    return Gen<Int>.fromElements(in: ClosedRange(rows))
+  }
+  
+  var columnIndexGen: Gen<Int> {
+    return Gen<Int>.fromElements(in: ClosedRange(columns))
   }
 }

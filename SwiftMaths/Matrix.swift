@@ -278,7 +278,17 @@ public final class AnyMatrix: Matrix {
     }
   }
   
-  private func box<AM: AnyMatrix>() -> AM { return self as! AM }
+  public func unwrap<M: Matrix>() -> M? {
+    return _matrix as? M
+  }
+  
+  public func unwrap<M: Matrix>(like: M) -> M? {
+    return _matrix as? M
+  }
+  
+  public func unwrap<M: Matrix>(as: M.Type) -> M? {
+    return _matrix as? M
+  }
   
   public var rowCount: Int { return _rowCount() }
   public var columnCount: Int { return _columnCount() }
@@ -292,26 +302,26 @@ public final class AnyMatrix: Matrix {
     get { return _subscript_get(r,c) }
     set(v) { return _subscript_set(r,c,v) } }
   
-  public func row(_ idx: Int) -> Self? { return _row_idx(idx)?.box() }
-  public func column(_ idx: Int) -> Self? { return _column_idx(idx)?.box() }
+  public func row(_ idx: Int) -> AnyMatrix? { return _row_idx(idx) }
+  public func column(_ idx: Int) -> AnyMatrix? { return _column_idx(idx) }
   
   public func array(fromRow idx : Int) -> [Float]? { return _array_fromRow(idx) }
   public func array(fromColumn idx: Int) -> [Float]? { return _array_fromColumn(idx) }
   
-  public func subMatrix(rows: IndexSet) -> Self? { return _submatrix_rows(rows)?.box() }
-  public func subMatrix(columns: IndexSet) -> Self? { return _submatrix_columns(columns)?.box() }
-  public func subMatrix(rows: IndexSet, columns: IndexSet) -> Self? { return _submatrix_rows_columns(rows,columns)?.box() }
+  public func subMatrix(rows: IndexSet) -> AnyMatrix? { return _submatrix_rows(rows) }
+  public func subMatrix(columns: IndexSet) -> AnyMatrix? { return _submatrix_columns(columns) }
+  public func subMatrix(rows: IndexSet, columns: IndexSet) -> AnyMatrix? { return _submatrix_rows_columns(rows,columns) }
 
-  public func transpose() -> Self { return _transpose().box() }
+  public func transpose() -> AnyMatrix { return _transpose() }
 
-  public static func *(lhs: Float, rhs: AnyMatrix) -> Self { return rhs._multiply_scalar_left(lhs).box() }
-  public static func *(lhs: AnyMatrix, rhs: Float) -> Self { return lhs._multiply_scalar_right(rhs).box() }
+  public static func *(lhs: Float, rhs: AnyMatrix) -> AnyMatrix { return rhs._multiply_scalar_left(lhs) }
+  public static func *(lhs: AnyMatrix, rhs: Float) -> AnyMatrix { return lhs._multiply_scalar_right(rhs) }
 
   public static func ==(lhs: AnyMatrix, rhs: AnyMatrix) -> Bool { return lhs._equals(rhs) }
 
-  public static func +(lhs: AnyMatrix, rhs: AnyMatrix) -> Self? { return lhs._plus(rhs)?.box() }
-  public static func -(lhs: AnyMatrix, rhs: AnyMatrix) -> Self? { return lhs._minus(rhs)?.box() }
-  public static func *(lhs: AnyMatrix, rhs: AnyMatrix) -> Self? { return lhs._multiply(rhs)?.box() }
+  public static func +(lhs: AnyMatrix, rhs: AnyMatrix) -> AnyMatrix? { return lhs._plus(rhs) }
+  public static func -(lhs: AnyMatrix, rhs: AnyMatrix) -> AnyMatrix? { return lhs._minus(rhs) }
+  public static func *(lhs: AnyMatrix, rhs: AnyMatrix) -> AnyMatrix? { return lhs._multiply(rhs) }
 }
 
 public extension Matrix {
