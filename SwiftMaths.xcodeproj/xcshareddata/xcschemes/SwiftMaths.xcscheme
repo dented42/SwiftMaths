@@ -53,6 +53,11 @@
                BlueprintName = "SwiftMathsTests"
                ReferencedContainer = "container:SwiftMaths.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "AbstractMatrixTests">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
       <MacroExpansion>

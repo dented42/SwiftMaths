@@ -13,11 +13,27 @@ import SwiftMaths
 
 class AbstractMatrixTests: XCTestCase {
   
+  // MARK: Abstract methods
+  
+  open var matrixGenerator: Gen<AnyMatrix> {
+    preconditionFailure("AbstractMatrixTests must provide an implementation of matrixGenerator.")
+  }
+  
+  open func matrix_init(row: [Float]) -> AnyMatrix? {
+    preconditionFailure("AbstractMatrixTests must provide an implementation of matrix_init(row:).")
+  }
+  
+  open func matrix_init(column: [Float]) -> AnyMatrix? {
+    preconditionFailure("AbstractMatrixTests must provide an implementation of matrix_init(column:).")
+  }
+  
+  // MARK: Abstract test checker
+  
   func testAbstractTestClass() {
     AssertAbstractTestClass(name: "SwiftMathsTests.AbstractMatrixTests")
   }
   
-  // Mark: Default methods
+  // MARK: Default implementation tests
   
   func testInit_row() {
     property("empty vector is rejected") <- {
@@ -28,7 +44,7 @@ class AbstractMatrixTests: XCTestCase {
       (rowHolder: ArrayOf<Float>) in
       let row = rowHolder.getArray
       return (row.count > 0) ==> {
-        let m = SimpleMatrix(row: row)
+        let m = self.matrix_init(row: row)
         
         let exists = (m != nil) <?> "matrix exists"
         let rowsMatch = (m?.rowCount == 1) <?> "correct number of rows"
@@ -42,7 +58,7 @@ class AbstractMatrixTests: XCTestCase {
       (rowHolder: ArrayOf<Float>) in
       let row = rowHolder.getArray
       return (row.count > 0) ==> {
-        guard let m = SimpleMatrix(row: row) else {
+        guard let m = self.matrix_init(row: row) else {
           return false
         }
         
@@ -56,14 +72,14 @@ class AbstractMatrixTests: XCTestCase {
   
   func testInit_column() {
     property("empty vector is rejected") <- {
-      return SimpleMatrix(column: []) == nil
+      return matrix_init(column: []) == nil
     }
     
     property("dimensions are correct") <- forAll {
       (columnHolder: ArrayOf<Float>) in
       let column = columnHolder.getArray
       return (column.count > 0) ==> {
-        let m = SimpleMatrix(column: column)
+        let m = self.matrix_init(column: column)
         
         let exists = (m != nil) <?> "matrix exists"
         let rowsMatch = (m?.rowCount == column.count) <?> "correct number of rows"
@@ -77,7 +93,7 @@ class AbstractMatrixTests: XCTestCase {
       (columnHolder: ArrayOf<Float>) in
       let column = columnHolder.getArray
       return (column.count > 0) ==> {
-        guard let m = SimpleMatrix(column: column) else {
+        guard let m = self.matrix_init(column: column) else {
           return false
         }
         
@@ -90,8 +106,8 @@ class AbstractMatrixTests: XCTestCase {
   }
   
   func testCount() {
-    property("count is correct") <- forAll {
-      (mat: SimpleMatrix) in
+    property("count is correct") <- forAll(self.matrixGenerator) {
+      (mat: AnyMatrix) in
       
       return mat.count == (mat.rowCount * mat.columnCount)
     }
@@ -721,5 +737,13 @@ class AbstractMatrixTests: XCTestCase {
         }
       }
     }
+  }
+}
+
+// MARK: Arbitrary instances
+
+extension AnyMatrix: Arbitrary {
+  public static var arbitrary: Gen<AnyMatrix> {
+    preconditionFailure("AnyMatrix doesn't conform to Arbitrary. Supply an explicit generator instead.")
   }
 }

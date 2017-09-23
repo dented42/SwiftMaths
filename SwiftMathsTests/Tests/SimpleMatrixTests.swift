@@ -13,6 +13,22 @@ import SwiftMaths
 
 class SimpleMatrixTests: AbstractMatrixTests {
   
+  // MARK: Required
+  
+  override var matrixGenerator: Gen<AnyMatrix> {
+    return SimpleMatrix.arbitrary.map { return $0.wrapped }
+  }
+  
+  override func matrix_init(row: [Float]) -> AnyMatrix? {
+    return SimpleMatrix(row: row)?.wrapped
+  }
+  
+  override func matrix_init(column: [Float]) -> AnyMatrix? {
+    return SimpleMatrix(column: column)?.wrapped
+  }
+  
+  // MARK: Init tests
+  
   func testInit_RowsColumns() {
     property("invalid dimensions are rejected") <- forAll {
       (rows: Int, columns: Int) in
@@ -69,6 +85,8 @@ class SimpleMatrixTests: AbstractMatrixTests {
       }
     }
   }
+  
+  // MARK: Subscript tests
 
   func testSubscript_set() {
     property("invalid indices have no effect") <- forAll {

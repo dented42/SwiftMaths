@@ -315,14 +315,8 @@ public final class AnyMatrix: Matrix {
 }
 
 public extension Matrix {
-  public func wrap() -> AnyMatrix {
+  public var wrapped: AnyMatrix {
     return AnyMatrix(matrix: self)
-  }
-  public func wrap<A: AnyMatrix>(like: A) -> A {
-    return A(matrix: self)
-  }
-  public func wrap<A: AnyMatrix>(as: A.Type) -> A {
-    return A(matrix: self)
   }
 }
 
