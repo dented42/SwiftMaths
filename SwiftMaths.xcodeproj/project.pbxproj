@@ -7,20 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F2C6D821F6DF92C002A6CC9 /* SimpleMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2C6D811F6DF92C002A6CC9 /* SimpleMatrix.swift */; };
+		1F2CC71A1F6F79B3000D67FF /* IndexSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2CC7191F6F79B3000D67FF /* IndexSet.swift */; };
+		1F39D3261F771456009D4CCB /* AbstractMatrixTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1B2D601F6F55B00025DFB7 /* AbstractMatrixTests.swift */; };
+		1F39D3271F77197B009D4CCB /* SimpleMatrixTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2C6D7F1F6DF8FF002A6CC9 /* SimpleMatrixTests.swift */; };
+		1F5135991F68C5430055FAB1 /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5135981F68C5430055FAB1 /* Matrix.swift */; };
+		1F77D5101F6DF262004C3F9B /* Generators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F77D50F1F6DF262004C3F9B /* Generators.swift */; };
 		1F8D95341F6F1B4B007C5C09 /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8D95331F6F1B4B007C5C09 /* Sequence.swift */; };
 		1F8D95361F6F1B57007C5C09 /* SequenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8D95351F6F1B57007C5C09 /* SequenceTests.swift */; };
 		1F8D95381F6F1C4F007C5C09 /* Functional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8D95371F6F1C4F007C5C09 /* Functional.swift */; };
 		1F8D953A1F6F1C59007C5C09 /* FunctionalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8D95391F6F1C59007C5C09 /* FunctionalTests.swift */; };
+		1F981FAD1F69ADF300F22B11 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F981FAC1F69ADF300F22B11 /* Accelerate.framework */; };
 		1FA098AC1F674E680068FD7C /* SwiftMaths.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA098A21F674E680068FD7C /* SwiftMaths.framework */; };
 		1FA098B31F674E680068FD7C /* SwiftMaths.h in Headers */ = {isa = PBXBuildFile; fileRef = 1FA098A51F674E680068FD7C /* SwiftMaths.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1FA098C11F6755AE0068FD7C /* Cartfile.resolved in Resources */ = {isa = PBXBuildFile; fileRef = 1FA098C01F6755AE0068FD7C /* Cartfile.resolved */; };
 		1FA098C61F6756100068FD7C /* SwiftCheck.framework.dSYM in Copy Debug Symbols */ = {isa = PBXBuildFile; fileRef = 1FA098C21F6755E80068FD7C /* SwiftCheck.framework.dSYM */; };
-		1FA098C81F6756200068FD7C /* SwiftCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA098C71F6756200068FD7C /* SwiftCheck.framework */; };
 		1FA098CB1F67563E0068FD7C /* SwiftCheck.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA098C71F6756200068FD7C /* SwiftCheck.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1FA098CD1F6756470068FD7C /* SwiftCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA098C71F6756200068FD7C /* SwiftCheck.framework */; };
+		1FB57CE81F70577200999308 /* TestAssertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB57CE71F70577200999308 /* TestAssertions.swift */; };
 		1FBA34BE1F676A2000BD3919 /* InjectiveMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBA34BD1F676A2000BD3919 /* InjectiveMap.swift */; };
 		1FBA34C01F676A3F00BD3919 /* InjectiveMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBA34BF1F676A3F00BD3919 /* InjectiveMapTests.swift */; };
-		1FBA34C21F676A4800BD3919 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBA34C11F676A4800BD3919 /* Utilities.swift */; };
+		1FBA34C21F676A4800BD3919 /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBA34C11F676A4800BD3919 /* Dictionary.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,10 +66,17 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1F1B2D601F6F55B00025DFB7 /* AbstractMatrixTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractMatrixTests.swift; sourceTree = "<group>"; };
+		1F2C6D7F1F6DF8FF002A6CC9 /* SimpleMatrixTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleMatrixTests.swift; sourceTree = "<group>"; };
+		1F2C6D811F6DF92C002A6CC9 /* SimpleMatrix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleMatrix.swift; sourceTree = "<group>"; };
+		1F2CC7191F6F79B3000D67FF /* IndexSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexSet.swift; sourceTree = "<group>"; };
+		1F5135981F68C5430055FAB1 /* Matrix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matrix.swift; sourceTree = "<group>"; };
+		1F77D50F1F6DF262004C3F9B /* Generators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Generators.swift; sourceTree = "<group>"; };
 		1F8D95331F6F1B4B007C5C09 /* Sequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
 		1F8D95351F6F1B57007C5C09 /* SequenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequenceTests.swift; sourceTree = "<group>"; };
 		1F8D95371F6F1C4F007C5C09 /* Functional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functional.swift; sourceTree = "<group>"; };
 		1F8D95391F6F1C59007C5C09 /* FunctionalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionalTests.swift; sourceTree = "<group>"; };
+		1F981FAC1F69ADF300F22B11 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		1FA098A21F674E680068FD7C /* SwiftMaths.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftMaths.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FA098A51F674E680068FD7C /* SwiftMaths.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftMaths.h; sourceTree = "<group>"; };
 		1FA098A61F674E680068FD7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -72,9 +86,10 @@
 		1FA098C01F6755AE0068FD7C /* Cartfile.resolved */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.resolved; sourceTree = "<group>"; };
 		1FA098C21F6755E80068FD7C /* SwiftCheck.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = SwiftCheck.framework.dSYM; path = Carthage/Build/Mac/SwiftCheck.framework.dSYM; sourceTree = "<group>"; };
 		1FA098C71F6756200068FD7C /* SwiftCheck.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftCheck.framework; path = Carthage/Build/Mac/SwiftCheck.framework; sourceTree = "<group>"; };
+		1FB57CE71F70577200999308 /* TestAssertions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestAssertions.swift; sourceTree = "<group>"; };
 		1FBA34BD1F676A2000BD3919 /* InjectiveMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InjectiveMap.swift; sourceTree = "<group>"; };
 		1FBA34BF1F676A3F00BD3919 /* InjectiveMapTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InjectiveMapTests.swift; sourceTree = "<group>"; };
-		1FBA34C11F676A4800BD3919 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		1FBA34C11F676A4800BD3919 /* Dictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dictionary.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,7 +97,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1FA098C81F6756200068FD7C /* SwiftCheck.framework in Frameworks */,
+				1F981FAD1F69ADF300F22B11 /* Accelerate.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,6 +113,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1F1B2D5E1F6F2E900025DFB7 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				1FBA34C11F676A4800BD3919 /* Dictionary.swift */,
+				1F2CC7191F6F79B3000D67FF /* IndexSet.swift */,
+				1F77D50F1F6DF262004C3F9B /* Generators.swift */,
+				1FB57CE71F70577200999308 /* TestAssertions.swift */,
+			);
+			path = Tools;
+			sourceTree = "<group>";
+		};
+		1F1B2D5F1F6F2EAC0025DFB7 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				1F8D95391F6F1C59007C5C09 /* FunctionalTests.swift */,
+				1FBA34BF1F676A3F00BD3919 /* InjectiveMapTests.swift */,
+				1F1B2D601F6F55B00025DFB7 /* AbstractMatrixTests.swift */,
+				1F8D95351F6F1B57007C5C09 /* SequenceTests.swift */,
+				1F2C6D7F1F6DF8FF002A6CC9 /* SimpleMatrixTests.swift */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
 		1FA098981F674E680068FD7C = {
 			isa = PBXGroup;
 			children = (
@@ -125,6 +163,8 @@
 				1F8D95371F6F1C4F007C5C09 /* Functional.swift */,
 				1FBA34BD1F676A2000BD3919 /* InjectiveMap.swift */,
 				1F8D95331F6F1B4B007C5C09 /* Sequence.swift */,
+				1F5135981F68C5430055FAB1 /* Matrix.swift */,
+				1F2C6D811F6DF92C002A6CC9 /* SimpleMatrix.swift */,
 				1FA098A61F674E680068FD7C /* Info.plist */,
 			);
 			path = SwiftMaths;
@@ -134,10 +174,8 @@
 			isa = PBXGroup;
 			children = (
 				1FA098B21F674E680068FD7C /* Info.plist */,
-				1F8D95391F6F1C59007C5C09 /* FunctionalTests.swift */,
-				1FBA34BF1F676A3F00BD3919 /* InjectiveMapTests.swift */,
-				1F8D95351F6F1B57007C5C09 /* SequenceTests.swift */,
-				1FBA34C11F676A4800BD3919 /* Utilities.swift */,
+				1F1B2D5F1F6F2EAC0025DFB7 /* Tests */,
+				1F1B2D5E1F6F2E900025DFB7 /* Tools */,
 			);
 			path = SwiftMathsTests;
 			sourceTree = "<group>";
@@ -164,6 +202,7 @@
 		1FA098CC1F6756470068FD7C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1F981FAC1F69ADF300F22B11 /* Accelerate.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -239,7 +278,6 @@
 					};
 					1FA098AA1F674E680068FD7C = {
 						CreatedOnToolsVersion = 9.0;
-						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -319,6 +357,8 @@
 				1F8D95381F6F1C4F007C5C09 /* Functional.swift in Sources */,
 				1F8D95341F6F1B4B007C5C09 /* Sequence.swift in Sources */,
 				1FBA34BE1F676A2000BD3919 /* InjectiveMap.swift in Sources */,
+				1F2C6D821F6DF92C002A6CC9 /* SimpleMatrix.swift in Sources */,
+				1F5135991F68C5430055FAB1 /* Matrix.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -326,10 +366,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1FBA34C21F676A4800BD3919 /* Utilities.swift in Sources */,
+				1F39D3261F771456009D4CCB /* AbstractMatrixTests.swift in Sources */,
+				1FBA34C21F676A4800BD3919 /* Dictionary.swift in Sources */,
 				1FBA34C01F676A3F00BD3919 /* InjectiveMapTests.swift in Sources */,
 				1F8D953A1F6F1C59007C5C09 /* FunctionalTests.swift in Sources */,
+				1F39D3271F77197B009D4CCB /* SimpleMatrixTests.swift in Sources */,
 				1F8D95361F6F1B57007C5C09 /* SequenceTests.swift in Sources */,
+				1F2CC71A1F6F79B3000D67FF /* IndexSet.swift in Sources */,
+				1FB57CE81F70577200999308 /* TestAssertions.swift in Sources */,
+				1F77D5101F6DF262004C3F9B /* Generators.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -513,7 +558,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -524,7 +568,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.fortlogic.SwiftMathsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
@@ -533,7 +576,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
