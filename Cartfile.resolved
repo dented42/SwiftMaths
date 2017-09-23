@@ -1,1 +1,2 @@
-github "typelift/SwiftCheck" "912f0f6f53067a1232c07dc5ecffe05cdfbc1e5d"
+github "fortlogic/FortlogicFoundation" "v/0.0.2"
+github "typelift/SwiftCheck" "0.8.1"

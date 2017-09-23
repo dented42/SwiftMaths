@@ -13,8 +13,6 @@
 		1F39D3271F77197B009D4CCB /* SimpleMatrixTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2C6D7F1F6DF8FF002A6CC9 /* SimpleMatrixTests.swift */; };
 		1F5135991F68C5430055FAB1 /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5135981F68C5430055FAB1 /* Matrix.swift */; };
 		1F77D5101F6DF262004C3F9B /* Generators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F77D50F1F6DF262004C3F9B /* Generators.swift */; };
-		1F8D95341F6F1B4B007C5C09 /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8D95331F6F1B4B007C5C09 /* Sequence.swift */; };
-		1F8D95361F6F1B57007C5C09 /* SequenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8D95351F6F1B57007C5C09 /* SequenceTests.swift */; };
 		1F8D95381F6F1C4F007C5C09 /* Functional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8D95371F6F1C4F007C5C09 /* Functional.swift */; };
 		1F8D953A1F6F1C59007C5C09 /* FunctionalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8D95391F6F1C59007C5C09 /* FunctionalTests.swift */; };
 		1F981FAD1F69ADF300F22B11 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F981FAC1F69ADF300F22B11 /* Accelerate.framework */; };
@@ -28,6 +26,10 @@
 		1FBA34BE1F676A2000BD3919 /* InjectiveMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBA34BD1F676A2000BD3919 /* InjectiveMap.swift */; };
 		1FBA34C01F676A3F00BD3919 /* InjectiveMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBA34BF1F676A3F00BD3919 /* InjectiveMapTests.swift */; };
 		1FBA34C21F676A4800BD3919 /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBA34C11F676A4800BD3919 /* Dictionary.swift */; };
+		1FE99CFA1F7723A700A3B523 /* FortlogicFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE99CF81F77238E00A3B523 /* FortlogicFoundation.framework */; };
+		1FE99CFB1F7723AC00A3B523 /* FortlogicFoundation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE99CF81F77238E00A3B523 /* FortlogicFoundation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1FE99CFC1F7723B200A3B523 /* FortlogicFoundation.framework.dSYM in Copy Debug Symbols */ = {isa = PBXBuildFile; fileRef = 1FE99CF91F77239C00A3B523 /* FortlogicFoundation.framework.dSYM */; };
+		1FE99CFD1F7723E000A3B523 /* FortlogicFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE99CF81F77238E00A3B523 /* FortlogicFoundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +49,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				1FE99CFC1F7723B200A3B523 /* FortlogicFoundation.framework.dSYM in Copy Debug Symbols */,
 				1FA098C61F6756100068FD7C /* SwiftCheck.framework.dSYM in Copy Debug Symbols */,
 			);
 			name = "Copy Debug Symbols";
@@ -59,6 +62,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				1FA098CB1F67563E0068FD7C /* SwiftCheck.framework in Embed Frameworks */,
+				1FE99CFB1F7723AC00A3B523 /* FortlogicFoundation.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -72,8 +76,6 @@
 		1F2CC7191F6F79B3000D67FF /* IndexSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexSet.swift; sourceTree = "<group>"; };
 		1F5135981F68C5430055FAB1 /* Matrix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matrix.swift; sourceTree = "<group>"; };
 		1F77D50F1F6DF262004C3F9B /* Generators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Generators.swift; sourceTree = "<group>"; };
-		1F8D95331F6F1B4B007C5C09 /* Sequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
-		1F8D95351F6F1B57007C5C09 /* SequenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequenceTests.swift; sourceTree = "<group>"; };
 		1F8D95371F6F1C4F007C5C09 /* Functional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functional.swift; sourceTree = "<group>"; };
 		1F8D95391F6F1C59007C5C09 /* FunctionalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionalTests.swift; sourceTree = "<group>"; };
 		1F981FAC1F69ADF300F22B11 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
@@ -90,6 +92,9 @@
 		1FBA34BD1F676A2000BD3919 /* InjectiveMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InjectiveMap.swift; sourceTree = "<group>"; };
 		1FBA34BF1F676A3F00BD3919 /* InjectiveMapTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InjectiveMapTests.swift; sourceTree = "<group>"; };
 		1FBA34C11F676A4800BD3919 /* Dictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dictionary.swift; sourceTree = "<group>"; };
+		1FE99CF61F77236B00A3B523 /* FortlogicFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FortlogicFoundation.framework; path = Carthage/Build/Mac/FortlogicFoundation.framework; sourceTree = "<group>"; };
+		1FE99CF81F77238E00A3B523 /* FortlogicFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FortlogicFoundation.framework; path = Carthage/Build/Mac/FortlogicFoundation.framework; sourceTree = "<group>"; };
+		1FE99CF91F77239C00A3B523 /* FortlogicFoundation.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = FortlogicFoundation.framework.dSYM; path = Carthage/Build/Mac/FortlogicFoundation.framework.dSYM; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +102,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FE99CFD1F7723E000A3B523 /* FortlogicFoundation.framework in Frameworks */,
 				1F981FAD1F69ADF300F22B11 /* Accelerate.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -105,6 +111,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FE99CFA1F7723A700A3B523 /* FortlogicFoundation.framework in Frameworks */,
 				1FA098AC1F674E680068FD7C /* SwiftMaths.framework in Frameworks */,
 				1FA098CD1F6756470068FD7C /* SwiftCheck.framework in Frameworks */,
 			);
@@ -130,7 +137,6 @@
 				1F8D95391F6F1C59007C5C09 /* FunctionalTests.swift */,
 				1FBA34BF1F676A3F00BD3919 /* InjectiveMapTests.swift */,
 				1F1B2D601F6F55B00025DFB7 /* AbstractMatrixTests.swift */,
-				1F8D95351F6F1B57007C5C09 /* SequenceTests.swift */,
 				1F2C6D7F1F6DF8FF002A6CC9 /* SimpleMatrixTests.swift */,
 			);
 			path = Tests;
@@ -162,7 +168,6 @@
 				1FA098A51F674E680068FD7C /* SwiftMaths.h */,
 				1F8D95371F6F1C4F007C5C09 /* Functional.swift */,
 				1FBA34BD1F676A2000BD3919 /* InjectiveMap.swift */,
-				1F8D95331F6F1B4B007C5C09 /* Sequence.swift */,
 				1F5135981F68C5430055FAB1 /* Matrix.swift */,
 				1F2C6D811F6DF92C002A6CC9 /* SimpleMatrix.swift */,
 				1FA098A61F674E680068FD7C /* Info.plist */,
@@ -184,9 +189,9 @@
 			isa = PBXGroup;
 			children = (
 				1FA098BE1F6755600068FD7C /* CartFile */,
-				1FA098C71F6756200068FD7C /* SwiftCheck.framework */,
-				1FA098C41F6755EE0068FD7C /* Debug Symbols */,
 				1FA098C01F6755AE0068FD7C /* Cartfile.resolved */,
+				1FE99CF51F77234B00A3B523 /* Frameworks */,
+				1FA098C41F6755EE0068FD7C /* Debug Symbols */,
 			);
 			name = Dependencies;
 			sourceTree = "<group>";
@@ -194,6 +199,7 @@
 		1FA098C41F6755EE0068FD7C /* Debug Symbols */ = {
 			isa = PBXGroup;
 			children = (
+				1FE99CF91F77239C00A3B523 /* FortlogicFoundation.framework.dSYM */,
 				1FA098C21F6755E80068FD7C /* SwiftCheck.framework.dSYM */,
 			);
 			name = "Debug Symbols";
@@ -202,7 +208,17 @@
 		1FA098CC1F6756470068FD7C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1FE99CF61F77236B00A3B523 /* FortlogicFoundation.framework */,
 				1F981FAC1F69ADF300F22B11 /* Accelerate.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		1FE99CF51F77234B00A3B523 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1FE99CF81F77238E00A3B523 /* FortlogicFoundation.framework */,
+				1FA098C71F6756200068FD7C /* SwiftCheck.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -355,7 +371,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F8D95381F6F1C4F007C5C09 /* Functional.swift in Sources */,
-				1F8D95341F6F1B4B007C5C09 /* Sequence.swift in Sources */,
 				1FBA34BE1F676A2000BD3919 /* InjectiveMap.swift in Sources */,
 				1F2C6D821F6DF92C002A6CC9 /* SimpleMatrix.swift in Sources */,
 				1F5135991F68C5430055FAB1 /* Matrix.swift in Sources */,
@@ -371,7 +386,6 @@
 				1FBA34C01F676A3F00BD3919 /* InjectiveMapTests.swift in Sources */,
 				1F8D953A1F6F1C59007C5C09 /* FunctionalTests.swift in Sources */,
 				1F39D3271F77197B009D4CCB /* SimpleMatrixTests.swift in Sources */,
-				1F8D95361F6F1B57007C5C09 /* SequenceTests.swift in Sources */,
 				1F2CC71A1F6F79B3000D67FF /* IndexSet.swift in Sources */,
 				1FB57CE81F70577200999308 /* TestAssertions.swift in Sources */,
 				1F77D5101F6DF262004C3F9B /* Generators.swift in Sources */,

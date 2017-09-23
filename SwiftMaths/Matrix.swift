@@ -6,6 +6,7 @@
 //  Copyright © 2017 Matias Eyzaguirre. All rights reserved.
 //
 
+import FortlogicFoundation
 import Foundation
 
 public protocol Matrix: Equatable {
