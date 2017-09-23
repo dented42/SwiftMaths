@@ -82,12 +82,93 @@ public extension Matrix {
   
 }
 
-// MARK: AnyMatrix
+// MARK: Containers
 
-final public class AnyMatrix: Matrix {
+open class MatrixBox<M: Matrix>: Matrix {
+  
+  private var matrix: M
+  
+  required public init?(rows: Int, columns: Int) {
+    guard let mat = M(rows: rows, columns: columns) else {
+      return nil
+    }
+    self.matrix = mat
+  }
+  
+  public required init?(row: [Float]) {
+    guard let mat = M(row: row) else {
+      return nil
+    }
+    self.matrix = mat
+  }
+  
+  public required init?(column: [Float]) {
+    guard let mat = M(column: column) else {
+      return nil
+    }
+    self.matrix = mat
+  }
+  
+  required public init(matrix: M) {
+    self.matrix = matrix
+  }
+  
+  required convenience public init?(maybe: M?) {
+    guard let mat = maybe else { return nil }
+    self.init(matrix: mat)
+  }
+  
+  public final var rowCount: Int { return matrix.rowCount }
+  public final var columnCount: Int { return matrix.columnCount }
+  
+  public final var count: Int { return matrix.count }
+  
+  public final var rows: CountableRange<Int> { return matrix.rows }
+  public final var columns: CountableRange<Int> { return matrix.columns }
+  
+  public final subscript(r: Int, c: Int) -> Float? {
+    get {
+      return matrix[r,c]
+    }
+    set(v) {
+      matrix[r,c] = v
+    }
+  }
+  
+  public final func row(_ r: Int) -> Self? { return matrix.row(r)?.boxed() }
+  public final func column(_ c: Int) -> Self? { return matrix.column(c)?.boxed() }
+  
+  public final func array(fromRow row: Int) -> [Float]? { return matrix.array(fromRow: row) }
+  public final func array(fromColumn column: Int) -> [Float]? { return matrix.array(fromColumn: column) }
+  
+  public final func subMatrix(rows: IndexSet) -> Self? { return matrix.subMatrix(rows: rows)?.boxed() }
+  public final func subMatrix(columns: IndexSet) -> Self? { return matrix.subMatrix(columns: columns)?.boxed() }
+  public final func subMatrix(rows: IndexSet, columns: IndexSet) -> Self? { return matrix.subMatrix(rows: rows, columns: columns)?.boxed() }
+  
+  public final func transpose() -> Self { return matrix.transpose().boxed() }
+  
+  public static func *(lhs: Float, rhs: MatrixBox) -> Self { return (lhs * rhs.matrix).boxed() }
+  public static func *(lhs: MatrixBox, rhs: Float) -> Self { return (lhs.matrix * rhs).boxed() }
+
+  public static func ==(lhs: MatrixBox, rhs: MatrixBox) -> Bool { return lhs.matrix == rhs.matrix }
+
+  public static func +(lhs: MatrixBox, rhs: MatrixBox) -> Self? { return (lhs.matrix + rhs.matrix)?.boxed() }
+  public static func -(lhs: MatrixBox, rhs: MatrixBox) -> Self? { return (lhs.matrix - rhs.matrix)?.boxed() }
+  public static func *(lhs: MatrixBox, rhs: MatrixBox) -> Self? { return (lhs.matrix * rhs.matrix)?.boxed() }
+}
+
+public extension Matrix {
+ func boxed<MBox: MatrixBox<Self>>() -> MBox {
+    return MBox(matrix: self)
+  }
+}
+
+public final class AnyMatrix: Matrix {
   required public init?(rows: Int, columns: Int) { return nil }
   required public init?(row: [Float]) { return nil }
   required public init?(column: [Float]) { return nil }
+  
+  public let matrixType: String
   
   private let _matrix: Any
   private let _rowCount: () -> Int
@@ -112,8 +193,9 @@ final public class AnyMatrix: Matrix {
   private let _minus: (AnyMatrix) -> AnyMatrix?
   private let _multiply: (AnyMatrix) -> AnyMatrix?
   
-  public init<M: Matrix>(_ m: M) {
+  required public init<M: Matrix>(matrix m: M) {
     var matrix = m
+    matrixType = "\(type(of: matrix))"
     _matrix = matrix
     _rowCount = { return matrix.rowCount }
     _columnCount = { return matrix.columnCount }
@@ -129,9 +211,9 @@ final public class AnyMatrix: Matrix {
     _submatrix_rows = { (rows) in return AnyMatrix(maybe: matrix.subMatrix(rows: rows)) }
     _submatrix_columns = { (cols) in return AnyMatrix(maybe: matrix.subMatrix(columns: cols)) }
     _submatrix_rows_columns = { return AnyMatrix(maybe: matrix.subMatrix(rows: $0, columns: $1)) }
-    _transpose = { return AnyMatrix(matrix.transpose()) }
-    _multiply_scalar_left = { (scalar) in return AnyMatrix(scalar * matrix) }
-    _multiply_scalar_right = { (scalar) in return AnyMatrix(matrix * scalar) }
+    _transpose = { return AnyMatrix(matrix: matrix.transpose()) }
+    _multiply_scalar_left = { (scalar) in return AnyMatrix(matrix: scalar * matrix) }
+    _multiply_scalar_right = { (scalar) in return AnyMatrix(matrix: matrix * scalar) }
     _equals = { (other) in
       if let otherMatrix = other._matrix as? M {
         return matrix == otherMatrix
@@ -162,13 +244,41 @@ final public class AnyMatrix: Matrix {
     }
   }
   
+  required public init(any m: AnyMatrix) {
+    matrixType = m.matrixType
+    _matrix = m._matrix
+    _rowCount = m._rowCount
+    _columnCount = m._columnCount
+    _count = m._count
+    _rows = m._rows
+    _columns = m._columns
+    _subscript_get = m._subscript_get
+    _subscript_set = m._subscript_set
+    _row_idx = m._row_idx
+    _column_idx = m._column_idx
+    _array_fromRow = m._array_fromRow
+    _array_fromColumn = m._array_fromColumn
+    _submatrix_rows = m._submatrix_rows
+    _submatrix_columns = m._submatrix_columns
+    _submatrix_rows_columns = m._submatrix_rows_columns
+    _transpose = m._transpose
+    _multiply_scalar_left = m._multiply_scalar_left
+    _multiply_scalar_right = m._multiply_scalar_right
+    _equals = m._equals
+    _plus = m._plus
+    _minus = m._minus
+    _multiply = m._multiply
+  }
+  
   public convenience init?<M: Matrix>(maybe m: M?) {
     if let matrix = m {
-      self.init(matrix)
+      self.init(matrix: matrix)
     } else {
       return nil
     }
   }
+  
+  private func box<AM: AnyMatrix>() -> AM { return self as! AM }
   
   public var rowCount: Int { return _rowCount() }
   public var columnCount: Int { return _columnCount() }
@@ -182,26 +292,38 @@ final public class AnyMatrix: Matrix {
     get { return _subscript_get(r,c) }
     set(v) { return _subscript_set(r,c,v) } }
   
-  public func row(_ idx: Int) -> AnyMatrix? { return _row_idx(idx) }
-  public func column(_ idx: Int) -> AnyMatrix? { return _column_idx(idx) }
+  public func row(_ idx: Int) -> Self? { return _row_idx(idx)?.box() }
+  public func column(_ idx: Int) -> Self? { return _column_idx(idx)?.box() }
   
   public func array(fromRow idx : Int) -> [Float]? { return _array_fromRow(idx) }
   public func array(fromColumn idx: Int) -> [Float]? { return _array_fromColumn(idx) }
   
-  public func subMatrix(rows: IndexSet) -> AnyMatrix? { return _submatrix_rows(rows) }
-  public func subMatrix(columns: IndexSet) -> AnyMatrix? { return _submatrix_columns(columns) }
-  public func subMatrix(rows: IndexSet, columns: IndexSet) -> AnyMatrix? { return _submatrix_rows_columns(rows,columns) }
-  
-  public func transpose() -> AnyMatrix { return _transpose() }
-  
-  public static func *(lhs: Float, rhs: AnyMatrix) -> AnyMatrix { return rhs._multiply_scalar_left(lhs) }
-  public static func *(lhs: AnyMatrix, rhs: Float) -> AnyMatrix { return lhs._multiply_scalar_right(rhs) }
-  
+  public func subMatrix(rows: IndexSet) -> Self? { return _submatrix_rows(rows)?.box() }
+  public func subMatrix(columns: IndexSet) -> Self? { return _submatrix_columns(columns)?.box() }
+  public func subMatrix(rows: IndexSet, columns: IndexSet) -> Self? { return _submatrix_rows_columns(rows,columns)?.box() }
+
+  public func transpose() -> Self { return _transpose().box() }
+
+  public static func *(lhs: Float, rhs: AnyMatrix) -> Self { return rhs._multiply_scalar_left(lhs).box() }
+  public static func *(lhs: AnyMatrix, rhs: Float) -> Self { return lhs._multiply_scalar_right(rhs).box() }
+
   public static func ==(lhs: AnyMatrix, rhs: AnyMatrix) -> Bool { return lhs._equals(rhs) }
-  
-  public static func +(lhs: AnyMatrix, rhs: AnyMatrix) -> AnyMatrix? { return lhs._plus(rhs) }
-  public static func -(lhs: AnyMatrix, rhs: AnyMatrix) -> AnyMatrix? { return lhs._minus(rhs) }
-  public static func *(lhs: AnyMatrix, rhs: AnyMatrix) -> AnyMatrix? { return lhs._multiply(rhs) }
+
+  public static func +(lhs: AnyMatrix, rhs: AnyMatrix) -> Self? { return lhs._plus(rhs)?.box() }
+  public static func -(lhs: AnyMatrix, rhs: AnyMatrix) -> Self? { return lhs._minus(rhs)?.box() }
+  public static func *(lhs: AnyMatrix, rhs: AnyMatrix) -> Self? { return lhs._multiply(rhs)?.box() }
+}
+
+public extension Matrix {
+  public func wrap() -> AnyMatrix {
+    return AnyMatrix(matrix: self)
+  }
+  public func wrap<A: AnyMatrix>(like: A) -> A {
+    return A(matrix: self)
+  }
+  public func wrap<A: AnyMatrix>(as: A.Type) -> A {
+    return A(matrix: self)
+  }
 }
 
 // MARK: Default Implementations
