@@ -69,7 +69,7 @@ class SimpleMatrixTests: AbstractMatrixTests {
   func testSubscript_get() {
     property("invalid indices are rejected") <- forAll {
       (matrix: SimpleMatrix, row: Int, column: Int) in
-        return !(matrix.rows.contains(row) && matrix.columns.contains(column)) ==> {
+        return !(matrix.rowIndices.contains(row) && matrix.columnIndices.contains(column)) ==> {
           return matrix[row,column] == nil
         }
       }
@@ -77,9 +77,9 @@ class SimpleMatrixTests: AbstractMatrixTests {
     property("entries map correctly") <- forAll {
       (holder: SimpleMatrix.Metadata) in
       let matrix = holder.matrix
-      return matrix.rows.mapAnd {
+      return matrix.rowIndices.mapAnd {
         (row) in
-        return matrix.columns.mapAnd {
+        return matrix.columnIndices.mapAnd {
           (column) in
           return matrix[row,column] == holder.reference[row][column]
         }
@@ -92,7 +92,7 @@ class SimpleMatrixTests: AbstractMatrixTests {
   func testSubscript_set() {
     property("invalid indices have no effect") <- forAll {
       (matrix: SimpleMatrix, row: Int, column: Int, value: Float) in
-      return !(matrix.rows.contains(row) && matrix.columns.contains(column)) ==> {
+      return !(matrix.rowIndices.contains(row) && matrix.columnIndices.contains(column)) ==> {
         var mutableMatrix = matrix
         mutableMatrix[row,column] = value
         return mutableMatrix == matrix
@@ -101,7 +101,7 @@ class SimpleMatrixTests: AbstractMatrixTests {
     
     property("setting an entry changes that entry") <- forAll {
       (matrix: SimpleMatrix, row: Int, column: Int, value: Float) in
-      return (matrix.rows.contains(row) && matrix.columns.contains(column)) ==> {
+      return (matrix.rowIndices.contains(row) && matrix.columnIndices.contains(column)) ==> {
         var mutableMatrix = matrix
         mutableMatrix[row,column] = value
         return mutableMatrix[row,column] == value
@@ -110,12 +110,12 @@ class SimpleMatrixTests: AbstractMatrixTests {
     
     property("setting an entry doesn't change other entries") <- forAll {
       (matrix: SimpleMatrix, row: Int, column: Int, value: Float) in
-      return (matrix.rows.contains(row) && matrix.columns.contains(column)) ==> {
+      return (matrix.rowIndices.contains(row) && matrix.columnIndices.contains(column)) ==> {
         var mutableMatrix = matrix
         mutableMatrix[row,column] = value
-        return mutableMatrix.rows.mapAnd {
+        return mutableMatrix.rowIndices.mapAnd {
           (r) in
-          return mutableMatrix.columns.mapAnd {
+          return mutableMatrix.columnIndices.mapAnd {
             (c) in
             if (r != row) && (c != column) {
               return mutableMatrix[r,c] == matrix[r,c]
@@ -192,11 +192,11 @@ extension SimpleMatrix: Arbitrary {
   }
   
   var rowIdxGen: Gen<Int> {
-    return Gen<Int>.fromElements(of: rows)
+    return Gen<Int>.fromElements(of: rowIndices)
   }
   
   var columnIdxGen: Gen<Int> {
-    return Gen<Int>.fromElements(of: columns)
+    return Gen<Int>.fromElements(of: columnIndices)
   }
   
   public static var arbitrary: Gen<SimpleMatrix> {

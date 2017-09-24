@@ -36,7 +36,7 @@ public struct SimpleMatrix: Matrix {
   public subscript(r: Int, c: Int) -> Float? {
     get {
       // negative indices make no sense
-      guard rows.contains(r) && columns.contains(c) else {
+      guard rowIndices.contains(r) && columnIndices.contains(c) else {
         return nil
       }
       
@@ -46,7 +46,7 @@ public struct SimpleMatrix: Matrix {
     }
     set(v) {
       // negative indices make no sense
-      guard rows.contains(r) && columns.contains(c) else {
+      guard rowIndices.contains(r) && columnIndices.contains(c) else {
         return
       }
       

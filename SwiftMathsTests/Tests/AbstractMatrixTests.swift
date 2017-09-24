@@ -113,27 +113,27 @@ class AbstractMatrixTests: XCTestCase {
     }
   }
   
-  func testRows() {
+  func testRowIndices() {
     property("correct lower bound") <- forAll(self.matrixGenerator) {
       (mat: AnyMatrix) in
-      return mat.rows.first == 0
+      return mat.rowIndices.first == 0
     }
     
     property("correct upper bound") <- forAll(self.matrixGenerator) {
       (mat: AnyMatrix) in
-      return mat.rows.last == (mat.rowCount - 1)
+      return mat.rowIndices.last == (mat.rowCount - 1)
     }
   }
   
-  func testColumns() {
+  func testColumnIndices() {
     property("correct lower bound") <- forAll(self.matrixGenerator) {
       (mat: AnyMatrix) in
-      return mat.columns.first == 0
+      return mat.columnIndices.first == 0
     }
     
     property("correct upper bound") <- forAll(self.matrixGenerator) {
       (mat: AnyMatrix) in
-      return mat.columns.last == (mat.columnCount - 1)
+      return mat.columnIndices.last == (mat.columnCount - 1)
     }
   }
 
@@ -142,7 +142,7 @@ class AbstractMatrixTests: XCTestCase {
     property("invalid rows are rejected") <- forAll(self.matrixGenerator) {
       (mat: AnyMatrix) in
       return forAll { (rowIdx: Int) in
-        return !mat.rows.contains(rowIdx) ==> {
+        return !mat.rowIndices.contains(rowIdx) ==> {
           return mat.row(rowIdx) == nil
         }
       }
@@ -171,7 +171,7 @@ class AbstractMatrixTests: XCTestCase {
           return false
         }
         
-        return row.columns.mapAnd {
+        return row.columnIndices.mapAnd {
           (idx) in
           return row[0, idx] == mat[rowIdx, idx]
         }
@@ -183,7 +183,7 @@ class AbstractMatrixTests: XCTestCase {
     property("invalid columns are rejected") <- forAll(self.matrixGenerator) {
       (mat: AnyMatrix) in
       return forAll { (columnIdx: Int) in
-        return !mat.columns.contains(columnIdx) ==> {
+        return !mat.columnIndices.contains(columnIdx) ==> {
           return mat.column(columnIdx) == nil
         }
       }
@@ -212,7 +212,7 @@ class AbstractMatrixTests: XCTestCase {
           return false
         }
         
-        return column.rows.mapAnd {
+        return column.rowIndices.mapAnd {
           (idx) in
           return column[idx, 0] == mat[idx, columnIdx]
         }
@@ -224,7 +224,7 @@ class AbstractMatrixTests: XCTestCase {
     property("invalid rows are rejected") <- forAll(self.matrixGenerator) {
       (mat: AnyMatrix) in
       return forAll { (rowIdx: Int) in
-        return !mat.rows.contains(rowIdx) ==> {
+        return !mat.rowIndices.contains(rowIdx) ==> {
           return mat.array(fromRow: rowIdx) == nil
         }
       }
@@ -262,7 +262,7 @@ class AbstractMatrixTests: XCTestCase {
     property("invalid columns are rejected") <- forAll(self.matrixGenerator) {
       (mat: AnyMatrix) in
       return forAll { (columnIdx: Int) in
-        return !mat.columns.contains(columnIdx) ==> {
+        return !mat.columnIndices.contains(columnIdx) ==> {
           return mat.array(fromColumn: columnIdx) == nil
         }
       }
@@ -305,7 +305,7 @@ class AbstractMatrixTests: XCTestCase {
     property("invalid indices are rejected") <- forAll(self.matrixGenerator) {
       (matrix: AnyMatrix) in
       return forAll { (rowSet: IndexSet) in
-        return (rowSet.contains { return !matrix.rows.contains($0) }) ==> {
+        return (rowSet.contains { return !matrix.rowIndices.contains($0) }) ==> {
           return matrix.subMatrix(rows: rowSet) == nil
         }
       }
@@ -314,7 +314,7 @@ class AbstractMatrixTests: XCTestCase {
     property("dimensions match") <- forAll(self.matrixGenerator) {
       (matrix: AnyMatrix) in
       return forAll { (rowSet: IndexSet) in
-        return (rowSet.mapAnd { return matrix.rows.contains($0) }) ==> {
+        return (rowSet.mapAnd { return matrix.rowIndices.contains($0) }) ==> {
           guard let subMatrix = matrix.subMatrix(rows: rowSet) else {
             return false
           }
@@ -329,7 +329,7 @@ class AbstractMatrixTests: XCTestCase {
     property("entries match") <- forAll(self.matrixGenerator) {
       (matrix: AnyMatrix) in
       return forAll { (rowSet: IndexSet) in
-        return (rowSet.mapAnd { return matrix.rows.contains($0) }) ==> {
+        return (rowSet.mapAnd { return matrix.rowIndices.contains($0) }) ==> {
           guard let subMatrix = matrix.subMatrix(rows: rowSet) else {
             return false
           }
@@ -338,7 +338,7 @@ class AbstractMatrixTests: XCTestCase {
           
           return rowIdxs.indices.mapAnd {
             (row) in
-            return subMatrix.columns.mapAnd {
+            return subMatrix.columnIndices.mapAnd {
               (column) in
               return subMatrix[row,column] == matrix[rowIdxs[row],column]
             }
@@ -357,7 +357,7 @@ class AbstractMatrixTests: XCTestCase {
     property("invalid indices are rejected") <- forAll(self.matrixGenerator) {
       (matrix: AnyMatrix) in
       return forAll { (columnSet: IndexSet) in
-        return (columnSet.contains { return !matrix.columns.contains($0) }) ==> {
+        return (columnSet.contains { return !matrix.columnIndices.contains($0) }) ==> {
           return matrix.subMatrix(columns: columnSet) == nil
         }
       }
@@ -366,7 +366,7 @@ class AbstractMatrixTests: XCTestCase {
     property("dimensions match") <- forAll(self.matrixGenerator) {
       (matrix: AnyMatrix) in
       return forAll { (columnSet: IndexSet) in
-        return (columnSet.mapAnd { return matrix.columns.contains($0) }) ==> {
+        return (columnSet.mapAnd { return matrix.columnIndices.contains($0) }) ==> {
           guard let subMatrix = matrix.subMatrix(columns: columnSet) else {
             return false
           }
@@ -381,14 +381,14 @@ class AbstractMatrixTests: XCTestCase {
     property("entries match") <- forAll(self.matrixGenerator) {
       (matrix: AnyMatrix) in
       return forAll { (columnSet: IndexSet) in
-        return (columnSet.mapAnd { return matrix.columns.contains($0) }) ==> {
+        return (columnSet.mapAnd { return matrix.columnIndices.contains($0) }) ==> {
           guard let subMatrix = matrix.subMatrix(columns: columnSet) else {
             return false
           }
           
           let columnIdxs = Array(columnSet).sorted()
           
-          return subMatrix.rows.mapAnd {
+          return subMatrix.rowIndices.mapAnd {
             (row) in
             return columnIdxs.indices.mapAnd {
               (column) in
@@ -418,7 +418,7 @@ class AbstractMatrixTests: XCTestCase {
     property("invalid row indices are rejected") <- forAll(self.matrixGenerator) {
       (matrix: AnyMatrix) in
       return forAll { (rowSet: IndexSet, columnSet: IndexSet) in
-        return (rowSet.contains { return !matrix.rows.contains($0) }) ==> {
+        return (rowSet.contains { return !matrix.rowIndices.contains($0) }) ==> {
           return matrix.subMatrix(rows: rowSet, columns: columnSet) == nil
         }
       }
@@ -427,7 +427,7 @@ class AbstractMatrixTests: XCTestCase {
     property("invalid column sets are rejected") <- forAll(self.matrixGenerator) {
       (matrix: AnyMatrix) in
       return forAll { (rowSet: IndexSet, columnSet: IndexSet) in
-        return (columnSet.contains { return !matrix.columns.contains($0) }) ==> {
+        return (columnSet.contains { return !matrix.columnIndices.contains($0) }) ==> {
           return matrix.subMatrix(rows: rowSet, columns: columnSet) == nil
         }
       }
@@ -436,8 +436,8 @@ class AbstractMatrixTests: XCTestCase {
     property("dimensions match") <- forAll(self.matrixGenerator) {
       (matrix: AnyMatrix) in
       return forAll { (rowSet: IndexSet, columnSet: IndexSet) in
-        return (rowSet.mapAnd { return matrix.rows.contains($0) }) ==> {
-          return (columnSet.mapAnd { return matrix.columns.contains($0) }) ==> {
+        return (rowSet.mapAnd { return matrix.rowIndices.contains($0) }) ==> {
+          return (columnSet.mapAnd { return matrix.columnIndices.contains($0) }) ==> {
             guard let subMatrix = matrix.subMatrix(rows: rowSet, columns: columnSet) else {
               return false
             }
@@ -453,8 +453,8 @@ class AbstractMatrixTests: XCTestCase {
     property("entries match") <- forAll(self.matrixGenerator) {
       (matrix: AnyMatrix) in
       return forAll { (rowSet: IndexSet, columnSet: IndexSet) in
-        return (rowSet.mapAnd { return matrix.rows.contains($0) }) ==> {
-          return (columnSet.mapAnd { return matrix.columns.contains($0) }) ==> {
+        return (rowSet.mapAnd { return matrix.rowIndices.contains($0) }) ==> {
+          return (columnSet.mapAnd { return matrix.columnIndices.contains($0) }) ==> {
             guard let subMatrix = matrix.subMatrix(rows: rowSet, columns: columnSet) else {
               return false
             }
@@ -492,9 +492,9 @@ class AbstractMatrixTests: XCTestCase {
       
       let trans = mat.transpose()
       
-      return trans.rows.mapAnd {
+      return trans.rowIndices.mapAnd {
         (row) in
-        return trans.columns.mapAnd {
+        return trans.columnIndices.mapAnd {
           (column) in
           return trans[row, column] == mat[column, row]
         }
@@ -525,9 +525,9 @@ class AbstractMatrixTests: XCTestCase {
       return forAll { (scalar: Float) in
         let scaled = scalar * matrix
         
-        return scaled.rows.mapAnd {
+        return scaled.rowIndices.mapAnd {
           (row) in
-          return scaled.columns.mapAnd {
+          return scaled.columnIndices.mapAnd {
             (column) in
             return scaled[row,column] == (matrix[row,column]! * scalar)
           }
@@ -554,9 +554,9 @@ class AbstractMatrixTests: XCTestCase {
       return forAll { (scalar: Float) in
         let scaled =  matrix * scalar
         
-        return scaled.rows.mapAnd {
+        return scaled.rowIndices.mapAnd {
           (row) in
-          return scaled.columns.mapAnd {
+          return scaled.columnIndices.mapAnd {
             (column) in
             return scaled[row,column] == (matrix[row,column]! * scalar)
           }
@@ -594,9 +594,9 @@ class AbstractMatrixTests: XCTestCase {
           return false
         }
         
-        return mat3.rows.mapAnd {
+        return mat3.rowIndices.mapAnd {
           (row) in
-          return mat3.columns.mapAnd {
+          return mat3.columnIndices.mapAnd {
             (column) in
             return mat3[row,column] == (mat1[row,column]! + mat2[row,column]!)
           }
@@ -634,9 +634,9 @@ class AbstractMatrixTests: XCTestCase {
           return false
         }
         
-        return mat3.rows.mapAnd {
+        return mat3.rowIndices.mapAnd {
           (row) in
-          return mat3.columns.mapAnd {
+          return mat3.columnIndices.mapAnd {
             (column) in
             return mat3[row,column] == (mat1[row,column]! - mat2[row,column]!)
           }
@@ -674,11 +674,11 @@ class AbstractMatrixTests: XCTestCase {
           return false
         }
         
-        return product.rows.mapAnd {
+        return product.rowIndices.mapAnd {
           (row) in
-          return product.columns.mapAnd {
+          return product.columnIndices.mapAnd {
             (column) in
-            return product[row,column] == matrix1.columns.reduce(0) {
+            return product[row,column] == matrix1.columnIndices.reduce(0) {
               (acc: Float, idx: Int) in
               return acc + (matrix1[row, idx]! * matrix2[idx, column]!)
             }
@@ -718,9 +718,9 @@ class AbstractMatrixTests: XCTestCase {
           return false
         }
         
-        return matrix.rows.mapAnd {
+        return matrix.rowIndices.mapAnd {
           (row) in
-          return matrix.columns.mapAnd {
+          return matrix.columnIndices.mapAnd {
             (column) in
             if row == column {
               return matrix[row,column] == trace[row]
@@ -762,9 +762,9 @@ class AbstractMatrixTests: XCTestCase {
           return false
         }
         
-        return matrix.rows.mapAnd {
+        return matrix.rowIndices.mapAnd {
           (row) in
-          return matrix.columns.mapAnd {
+          return matrix.columnIndices.mapAnd {
             (column) in
             if row == column {
               return matrix[row,column] == 1
@@ -786,10 +786,10 @@ extension AnyMatrix: Arbitrary {
   }
   
   var rowIndexGen: Gen<Int> {
-    return Gen<Int>.fromElements(in: ClosedRange(rows))
+    return Gen<Int>.fromElements(in: ClosedRange(rowIndices))
   }
   
   var columnIndexGen: Gen<Int> {
-    return Gen<Int>.fromElements(in: ClosedRange(columns))
+    return Gen<Int>.fromElements(in: ClosedRange(columnIndices))
   }
 }

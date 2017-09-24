@@ -20,8 +20,8 @@ public protocol Matrix: Equatable {
   
   var count: Int { get }
   
-  var rows: CountableRange<Int> { get }
-  var columns: CountableRange<Int> { get }
+  var rowIndices: CountableRange<Int> { get }
+  var columnIndices: CountableRange<Int> { get }
   
   subscript(r: Int, c: Int) -> Float? { get set }
   
@@ -124,8 +124,8 @@ open class MatrixBox<M: Matrix>: Matrix {
   
   public final var count: Int { return matrix.count }
   
-  public final var rows: CountableRange<Int> { return matrix.rows }
-  public final var columns: CountableRange<Int> { return matrix.columns }
+  public final var rowIndices: CountableRange<Int> { return matrix.rowIndices }
+  public final var columnIndices: CountableRange<Int> { return matrix.columnIndices }
   
   public final subscript(r: Int, c: Int) -> Float? {
     get {
@@ -175,8 +175,8 @@ public final class AnyMatrix: Matrix {
   private let _rowCount: () -> Int
   private let _columnCount: () -> Int
   private let _count: () -> Int
-  private let _rows: () -> CountableRange<Int>
-  private let _columns: () -> CountableRange<Int>
+  private let _rowsIndices: () -> CountableRange<Int>
+  private let _columnIndices: () -> CountableRange<Int>
   private let _subscript_get: (Int,Int) -> Float?
   private let _subscript_set: (Int,Int,Float?) -> ()
   private let _row_idx: (Int) -> AnyMatrix?
@@ -201,8 +201,8 @@ public final class AnyMatrix: Matrix {
     _rowCount = { return matrix.rowCount }
     _columnCount = { return matrix.columnCount }
     _count = { return matrix.count }
-    _rows = { return matrix.rows }
-    _columns = { return matrix.columns }
+    _rowsIndices = { return matrix.rowIndices }
+    _columnIndices = { return matrix.columnIndices }
     _subscript_get = { (r,c) in return matrix[r,c] }
     _subscript_set = { (r,c,v) in matrix[r,c] = v }
     _row_idx = { (idx) in return AnyMatrix(maybe: matrix.row(idx)) }
@@ -251,8 +251,8 @@ public final class AnyMatrix: Matrix {
     _rowCount = m._rowCount
     _columnCount = m._columnCount
     _count = m._count
-    _rows = m._rows
-    _columns = m._columns
+    _rowsIndices = m._rowsIndices
+    _columnIndices = m._columnIndices
     _subscript_get = m._subscript_get
     _subscript_set = m._subscript_set
     _row_idx = m._row_idx
@@ -296,8 +296,8 @@ public final class AnyMatrix: Matrix {
   
   public var count: Int { return _count() }
   
-  public var rows: CountableRange<Int> { return _rows() }
-  public var columns: CountableRange<Int> { return _columns() }
+  public var rowIndices: CountableRange<Int> { return _rowsIndices() }
+  public var columnIndices: CountableRange<Int> { return _columnIndices() }
   
   public subscript(r: Int, c: Int) -> Float? {
     get { return _subscript_get(r,c) }
@@ -365,22 +365,22 @@ public extension Matrix {
     return rowCount * columnCount
   }
   
-  public var rows: CountableRange<Int> {
+  public var rowIndices: CountableRange<Int> {
     return 0..<rowCount
   }
   
-  public var columns: CountableRange<Int> {
+  public var columnIndices: CountableRange<Int> {
     return 0..<columnCount
   }
   
   public func row(_ row: Int) -> Self? {
-    guard rows.contains(row) else {
+    guard rowIndices.contains(row) else {
       return nil
     }
     
     var mat = Self(rows: 1, columns: columnCount)!
     
-    for column in columns {
+    for column in columnIndices {
       mat[0, column] = self[row, column]!
     }
     
@@ -388,13 +388,13 @@ public extension Matrix {
   }
   
   public func column(_ column: Int) -> Self? {
-    guard columns.contains(column) else {
+    guard columnIndices.contains(column) else {
       return nil
     }
     
     var mat = Self(rows: rowCount, columns: 1)!
     
-    for row in rows {
+    for row in rowIndices {
       mat[row,0] = self[row, column]!
     }
     
@@ -403,11 +403,11 @@ public extension Matrix {
   
   public func array(fromRow row: Int) -> [Float]? {
     // the row needs to exist
-    guard rows.contains(row) else {
+    guard rowIndices.contains(row) else {
       return nil
     }
     
-    return columns.map {
+    return columnIndices.map {
       (column: Int) in
       return self[row, column]!
     }
@@ -415,11 +415,11 @@ public extension Matrix {
   
   public func array(fromColumn column: Int) -> [Float]? {
     // the column needs to exist
-    guard columns.contains(column) else {
+    guard columnIndices.contains(column) else {
       return nil
     }
     
-    return rows.map {
+    return rowIndices.map {
       (row: Int) in
       return self[row, column]!
     }
@@ -427,7 +427,7 @@ public extension Matrix {
   
   public func subMatrix(rows rowSet: IndexSet) -> Self? {
     // the rows need to be in the right range
-    guard (rowSet.count > 0) && (rowSet.mapAnd{ return rows.contains($0) }) else {
+    guard (rowSet.count > 0) && (rowSet.mapAnd{ return rowIndices.contains($0) }) else {
       return nil
     }
     
@@ -435,8 +435,8 @@ public extension Matrix {
     
     var sub = Self(rows: rowIdxs.count, columns: columnCount)!
     
-    for row in sub.rows {
-      for column in sub.columns {
+    for row in sub.rowIndices {
+      for column in sub.columnIndices {
         sub[row,column] = self[rowIdxs[row], column]
       }
     }
@@ -446,7 +446,7 @@ public extension Matrix {
   
   public func subMatrix(columns columnSet: IndexSet) -> Self? {
     // the columns need to be in the right range
-    guard (columnSet.count > 0) && (columnSet.mapAnd{ return columns.contains($0) }) else {
+    guard (columnSet.count > 0) && (columnSet.mapAnd{ return columnIndices.contains($0) }) else {
       return nil
     }
     
@@ -454,8 +454,8 @@ public extension Matrix {
     
     var sub = Self(rows: rowCount, columns: columnIdxs.count)!
     
-    for row in sub.rows {
-      for column in sub.columns {
+    for row in sub.rowIndices {
+      for column in sub.columnIndices {
         sub[row,column] = self[row, columnIdxs[column]]
       }
     }
@@ -465,12 +465,12 @@ public extension Matrix {
   
   public func subMatrix(rows rowSet: IndexSet, columns columnSet: IndexSet) -> Self? {
     // the rows need to be in the right range
-    guard (rowSet.count > 0) && (rowSet.mapAnd{ return rows.contains($0) }) else {
+    guard (rowSet.count > 0) && (rowSet.mapAnd{ return rowIndices.contains($0) }) else {
       return nil
     }
     
     // the columns need to be in the right range
-    guard (columnSet.count > 0) && (columnSet.mapAnd{ return columns.contains($0) }) else {
+    guard (columnSet.count > 0) && (columnSet.mapAnd{ return columnIndices.contains($0) }) else {
       return nil
     }
     
@@ -491,8 +491,8 @@ public extension Matrix {
   public func transpose() -> Self {
     var trans = Self(rows: columnCount, columns: rowCount)!
     
-    for row in rows {
-      for column in columns {
+    for row in rowIndices {
+      for column in columnIndices {
         trans[column, row] = self[row, column]
       }
     }
@@ -503,8 +503,8 @@ public extension Matrix {
   public static func *(lhs: Float, rhs: Self) -> Self {
     var scaled = Self(rows: rhs.rowCount, columns: rhs.columnCount)!
     
-    for row in scaled.rows {
-      for column in scaled.columns {
+    for row in scaled.rowIndices {
+      for column in scaled.columnIndices {
         scaled[row,column] = lhs * rhs[row,column]!
       }
     }
@@ -515,8 +515,8 @@ public extension Matrix {
   public static func *(lhs: Self, rhs: Float) -> Self {
     var scaled = Self(rows: lhs.rowCount, columns: lhs.columnCount)!
     
-    for row in scaled.rows {
-      for column in scaled.columns {
+    for row in scaled.rowIndices {
+      for column in scaled.columnIndices {
         scaled[row,column] = rhs * lhs[row,column]!
       }
     }
@@ -531,8 +531,8 @@ public extension Matrix {
     
     var sum = Self(rows: lhs.rowCount, columns: lhs.columnCount)!
     
-    for row in lhs.rows {
-      for column in lhs.columns {
+    for row in lhs.rowIndices {
+      for column in lhs.columnIndices {
         sum[row, column] = lhs[row, column]! + rhs[row, column]!
       }
     }
@@ -547,8 +547,8 @@ public extension Matrix {
     
     var difference = Self(rows: lhs.rowCount, columns: lhs.columnCount)!
     
-    for row in lhs.rows {
-      for column in lhs.columns {
+    for row in lhs.rowIndices {
+      for column in lhs.columnIndices {
         difference[row, column] = lhs[row, column]! - rhs[row, column]!
       }
     }
@@ -563,9 +563,9 @@ public extension Matrix {
     
     var product = Self(rows: lhs.rowCount, columns: rhs.columnCount)!
     
-    for row in product.rows {
-      for column in product.columns {
-        product[row, column] = lhs.columns.reduce(0) {
+    for row in product.rowIndices {
+      for column in product.columnIndices {
+        product[row, column] = lhs.columnIndices.reduce(0) {
           (acc: Float, idx: Int) in
           return acc + (lhs[row,idx]! * rhs[idx,column]!)
         }
